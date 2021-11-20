@@ -1,7 +1,7 @@
 import moment from "moment";
 export const showToast = (msg, type = "success") => {
     if (msg) {
-        console.log("msf", msf)
+        console.log("msg", msg, type);
     }
 };
 

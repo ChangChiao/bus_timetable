@@ -1,10 +1,10 @@
 <template>
-    <div>
-        <h3>{{ "紅10" }}</h3>
+    <div class="border rounded-md p-2">
+        <h3>{{ itemData.RouteName.Zh_tw }}</h3>
         <p>
-            {{ "臺大醫院" }}
+            {{ itemData.DepartureStopNameZh }}
             <span></span>
-            {{ "劍潭" }}
+            {{ itemData.DestinationStopNameZh }}
         </p>
     </div>
 </template>
@@ -12,8 +12,10 @@
 <script>
 export default {
     props: {
-        type: Object,
-        default: () => {},
+        itemData: {
+            type: Object,
+            default: () => {},
+        },
     },
     methods: {
         toBusInfo() {

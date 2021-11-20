@@ -1,10 +1,27 @@
 <template>
-    <ul>
-        <li v-for="item in keyList" :key="item" @click="setKeyword">
+    <ul class="flex flex-wrap">
+        <li
+            class="
+                w-1/5
+                border
+                flex
+                justify-center
+                items-center
+                rounded-md
+                h-10
+                cursor-pointer
+            "
+            v-for="item in keyList"
+            :key="item"
+            @click="setKeyword(item)"
+        >
             {{ item }}
         </li>
         <li @click="deleteKeyword">
-            <i></i>
+            <i>delete</i>
+        </li>
+        <li @click="reset">
+            <i>reset</i>
         </li>
     </ul>
 </template>
@@ -15,9 +32,14 @@
 export default {
     name: "Home",
     components: {},
+    props: {
+        keyword: {
+            type: String,
+            default: "",
+        },
+    },
     data() {
         return {
-            keyword: "",
             keyList: [
                 "紅",
                 "藍",
@@ -37,11 +59,16 @@ export default {
             ],
         };
     },
-    setKeyword(word) {
-        this.keyword += word;
-    },
-    deleteKeyword() {
-        this.keyword = this.keyword.substring(0, this.keyword - 1);
+    methods: {
+        setKeyword(word) {
+            this.$emit("setKeyword", word);
+        },
+        deleteKeyword() {
+            this.$emit("deleteKeyword");
+        },
+        reset() {
+            this.$emit("reset");
+        },
     },
 };
 </script>

@@ -1,11 +1,11 @@
-export const API_URL = "https://ptx.transportdata.tw/MOTC/v2";
-export const API_STOP = API_URL + "/Bus/RealTimeNearStop/Streaming/City"; //定點資料
+export const API_URL = "https://ptx.transportdata.tw/MOTC/v2/Bus";
+// export const API_STOP = API_URL + "/RealTimeNearStop/Streaming/City"; //定點資料
+export const API_ROUTE = API_URL + "/Route/City"; //取得所有公車路線
 export const API_ESTIMATED_TIME =
-    API_URL + "/v2/Bus/EstimatedTimeOfArrival/Streaming/City/"; //到站時間
+    API_URL + "/v2/Bus/EstimatedTimeOfArrival/Streaming/City/"; //預估到站時間
 //批次? 逐筆?
-export const API_SHAPE = API_URL + "/Cycling/Shape";
-export const API_NEAYBY_STATION = API_URL + "/Bike/Station/NearBy";
-export const API_NEAYBY_AVAILABLE = API_URL + "/Bike/Availability/NearBy";
+export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車站點
+
 export const CITY_LIST = [
     { label: "臺北市", value: "Taipei" },
     { label: "新北市", value: "NewTaipei" },

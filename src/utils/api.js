@@ -1,10 +1,8 @@
 import api from "../utils/http";
 import {
-    API_STATION,
-    API_AVAILABLE,
-    API_SHAPE,
-    API_NEAYBY_STATION,
-    API_NEAYBY_AVAILABLE,
+    API_ROUTE,
+    API_ESTIMATED_TIME,
+    API_BUS_STOP,
 } from "../global/constant";
 import jsSHA from "jssha";
 
@@ -25,19 +23,44 @@ const getAuthorizationHeader = () => {
     };
 };
 
-const getCity = (data) => {
-    const { city = "" } = data;
+const setPath = (data) => {
+    console.log("data", data);
+    const { city, routeName } = data;
     delete data.city;
-    return { cityPath: city, data };
+    delete data.routeName;
+    return { cityPath: city, routeName, data };
 };
 
-export const getBikeStation = (sendData) => {
-    const { cityPath, data } = getCity(sendData);
+export const getBusRoute = (sendData) => {
+    const { cityPath, routeName, data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
     };
-    return api.get(API_STATION + `/${cityPath}`, config);
+    console.log("routeName", routeName);
+    return api.get(API_ROUTE + `/${cityPath}/${routeName}`, config);
+};
+
+export const getEstimatedTime = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_ESTIMATED_TIME + `/${cityPath}`, config);
+};
+
+export const getBusStop = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_STOP + `/${cityPath}`, config);
 };

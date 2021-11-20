@@ -1,7 +1,10 @@
 <template>
     <div class="home">
         123
-        <img alt="Vue logo" src="../assets/logo.png" />
+        <router-link to="/busRoute">/busRoute</router-link>
+        <router-link to="/busSearch">/busSearch</router-link>
+        <router-link to="/favorite">/favorite</router-link>
+        <router-link to="/busNear">/busNear</router-link>
     </div>
 </template>
 
