@@ -4,7 +4,7 @@
             <li @click="setTab(0)">往{{}}</li>
             <li @click="setTab(1)">往{{}}</li>
         </ul>
-        <p>於{{}}前更新</p>
+        <p>於{{ second }}秒前更新</p>
         <BusRouteInfo :busInfo="listType === 0 ? goBus : backBus" />
         <!-- <Map /> -->
     </div>
@@ -29,7 +29,7 @@ export default {
             city: CITY_LIST[0].value,
             busData: [],
             listType: 0,
-            second:60,
+            second: 60,
         };
     },
     computed: {
@@ -42,11 +42,13 @@ export default {
     },
     methods: {
         getDataByTimer() {
-            this.timer =
-                (() => {
+            this.timer = setInterval(() => {
+                this.second -= 1;
+                if (this.second <= 0) {
+                    this.second = 60;
                     this.getBusArrive();
-                },
-                60000);
+                }
+            }, 1000);
         },
         async getBusArrive() {
             try {

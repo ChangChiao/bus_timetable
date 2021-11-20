@@ -21,7 +21,7 @@
 export default {
     props: {
         busInfo: {
-            type: Object,
+            type: Array,
             default: () => {},
         },
     },
