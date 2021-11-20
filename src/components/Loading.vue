@@ -1,36 +1,27 @@
 <template>
-    <teleport to="#teleport-target">
-        <div v-if="showLoading" class="loading-wrap">
-            <svg
-                class="spinner"
-                width="65px"
-                height="65px"
-                viewBox="0 0 66 66"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <circle
-                    class="path"
-                    fill="none"
-                    stroke-width="6"
-                    stroke-linecap="round"
-                    cx="33"
-                    cy="33"
-                    r="30"
-                ></circle>
-            </svg>
-        </div>
-    </teleport>
+    <div class="loading-wrap">
+        <svg
+            class="spinner"
+            width="65px"
+            height="65px"
+            viewBox="0 0 66 66"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <circle
+                class="path"
+                fill="none"
+                stroke-width="6"
+                stroke-linecap="round"
+                cx="33"
+                cy="33"
+                r="30"
+            ></circle>
+        </svg>
+    </div>
 </template>
 
 <script>
-export default {
-    props: {
-        showLoading: {
-            type: Boolean,
-            default: null,
-        },
-    },
-};
+export default {};
 </script>
 
 <style lang="css" scoped>

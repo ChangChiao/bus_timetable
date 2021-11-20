@@ -6,12 +6,10 @@
         </ul>
         <p>於{{ second }}秒前更新</p>
         <BusRouteInfo :busInfo="listType === 0 ? goBus : backBus" />
-        <!-- <Map /> -->
     </div>
 </template>
 
 <script>
-// import Map from "../components/Map.vue";
 import BusRouteInfo from "../components/BusRouteInfo.vue";
 import { getEstimatedTime } from "../utils/api";
 import { CITY_LIST } from "../global/constant";
@@ -56,7 +54,10 @@ export default {
                     city: this.city,
                     routeName: this.routeName,
                 };
+                this.$bus.$emit("setLoading", true);
                 const result = await getEstimatedTime(sendData);
+                this.$bus.$emit("setLoading", false);
+
                 this.busData = result;
                 console.log("result");
             } catch (error) {

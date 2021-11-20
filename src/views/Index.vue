@@ -5,6 +5,7 @@
         <router-link to="/busSearch">/busSearch</router-link>
         <router-link to="/favorite">/favorite</router-link>
         <router-link to="/busNear">/busNear</router-link>
+        <router-link to="/busmap">/busmap</router-link>
     </div>
 </template>
 

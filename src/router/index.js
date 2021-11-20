@@ -5,6 +5,7 @@ import BusRoute from "../views/BusRoute.vue";
 import BusSearch from "../views/BusSearch.vue";
 import Favorite from "../views/Favorite.vue";
 import BusNear from "../views/BusNear.vue";
+import BusMap from "../views/BusMap.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
         path: "/busNear",
         name: "BusNear",
         component: BusNear,
+    },
+    {
+        path: "/busmap",
+        name: "BusMap",
+        component: BusMap,
     },
 ];
 
