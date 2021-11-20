@@ -6,19 +6,23 @@ Vue.use(Vuex);
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
     reducer: (state) => ({
-        channelAccount: state.text,
+        favoriteList: state.favoriteList,
     }),
 });
 
 const initialState = () => {
     return {
-        text: "",
+        favoriteList: [],
     };
 };
 
 export default new Vuex.Store({
     state: initialState,
-    mutations: {},
+    mutations: {
+        updateFavoriteList(state, data) {
+            state.favoriteList = data;
+        },
+    },
     actions: {},
     modules: {},
     plugins: [vuexLocal.plugin],

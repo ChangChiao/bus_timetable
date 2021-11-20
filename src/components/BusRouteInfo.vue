@@ -1,17 +1,18 @@
 <template>
-    <div class="flex">
-        <ul>
-            <li>
-                <span>{{}}</span>
+    <div class="">
+        <ul v-for="item in liveBusList" :key="item.StopUID">
+            <li class="w-full border p-2">
+                <span>{{ item.StopName.Zh_tw }}</span>
+                <span>{{ transStatus(item.EstimateTime) }}</span>
                 <span>{{}}</span>
             </li>
         </ul>
-        <ul>
+        <!-- <ul>
             <li>
                 <span>{{}}</span>
                 <span></span>
             </li>
-        </ul>
+        </ul> -->
         <div class="line"></div>
     </div>
 </template>
@@ -25,18 +26,16 @@ export default {
         },
     },
     computed: {
-        goBus() {
-            return [].filter((item) => item.Direction === 0);
-        },
-        backBus() {
-            return [].filter((item) => item.Direction === 1);
+        liveBusList() {
+            return this.busInfo.filter((item) => item.EstimateTime);
         },
     },
     data() {
         return {};
     },
     methods: {
-        transStatus(time) {
+        transStatus(sec) {
+            const time = this.transMinute(sec);
             let text = "";
             switch (true) {
                 case time === 0:
@@ -53,6 +52,9 @@ export default {
                     break;
             }
             return text;
+        },
+        transMinute(sec) {
+            return Math.floor(sec / 60);
         },
     },
 };

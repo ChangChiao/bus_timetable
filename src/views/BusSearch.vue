@@ -9,11 +9,11 @@
                 {{ item.label }}
             </option>
         </select>
-        <h2>{{ keyword }}</h2>
+        <h2>{{ routeName }}</h2>
         <KeyBoard
-            @setKeyword="setKeyword"
+            @setrouteName="setrouteName"
             @reset="reset"
-            @deleteKeyword="deleteKeyword"
+            @deleterouteName="deleterouteName"
         />
         <ul>
             <template v-for="item in busList">
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             CITY_LIST,
-            keyword: "",
+            routeName: "",
             city: CITY_LIST[0].value,
             busList: [],
         };
@@ -50,7 +50,7 @@ export default {
         async getRoute() {
             const sendData = {
                 city: this.city,
-                routeName: this.keyword,
+                routeName: this.routeName,
             };
             try {
                 const result = await getBusRoute(sendData);
@@ -60,15 +60,15 @@ export default {
                 console.log("error", error);
             }
         },
-        setKeyword(word) {
-            this.keyword += word;
+        setrouteName(word) {
+            this.routeName += word;
             this.getRoute();
         },
-        deleteKeyword() {
-            this.keyword = this.keyword.substring(0, this.keyword - 1);
+        deleterouteName() {
+            this.routeName = this.routeName.substring(0, this.routeName - 1);
         },
         reset() {
-            this.keyword = "";
+            this.routeName = "";
         },
     },
     mounted() {

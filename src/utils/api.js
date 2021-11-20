@@ -44,14 +44,14 @@ export const getBusRoute = (sendData) => {
 };
 
 export const getEstimatedTime = (sendData) => {
-    const { cityPath, data } = setPath(sendData);
+    const { cityPath, routeName, data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
     };
-    return api.get(API_ESTIMATED_TIME + `/${cityPath}`, config);
+    return api.get(API_ESTIMATED_TIME + `/${cityPath}/${routeName}`, config);
 };
 
 export const getBusStop = (sendData) => {
