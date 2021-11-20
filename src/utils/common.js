@@ -1,11 +1,7 @@
-import Vue from "vue";
+import moment from "moment";
 export const showToast = (msg, type = "success") => {
     if (msg) {
-        Vue.$toast.open({
-            message: msg,
-            type,
-            // all of other options may go here
-        });
+        console.log("msf", msf)
     }
 };
 
@@ -17,7 +13,7 @@ export const transDate = (string) => {
     return `${year}/${month}/${day}`;
 };
 
-export const transTime = (time) => {
-    let date = new Date(time);
-    return date.toString("Zh_tw");
+export const transTime = (string) => {
+    let date = new Date(string);
+    return moment(date).format("YYYY-MM-DD HH:mm:ss");
 };

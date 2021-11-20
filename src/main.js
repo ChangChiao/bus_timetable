@@ -2,8 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "vue-toast-notification/dist/theme-sugar.css";
-import VueToast from "vue-toast-notification";
 import "tailwindcss/tailwind.css";
 import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -13,7 +11,6 @@ import {
     faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-Vue.use(VueToast);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("pagination", Pagination);
 library.add(faUserSecret);
