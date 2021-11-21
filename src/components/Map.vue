@@ -64,7 +64,7 @@ export default {
         },
         createMark() {
             stationMark = new L.Icon({
-                iconUrl: "/images/mark/no_rent.png",
+                iconUrl: "images/mark/no_rent.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -72,7 +72,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             busMark = new L.Icon({
-                iconUrl: "/images/mark/bike.png",
+                iconUrl: "images/mark/bike.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],

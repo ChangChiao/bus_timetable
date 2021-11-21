@@ -80,7 +80,7 @@ export default {
         },
         createMark() {
             markNoAvailable = new L.Icon({
-                iconUrl: "./images/mark/no-rent.png",
+                iconUrl: "images/mark/no-rent.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -88,7 +88,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markAvailable = new L.Icon({
-                iconUrl: "./images/mark/bike.png",
+                iconUrl: "images/mark/bike.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -96,7 +96,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markSelf = new L.Icon({
-                iconUrl: "./images/mark/currentLocation.png",
+                iconUrl: "images/mark/currentLocation.png",
                 shadowUrl: "",
                 iconSize: [40, 41],
                 iconAnchor: [12, 41],

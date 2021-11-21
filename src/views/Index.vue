@@ -17,7 +17,7 @@
                             >直接輸入路線名稱獲得資訊！</span
                         >
                     </p>
-                    <img src="/images/Index-section-image04_m.svg" alt="" />
+                    <img src="images/Index-section-image04_m.svg" alt="" />
                 </li>
                 <li class="list-item">
                     <p class="w-2/3 text-left">
@@ -28,7 +28,7 @@
                             >直接輸入路線名稱獲得資訊！</span
                         >
                     </p>
-                    <img src="/images/Index-section-image01_m.svg" alt="" />
+                    <img src="images/Index-section-image01_m.svg" alt="" />
                 </li>
                 <li class="list-item">
                     <p class="w-2/3 text-left">
@@ -39,7 +39,7 @@
                             >直接輸入路線名稱獲得資訊！</span
                         >
                     </p>
-                    <img src="/images/Index-section-image02_m.svg" alt="" />
+                    <img src="images/Index-section-image02_m.svg" alt="" />
                 </li>
             </ul>
             <p class="text-md font-bold block text-black pt-6">

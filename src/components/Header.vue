@@ -17,12 +17,12 @@
         </h1>
         <img
             class="absolute top-1 left-1"
-            src="/images/Index-header-logo.svg"
+            src="images/Index-header-logo.svg"
             alt=""
         />
         <img
             class="absolute bottom-0 right-0"
-            src="/images/Index-header-quarter.svg"
+            src="images/Index-header-quarter.svg"
             alt=""
         />
     </header>
