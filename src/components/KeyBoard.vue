@@ -11,7 +11,7 @@
         >
             {{ item.value }}
         </li>
-        <li @click="deleteKeyword">
+        <li class @click="deleteKeyword">
             <i>delete</i>
         </li>
     </ul>
