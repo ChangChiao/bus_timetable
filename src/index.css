@@ -16,8 +16,8 @@
     option {
         @apply text-center;
     }
-    h1 {
-        @apply text-primary-500 text-lg;
+    body{
+        background-color: #e5e5e5;
     }
 }
 
@@ -26,7 +26,11 @@
         @apply text-primary-500 text-lg font-bold pr-2;
     }
     .input-box {
-        @apply flex items-center border-solid border-primary-500 border pl-3 rounded-lg;
+        @apply flex items-center shadow-lg px-2 rounded-md;
+    }
+
+    .input-box-round{
+        @apply input-box rounded-lg;
     }
     .status {
         @apply rounded-md h-4 w-8 border mr-2 p-1;

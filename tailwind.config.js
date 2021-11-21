@@ -1,13 +1,10 @@
 module.exports = {
-    mode: "jit",
-    purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
+    // mode: "jit",
+    // purge: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}"],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
             colors: {
-                base: "#0E5978",
-                bg: "#f8f5f2",
-                blue: "#F0F9FC",
                 primary: {
                     100: "#EEEAF9",
                     300: "#C6B7EA",
@@ -49,11 +46,13 @@ module.exports = {
                     blue: "#448DFB",
                     green: "#59DD86",
                     brown: "#D4A274",
-                    orange: "#D4A274",
+                    orange: "#FB9232",
                     yellow: "#ECC94C",
                     gray: "#6F7585",
                     purple: "#37206D",
                 },
+                light: "#F5F5F5",
+                black: "#0D081A",
             },
         },
     },

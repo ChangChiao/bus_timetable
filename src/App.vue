@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <router-link to="/">
+        <!-- <router-link to="/">
             <font-awesome-icon icon="user-secret" />
-        </router-link>
+        </router-link> -->
         <router-view />
         <Loading v-if="showLoading" />
     </div>

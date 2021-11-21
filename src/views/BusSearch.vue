@@ -13,7 +13,7 @@
         <KeyBoard
             @setRouteName="setRouteName"
             @reset="reset"
-            @deleterouteName="deleterouteName"
+            @deleteRouteName="deleteRouteName"
         />
         <ul>
             <template v-for="item in busList">
@@ -67,8 +67,11 @@ export default {
             this.routeName += word;
             this.getRoute();
         },
-        deleterouteName() {
-            this.routeName = this.routeName.substring(0, this.routeName - 1);
+        deleteRouteName() {
+            this.routeName = this.routeName.substring(
+                0,
+                this.routeName.length - 1
+            );
         },
         reset() {
             this.routeName = "";

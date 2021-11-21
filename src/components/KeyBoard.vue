@@ -2,16 +2,18 @@
     <ul class="flex flex-wrap">
         <li
             class="keyboard-item"
-            v-for="item in keyList"
+            v-for="item in keyBoardList"
             :key="item.value"
             :style="{
                 color: item.style ? item.style : '#37206D',
             }"
-            @click="item.fn ? item.fn : setRouteName(item)"
+            @click="
+                item.fn ? handleFunction(item.fn) : setRouteName(item.value)
+            "
         >
             {{ item.value }}
         </li>
-        <li class @click="deleteKeyword">
+        <li class @click="deleteRouteName">
             <i>delete</i>
         </li>
     </ul>
@@ -29,8 +31,14 @@ export default {
             default: "",
         },
     },
+    computed: {
+        keyBoardList() {
+            return this.keyBoardShow ? this.keyList : this.keyList2;
+        },
+    },
     data() {
         return {
+            keyBoardShow: true,
             keyList: [
                 { value: "紅", style: "#FB5B44", fn: "" },
                 { value: "藍", style: "#448DFB", fn: "" },
@@ -69,9 +77,9 @@ export default {
                 { value: "E", style: "", fn: "" },
                 { value: "T", style: "", fn: "" },
                 { value: "返回", style: "gray", fn: "ctrlKeyboard" },
-                { value: "", style: "", fn: "" },
-                { value: "", style: "", fn: "" },
-                { value: "", style: "", fn: "" },
+                // { value: "-", style: "", fn: "" },
+                // { value: "-", style: "", fn: "" },
+                // { value: "-", style: "", fn: "" },
             ],
         };
     },
@@ -79,11 +87,19 @@ export default {
         setRouteName(word) {
             this.$emit("setRouteName", word);
         },
-        deleteKeyword() {
-            this.$emit("deleteKeyword");
+        deleteRouteName() {
+            console.log("deleteRouteName");
+            this.$emit("deleteRouteName");
         },
         reset() {
+            console.log("Reset");
             this.$emit("reset");
+        },
+        ctrlKeyboard() {
+            this.keyBoardShow = !this.keyBoardShow;
+        },
+        handleFunction(function_name) {
+            this[function_name]();
         },
     },
 };
@@ -91,6 +107,6 @@ export default {
 
 <style lang="postcss" scoped>
 .keyboard-item {
-    @apply w-1/5 border flex justify-center items-center rounded-md h-10 cursor-pointer border-line;
+    @apply w-1/5 border text-xl font-bold flex justify-center items-center rounded-md h-10 cursor-pointer border-line;
 }
 </style>
