@@ -57,10 +57,12 @@
                     border-primary-500
                     rounded-3xl
                 "
+                @click="getNowPos"
             >
                 開啟定位功能
             </button>
         </div>
+        <near-stop v-show="showNear" ref="near" />
         <Footer />
     </div>
 </template>
@@ -68,11 +70,37 @@
 <script>
 import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
+import NearStop from "../components/NearStop.vue";
 // @ is an alias to /src
 
 export default {
     name: "Home",
-    components: { Footer, Header },
+    components: { Footer, Header, NearStop },
+    data() {
+        return {
+            showNear: false,
+        };
+    },
+    methods: {
+        getNowPos() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const longitude = position.coords.longitude;
+                        const latitude = position.coords.latitude;
+                        console.log("longitude", longitude);
+                        console.log("latitude", latitude);
+                        this.showNear = true;
+                        this.$refs.near.getNearStop(latitude, longitude);
+                    },
+                    (event) => {
+                        const { code, message } = event;
+                        console.log("error", `code=${code}, msg=${message}`);
+                    }
+                );
+            }
+        },
+    },
 };
 </script>
 
