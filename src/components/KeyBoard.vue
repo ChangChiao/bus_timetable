@@ -13,7 +13,7 @@
             "
             v-for="item in keyList"
             :key="item"
-            @click="setKeyword(item)"
+            @click="setRouteName(item)"
         >
             {{ item }}
         </li>
@@ -60,8 +60,8 @@ export default {
         };
     },
     methods: {
-        setKeyword(word) {
-            this.$emit("setKeyword", word);
+        setRouteName(word) {
+            this.$emit("setRouteName", word);
         },
         deleteKeyword() {
             this.$emit("deleteKeyword");

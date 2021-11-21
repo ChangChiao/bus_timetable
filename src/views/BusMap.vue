@@ -54,7 +54,7 @@ export default {
         },
         initData() {
             this.getRouteMapMark();
-            // this.getRouteLine();
+            this.getRouteLine();
             this.getBusPos();
         },
         setView(mapInfo) {

@@ -112,9 +112,10 @@ export default {
             console.log("Geometry", Geometry);
             // Create a new Wicket instance
             const wicket = new Wkt.Wkt();
-            //Read in any kind of WKT string wicket.read(Geometry);
+            //Read in any kind of WKT string
+            wicket.read(Geometry);
             const geojsonFeature = wicket.toJson();
-            const lineStyle = { color: "#C50047", weight: 5 };
+            const lineStyle = { color: "#C50047", weight: 3 };
             routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(
                 map
             );

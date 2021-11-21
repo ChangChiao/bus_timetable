@@ -26,8 +26,7 @@ const getAuthorizationHeader = () => {
 };
 
 const setPath = (data) => {
-    console.log("data", data);
-    const { city, routeName } = data;
+    const { city = "", routeName = "" } = data;
     delete data.city;
     delete data.routeName;
     return { cityPath: city, routeName, data };

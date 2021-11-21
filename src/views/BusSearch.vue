@@ -11,7 +11,7 @@
         </select>
         <h2>{{ routeName }}</h2>
         <KeyBoard
-            @setrouteName="setrouteName"
+            @setRouteName="setRouteName"
             @reset="reset"
             @deleterouteName="deleterouteName"
         />
@@ -50,8 +50,10 @@ export default {
         async getRoute() {
             const sendData = {
                 city: this.city,
-                routeName: this.routeName,
-                $filter: `contains(RouteName/Zh_tw, '${this.routeName}')`,
+                // routeName: this.routeName,
+                $filter: this.routeName
+                    ? `contains(RouteName/Zh_tw, '${this.routeName}')`
+                    : "",
             };
             try {
                 const result = await getBusRoute(sendData);
@@ -61,7 +63,7 @@ export default {
                 console.log("error", error);
             }
         },
-        setrouteName(word) {
+        setRouteName(word) {
             this.routeName += word;
             this.getRoute();
         },

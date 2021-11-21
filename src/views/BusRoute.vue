@@ -5,13 +5,16 @@
             <li @click="setTab(1)">往{{}}</li>
         </ul>
         <p>於{{ second }}秒前更新</p>
-        <BusRouteInfo :busInfo="listType === 0 ? goBus : backBus" />
+        <BusRouteInfo
+            :busPos="busPos"
+            :busInfo="listType === 0 ? goBus : backBus"
+        />
     </div>
 </template>
 
 <script>
 import BusRouteInfo from "../components/BusRouteInfo.vue";
-import { getEstimatedTime } from "../utils/api";
+import { getEstimatedTime, getBusPosition } from "../utils/api";
 import { CITY_LIST } from "../global/constant";
 
 export default {
@@ -28,14 +31,31 @@ export default {
             busData: [],
             listType: 0,
             second: 60,
+            busPos: [],
         };
     },
     computed: {
         goBus() {
-            return this.busData.filter((item) => item.Direction === 0);
+            return this.sortedBusData.filter((item) => item.Direction === 0);
         },
         backBus() {
-            return this.busData.filter((item) => item.Direction === 1);
+            return this.sortedBusData.filter((item) => item.Direction === 1);
+        },
+        sortedBusData() {
+            const copy = [...this.liveBus];
+            return copy.sort((a, b) => a.StopUID.localeCompare(b.StopUID));
+        },
+        liveBus() {
+            return this.busData.filter((item) => item.StopStatus === 0);
+            // return this.busData.filter((item) => item.PlateNumb);
+        },
+    },
+    watch: {
+        goBus(val) {
+            console.warn("gobus", val);
+        },
+        busData(val) {
+            console.error("busData", val);
         },
     },
     methods: {
@@ -45,6 +65,7 @@ export default {
                 if (this.second <= 0) {
                     this.second = 60;
                     this.getBusArrive();
+                    // this.getBusPos();
                 }
             }, 1000);
         },
@@ -64,6 +85,17 @@ export default {
                 console.log("error", error);
             }
         },
+        async getBusPos() {
+            const sendData = { city: this.city, routeName: this.routeName };
+            try {
+                const result = await getBusPosition(sendData);
+                this.busPos = result;
+                console.log("this.busPos", this.busPos);
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+
         setTab(type) {
             this.listType = type;
         },
@@ -71,6 +103,7 @@ export default {
     mounted() {
         this.getBusArrive();
         this.getDataByTimer();
+        // this.getBusPos();
     },
     beforeDestroy() {
         clearInterval(this.timer);

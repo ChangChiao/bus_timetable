@@ -4,7 +4,7 @@
             <li class="w-full border p-2">
                 <span>{{ item.StopName.Zh_tw }}</span>
                 <span>{{ transStatus(item.EstimateTime) }}</span>
-                <span>{{}}</span>
+                <span>{{ item.StopUID }}</span>
             </li>
         </ul>
         <!-- <ul>
@@ -24,10 +24,16 @@ export default {
             type: Array,
             default: () => {},
         },
+        busPos: {
+            type: Array,
+            default: () => [],
+        },
     },
     computed: {
         liveBusList() {
-            return this.busInfo.filter((item) => item.EstimateTime);
+            return this.busInfo;
+
+            // return this.busInfo.filter((item) => item.EstimateTime);
         },
     },
     data() {
@@ -45,7 +51,7 @@ export default {
                     text = "即將到站";
                     break;
                 case !time:
-                    text = "--";
+                    text = "尚未發車";
                     break;
                 default:
                     text = time + "分鐘";

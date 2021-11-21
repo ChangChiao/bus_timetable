@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <font-awesome-icon icon="user-secret" />
+        <router-link to="/">
+            <font-awesome-icon icon="user-secret" />
+        </router-link>
         <router-view />
         <Loading v-if="showLoading" />
     </div>
