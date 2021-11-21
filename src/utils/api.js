@@ -92,14 +92,13 @@ export const getBusPosition = (sendData) => {
 };
 
 export const getStopNear = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
         params: {
-            ...data,
+            ...sendData,
         },
     };
-    return api.get(API_BUS_STOP_NEAR + `/${cityPath}/${routeName}`, config);
+    return api.get(API_BUS_STOP_NEAR, config);
 };
 
 export const getRouteNear = (sendData) => {

@@ -43,7 +43,7 @@ export default {
                 this.stopList = result;
                 console.log("this.lineInfo", this.lineInfo);
 
-                result.length > 0 && this.calcDistance(latitude, longitude);
+                // result.length > 0 && this.calcDistance(latitude, longitude);
             } catch (error) {
                 console.log("error", error);
             }
@@ -59,18 +59,13 @@ export default {
                     vo.StopPosition?.PositionLon,
                 ];
             });
-            console.log("newArr", newArr);
             const compare = newArr.map((item) => {
                 const [stopLat, stopLon] = item;
                 return getDistance(latitude, longitude, stopLat, stopLon);
             });
-            console.log("compare", compare);
-
             const minIndex = compare.indexOf(Math.min(...compare));
-            console.log("minIndex", minIndex);
             this.nearStop = this.stopList[minIndex];
             const { PositionLat, PositionLon } = this.nearStop.StopPosition;
-            console.log("98098890", PositionLat, PositionLon);
             this.getNearEstimated(PositionLat, PositionLon);
         },
         async getNearEstimated(latitude, longitude) {
