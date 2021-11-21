@@ -1,10 +1,10 @@
 <template>
-    <Map ref="map" @getRouteMap="getRouteMap" :mapInfo="mapInfo" />
+    <Map ref="map" @initData="initData" :mapInfo="mapInfo" />
 </template>
 
 <script>
 import Map from "../components/Map.vue";
-import { getBusStop } from "../utils/api";
+import { getBusStop, getBusLine, getBusPosition } from "../utils/api";
 export default {
     components: { Map },
     data() {
@@ -15,7 +15,7 @@ export default {
         };
     },
     methods: {
-        async getRouteMap() {
+        async getRouteMapMark() {
             const sendData = {
                 routeName: this.routeName,
                 city: this.city,
@@ -23,22 +23,47 @@ export default {
             try {
                 const result = await getBusStop(sendData);
                 console.log("result", result);
-                this.mapInfo = result[0].Stops;
-                console.log("this.mapInfo", this.mapInfo);
-                this.setView();
+                let mapInfo = result[0].Stops;
+                console.log("this.mapInfo", mapInfo);
+                this.setView(mapInfo);
             } catch (error) {
                 console.log("error", error);
             }
         },
-        setView() {
-            const { PositionLat, PositionLon } = this.mapInfo[0]?.StopPosition;
+        async getRouteLine() {
+            const sendData = { routeName: this.routeName, city: this.city };
+            try {
+                const result = await getBusLine(sendData);
+                let lineInfo = result[0].Geometry;
+                console.log("this.lineInfo", this.lineInfo);
+                this.$refs.map.drawLine(lineInfo);
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+        async getBusPos() {
+            const sendData = { routeName: this.routeName, city: this.city };
+            try {
+                const result = await getBusPosition(sendData);
+                let busInfo = result;
+                console.log("this.busInfo", busInfo);
+                this.$refs.map.drawBus(busInfo);
+            } catch (error) {
+                console.log("error", error);
+            }
+        },
+        initData() {
+            this.getRouteMapMark();
+            // this.getRouteLine();
+            this.getBusPos();
+        },
+        setView(mapInfo) {
+            const { PositionLat, PositionLon } = mapInfo[0]?.StopPosition;
+            this.$refs.map.drawMark(mapInfo);
             this.$refs.map.setView(PositionLat, PositionLon);
-            this.$refs.map.drawMark();
         },
     },
-    mounted() {
-        // this.getRouteMap();
-    },
+    mounted() {},
 };
 </script>
 

@@ -51,6 +51,7 @@ export default {
             const sendData = {
                 city: this.city,
                 routeName: this.routeName,
+                $filter: `contains(RouteName/Zh_tw, '${this.routeName}')`,
             };
             try {
                 const result = await getBusRoute(sendData);

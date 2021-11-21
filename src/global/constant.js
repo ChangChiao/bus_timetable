@@ -1,10 +1,13 @@
 export const API_URL = "https://ptx.transportdata.tw/MOTC/v2/Bus";
-// export const API_STOP = API_URL + "/RealTimeNearStop/Streaming/City"; //定點資料
-export const API_ROUTE = API_URL + "/Route/City"; //取得所有公車路線
+export const API_ROUTE = API_URL + "/Route/City"; //取得所有公車路線 +routeName可取得路線資訊（車牌號碼 票價）
 export const API_ESTIMATED_TIME = API_URL + "/EstimatedTimeOfArrival/City"; //預估到站時間
-//批次? 逐筆?
-export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車站點
-
+export const API_SCHEDULE = API_URL + "/Schedule/City"; //取得公車路線班表
+export const API_BUS_SHAPE = API_URL + "/Shape/City"; //取得公車路線
+export const API_BUS_POS = API_URL + "/RealTimeByFrequency/City"; //取得公車移動位置
+//批次(60秒更新) 逐筆（較快更新不過比較會掉資料）
+export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車站點(座標)
+export const API_BUS_STOP_NEAR = API_URL + "/Stop/NearBy"; //取得附近公車站點
+export const API_BUS_ROUTE_NEAR = API_URL + "/Route/NearBy"; //取得附近公車路線
 export const CITY_LIST = [
     { label: "臺北市", value: "Taipei" },
     { label: "新北市", value: "NewTaipei" },

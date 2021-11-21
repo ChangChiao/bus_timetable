@@ -3,6 +3,8 @@ import {
     API_ROUTE,
     API_ESTIMATED_TIME,
     API_BUS_STOP,
+    API_BUS_SHAPE,
+    API_BUS_POS,
 } from "../global/constant";
 import jsSHA from "jssha";
 
@@ -63,4 +65,26 @@ export const getBusStop = (sendData) => {
         },
     };
     return api.get(API_BUS_STOP + `/${cityPath}/${routeName}`, config);
+};
+
+export const getBusLine = (sendData) => {
+    const { cityPath, routeName, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_SHAPE + `/${cityPath}/${routeName}`, config);
+};
+
+export const getBusPosition = (sendData) => {
+    const { cityPath, routeName, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_POS + `/${cityPath}/${routeName}`, config);
 };
