@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    input {
+        outline: none;
+        @apply bg-transparent border-0 text-gray-900;
+    }
+    button {
+        @apply cursor-pointer border-0 text-center bg-primary-500 text-white rounded-lg h-10;
+    }
+    select {
+        @apply border-solid text-primary-500  border-primary-500 border rounded-lg px-2;
+    }
+    option {
+        @apply text-center;
+    }
+    h1 {
+        @apply text-primary-500 text-lg;
+    }
+}
+
+@layer components {
+    .sub-title {
+        @apply text-primary-500 text-lg font-bold pr-2;
+    }
+    .input-box {
+        @apply flex items-center border-solid border-primary-500 border pl-3 rounded-lg;
+    }
+    .status {
+        @apply rounded-md h-4 w-8 border mr-2 p-1;
+    }
+    .gradients{
+        @apply bg-gradient-to-tr from-gradients-200 to-gradients-100;
+    }
+
+    .gradients-deep{
+        @apply bg-gradient-to-tr from-gradients-500 to-gradients-400; 
+    }
+
+    .gradients-dark{
+        @apply bg-gradient-to-tr from-gradients-900 to-gradients-800;
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .for-mobile {
+        display: block;
+    }
+    .for-mobile-flex {
+        display: flex;
+    }
+    .map {
+        left: 0px;
+        height: calc(100vh - 80px);
+        @apply w-screen;
+    }
+    .list {
+        height: calc(100vh - 80px - 280px);
+    }
+}

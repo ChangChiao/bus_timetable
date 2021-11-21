@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import "./index.css";
 import "tailwindcss/tailwind.css";
 import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";

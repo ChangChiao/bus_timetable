@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        123
+        <img src="/images/Index-header-logo.svg" alt="" />
         <router-link to="/busRoute">/busRoute</router-link>
         <router-link to="/busSearch">/busSearch</router-link>
         <router-link to="/favorite">/favorite</router-link>
