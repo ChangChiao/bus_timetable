@@ -5,7 +5,10 @@
             <li @click="setTab(1)">往{{}}</li>
         </ul>
         <p>於{{ second }}秒前更新</p>
-        <BusRouteInfo :busPos="busPos" :busInfo="listType === 0 ? goBus : backBus" />
+        <BusRouteInfo
+            :busPos="busPos"
+            :busInfo="listType === 0 ? goBus : backBus"
+        />
     </div>
 </template>
 

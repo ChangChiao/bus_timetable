@@ -9,9 +9,11 @@ export const API_BUS_STATION = API_URL + "/Station/City"; //
 export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車站點(座標)
 export const API_BUS_STOP_NEAR = API_URL + "/Station/NearBy"; //取得附近公車站點
 export const API_BUS_ROUTE_NEAR = API_URL + "/Route/NearBy"; //取得附近公車路線
-export const API_BUS_ESTIMATED_NEAR = API_URL + "/EstimatedTimeOfArrival/NearBy"; //取得附近公車到站時間(僅桃園 台中有提供...)
+export const API_BUS_ESTIMATED_NEAR =
+    API_URL + "/EstimatedTimeOfArrival/NearBy"; //取得附近公車到站時間(僅桃園 台中有提供...)
 export const API_BUS_STATION_ID = API_URL + "/RealTimeNearStop/City"; //取得指定站位定點資料
-export const API_BUS_ESTIMATED_STATION = API_URL + "/EstimatedTimeOfArrival/City"; //取得指定站牌到站預估
+export const API_BUS_ESTIMATED_STATION =
+    API_URL + "/EstimatedTimeOfArrival/City"; //取得指定站牌到站預估
 
 export const CITY_LIST = [
     { label: "臺北市", value: "Taipei" },

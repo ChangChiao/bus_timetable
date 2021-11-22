@@ -30,15 +30,18 @@ export default {
             let mapToken = process.env.VUE_APP_MAP_TOKEN;
             map = L.map("map");
 
-            L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-                attribution:
-                    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: "mapbox/streets-v11",
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: mapToken,
-            }).addTo(map);
+            L.tileLayer(
+                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+                {
+                    attribution:
+                        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: "mapbox/streets-v11",
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    accessToken: mapToken,
+                }
+            ).addTo(map);
             console.log("init!!!!");
             markLayer = new L.MarkerClusterGroup().addTo(map);
             busLayer = new L.MarkerClusterGroup().addTo(map);
@@ -97,7 +100,8 @@ export default {
                 let { PositionLat, PositionLon } = item.BusPosition;
                 let { PlateNumb } = item;
                 busLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: busMark }).bindPopup(`
+                    L.marker([PositionLat, PositionLon], { icon: busMark })
+                        .bindPopup(`
                             <h2 class="title">${PlateNumb}</h2>
                         `)
                 );
@@ -112,7 +116,9 @@ export default {
             wicket.read(Geometry);
             const geojsonFeature = wicket.toJson();
             const lineStyle = { color: "#C50047", weight: 3 };
-            routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(map);
+            routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(
+                map
+            );
             routeLayer.addData(geojsonFeature);
             map.fitBounds(routeLayer.getBounds());
             map.addLayer(routeLayer);

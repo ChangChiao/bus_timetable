@@ -1,5 +1,16 @@
 <template>
-    <ul class="fixed p-2 h-56 flex justify-between flex-wrap bg-gray-300 border-t border-gray-500">
+    <ul
+        class="
+            fixed
+            p-2
+            h-56
+            flex
+            justify-between
+            flex-wrap
+            bg-gray-300
+            border-t border-gray-500
+        "
+    >
         <li
             class="keyboard-item"
             v-for="item in keyBoardList"
@@ -7,7 +18,9 @@
             :style="{
                 color: item.style ? item.style : '#37206D',
             }"
-            @click="item.fn ? handleFunction(item.fn) : setRouteName(item.value)"
+            @click="
+                item.fn ? handleFunction(item.fn) : setRouteName(item.value)
+            "
         >
             {{ item.value }}
         </li>

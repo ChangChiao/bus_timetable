@@ -1,7 +1,20 @@
 <template>
     <div>
         <bus-near-list />
-        <div class="rounded-full touch-ball fixed bg-light w-16 h-16 flex justify-center items-center shadow-lg">
+        <div
+            class="
+                rounded-full
+                touch-ball
+                fixed
+                bg-light
+                w-16
+                h-16
+                flex
+                justify-center
+                items-center
+                shadow-lg
+            "
+        >
             <img src="images/cursor.svg" alt="" />
         </div>
     </div>

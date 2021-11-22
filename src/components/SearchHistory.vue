@@ -2,7 +2,11 @@
     <div>
         <h3>歷史搜尋</h3>
         <ul>
-            <li v-for="item in historyList" :key="item.bus" class="border-gray-400 border-b">
+            <li
+                v-for="item in historyList"
+                :key="item.bus"
+                class="border-gray-400 border-b"
+            >
                 <img src="images/time.svg" alt="" />
                 {{ item.bus }}
                 <img src="images/arrow.svg" />

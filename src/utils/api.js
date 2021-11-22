@@ -131,7 +131,11 @@ export const getStation = (sendData) => {
             ...data,
         },
     };
-    return api.get(API_BUS_STATION_ID + `/${cityPath}/PassThrough/Station/${data.stationId}`, config);
+    return api.get(
+        API_BUS_STATION_ID +
+            `/${cityPath}/PassThrough/Station/${data.stationId}`,
+        config
+    );
 };
 
 export const getStationEstimated = (sendData) => {
@@ -142,5 +146,9 @@ export const getStationEstimated = (sendData) => {
             ...data,
         },
     };
-    return api.get(API_BUS_ESTIMATED_STATION + `/${cityPath}/PassThrough/Station/${data.stationId}`, config);
+    return api.get(
+        API_BUS_ESTIMATED_STATION +
+            `/${cityPath}/PassThrough/Station/${data.stationId}`,
+        config
+    );
 };

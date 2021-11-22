@@ -1,14 +1,39 @@
 <template>
     <div class="fixed w-screen h-screen top-0 left-0 z-20">
         <div class="mask"></div>
-        <nav class="menu overflow-hidden fixed right-0 top-0 w-60 gradients-dark z-30">
+        <nav
+            class="
+                menu
+                overflow-hidden
+                fixed
+                right-0
+                top-0
+                w-60
+                gradients-dark
+                z-30
+            "
+        >
             <div class="hamburger">
                 <span class="line"></span>
                 <span class="line"></span>
                 <span class="line"></span>
             </div>
-            <ul class="menu-list absolute pt-10 pr-32 top-16 rounded-full gradients">
-                <li v-for="item in menuList" class="text-white pr-40 py-4 text-right text-xl" :key="item.path">
+            <ul
+                class="
+                    menu-list
+                    absolute
+                    pt-10
+                    pr-32
+                    top-16
+                    rounded-full
+                    gradients
+                "
+            >
+                <li
+                    v-for="item in menuList"
+                    class="text-white pr-40 py-4 text-right text-xl"
+                    :key="item.path"
+                >
                     <router-link :to="item.path">{{ item.name }}</router-link>
                 </li>
             </ul>

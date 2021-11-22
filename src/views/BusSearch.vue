@@ -1,33 +1,46 @@
 <template>
-    <div>
+    <div class="px-4 pt-10">
         <select v-model="city" @change="getRoute">
-            <option v-for="item in CITY_LIST" :key="item.value" :value="item.value">
+            <option
+                v-for="item in CITY_LIST"
+                :key="item.value"
+                :value="item.value"
+            >
                 {{ item.label }}
             </option>
         </select>
         <p>
             <!-- <input type="checkbox" id="" value=""> -->
-            僅顯示提供無障礙的公車路線
+            <!-- 僅顯示提供無障礙的公車路線 -->
         </p>
         <div class="input-box">
-            <input type="text" placeholder="請輸入公車路線/起訖站名" v-model="routeName" />
-            <img src="images/search.svg" alt="" />
+            <input
+                type="text"
+                placeholder="請輸入公車路線/起訖站名"
+                v-model="routeName"
+            />
+            <img class="" @click="reset" src="images/search.svg" alt="" />
         </div>
         <h2>{{ routeName }}</h2>
-        <div v-if="showSearch">
-            <h3>搜尋結果</h3>
+        <div>
+            <h3 class="text-left pt-4 text-gray-500">搜尋結果</h3>
             <ul>
-                <template v-for="item in busList">
+                <template v-for="item in pageData">
                     <BusListItem :itemData="item" :key="item.RouteUID" />
                 </template>
-                <li v-if="busList.length === 0">
+                <li v-if="pageData.length === 0">
                     <p>哎呀!查無結果</p>
                     <p>請重新搜尋關鍵字或切換縣市</p>
                 </li>
             </ul>
         </div>
-        <search-history v-else />
-        <key-board v-if="showKeyboard" @setRouteName="setRouteName" @reset="reset" @deleteRouteName="deleteRouteName" />
+        <!-- <search-history v-else /> -->
+        <key-board
+            v-if="showKeyboard"
+            @setRouteName="setRouteName"
+            @reset="reset"
+            @deleteRouteName="deleteRouteName"
+        />
         <keyboard-btn @ctrlKeyboard="ctrlKeyboard" />
     </div>
 </template>
@@ -36,14 +49,14 @@
 import BusListItem from "../components/BusListItem.vue";
 import KeyBoard from "../components/KeyBoard.vue";
 import KeyboardBtn from "../components/keyboardBtn.vue";
-import SearchHistory from "../components/SearchHistory.vue";
+// import SearchHistory from "../components/SearchHistory.vue";
 import { CITY_LIST } from "../global/constant";
 import { getBusRoute } from "../utils/api";
 export default {
     components: {
         KeyBoard,
         BusListItem,
-        SearchHistory,
+        // SearchHistory,
         KeyboardBtn,
     },
     data() {
@@ -53,6 +66,8 @@ export default {
             city: CITY_LIST[0].value,
             busList: [],
             showKeyboard: false,
+            pageData: [],
+            endFlag: false,
         };
     },
     computed: {
@@ -68,22 +83,33 @@ export default {
             const sendData = {
                 city: this.city,
                 // routeName: this.routeName,
-                $filter: this.routeName ? `contains(RouteName/Zh_tw, '${this.routeName}')` : "",
+                $filter: this.routeName
+                    ? `contains(RouteName/Zh_tw, '${this.routeName}')`
+                    : "",
             };
             try {
                 const result = await getBusRoute(sendData);
                 this.busList = result;
+                this.splitData();
                 console.log("result", result);
             } catch (error) {
                 console.log("error", error);
             }
+        },
+        splitData() {
+            if (this.busList.length === 0) this.endFlag = true;
+            const temp = this.busList.splice(0, 30);
+            this.pageData = this.pageData.concat(temp);
         },
         setRouteName(word) {
             this.routeName += word;
             this.getRoute();
         },
         deleteRouteName() {
-            this.routeName = this.routeName.substring(0, this.routeName.length - 1);
+            this.routeName = this.routeName.substring(
+                0,
+                this.routeName.length - 1
+            );
         },
         reset() {
             this.routeName = "";
@@ -91,9 +117,22 @@ export default {
         ctrlKeyboard() {
             this.showKeyboard = !this.showKeyboard;
         },
+        scrollEvent() {
+            if (this.endFlag) return;
+            if (
+                window.innerHeight + window.pageYOffset >=
+                document.body.offsetHeight
+            ) {
+                this.splitData();
+            }
+        },
     },
     mounted() {
         this.getRoute();
+        window.addEventListener("scroll", this.scrollEvent);
+    },
+    beforeDestroy() {
+        window.removeEventListener("scroll", this.scrollEvent);
     },
 };
 </script>

@@ -6,7 +6,11 @@ import "./index.css";
 import "tailwindcss/tailwind.css";
 import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUserSecret, faMapMarkerAlt, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+    faUserSecret,
+    faMapMarkerAlt,
+    faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("pagination", Pagination);
