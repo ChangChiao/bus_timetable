@@ -11,10 +11,10 @@
         @apply cursor-pointer border-0 text-center bg-primary-500 text-white rounded-lg h-10;
     }
     select {
-        @apply border-solid text-primary-500  border-primary-500 border rounded-lg px-2;
+        @apply text-primary-500 rounded-lg bg-transparent px-2 outline-none;
     }
     option {
-        @apply text-center;
+        @apply text-center p-2;
     }
     body{
         background-color: #e5e5e5;
@@ -22,6 +22,9 @@
 }
 
 @layer components {
+    .mask {
+        @apply fixed w-screen h-screen z-10 bg-black opacity-50 top-0 left-0;
+    }
     .sub-title {
         @apply text-primary-500 text-lg font-bold pr-2;
     }
@@ -40,7 +43,7 @@
     }
 
     .gradients-deep{
-        @apply bg-gradient-to-tr from-gradients-500 to-gradients-400; 
+        @apply bg-gradient-to-tr from-gradients-500 to-gradients-400;
     }
 
     .gradients-dark{

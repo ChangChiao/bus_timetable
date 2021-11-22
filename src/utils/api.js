@@ -8,6 +8,8 @@ import {
     API_BUS_STOP_NEAR,
     API_BUS_ROUTE_NEAR,
     API_BUS_ESTIMATED_NEAR,
+    API_BUS_STATION_ID,
+    API_BUS_ESTIMATED_STATION,
 } from "../global/constant";
 import jsSHA from "jssha";
 
@@ -119,4 +121,26 @@ export const getNearEstimated = (sendData) => {
         },
     };
     return api.get(API_BUS_ESTIMATED_NEAR, config);
+};
+
+export const getStation = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_STATION_ID + `/${cityPath}/PassThrough/Station/${data.stationId}`, config);
+};
+
+export const getStationEstimated = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_ESTIMATED_STATION + `/${cityPath}/PassThrough/Station/${data.stationId}`, config);
 };

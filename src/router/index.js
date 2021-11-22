@@ -15,12 +15,12 @@ const routes = [
         component: Index,
     },
     {
-        path: "/busRoute",
+        path: "/busroute",
         name: "BusRoute",
         component: BusRoute,
     },
     {
-        path: "/busSearch",
+        path: "/bussearch",
         name: "BusSearch",
         component: BusSearch,
     },
@@ -30,7 +30,7 @@ const routes = [
         component: Favorite,
     },
     {
-        path: "/busNear",
+        path: "/busnear",
         name: "BusNear",
         component: BusNear,
     },

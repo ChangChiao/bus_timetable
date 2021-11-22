@@ -1,5 +1,5 @@
 <template>
-    <ul class="flex flex-wrap">
+    <ul class="fixed p-2 h-56 flex justify-between flex-wrap bg-gray-300 border-t border-gray-500">
         <li
             class="keyboard-item"
             v-for="item in keyBoardList"
@@ -7,14 +7,12 @@
             :style="{
                 color: item.style ? item.style : '#37206D',
             }"
-            @click="
-                item.fn ? handleFunction(item.fn) : setRouteName(item.value)
-            "
+            @click="item.fn ? handleFunction(item.fn) : setRouteName(item.value)"
         >
             {{ item.value }}
         </li>
-        <li class @click="deleteRouteName">
-            <i>delete</i>
+        <li class="keyboard-item bg-gray-600" @click="deleteRouteName">
+            <img src="images/Keyboard-delete.svg" alt="" />
         </li>
     </ul>
 </template>
@@ -107,6 +105,7 @@ export default {
 
 <style lang="postcss" scoped>
 .keyboard-item {
-    @apply w-1/5 border text-xl font-bold flex justify-center items-center rounded-md h-10 cursor-pointer border-line;
+    width: 19%;
+    @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light;
 }
 </style>

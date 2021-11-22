@@ -5,19 +5,21 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import * as Wkt from "wicket";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 let map = null;
 let markLayer = null;
-let markSelf = null;
-let markNoAvailable = null;
-let markAvailable = null;
+let routeLayer = null;
+let busLayer = null;
+let stationMark = null;
+let selfMark = null;
 export default {
     props: {
         mapInfo: {
-            type: Object,
-            default: () => {},
+            type: Array,
+            default: () => [],
         },
     },
     data() {
@@ -25,41 +27,23 @@ export default {
     },
     methods: {
         createMap() {
-            let mapToken = process.env.VUE_MAP_TOKEN;
+            let mapToken = process.env.VUE_APP_MAP_TOKEN;
             map = L.map("map");
 
-            L.tileLayer(
-                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-                {
-                    attribution:
-                        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    maxZoom: 18,
-                    id: "mapbox/streets-v11",
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    accessToken: mapToken,
-                }
-            ).addTo(map);
+            L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: "mapbox/streets-v11",
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: mapToken,
+            }).addTo(map);
+            console.log("init!!!!");
             markLayer = new L.MarkerClusterGroup().addTo(map);
+            busLayer = new L.MarkerClusterGroup().addTo(map);
+            this.$emit("initData");
         },
-        // getNowPos() {
-        //     if (navigator.geolocation) {
-        //         navigator.geolocation.getCurrentPosition(
-        //             (position) => {
-        //                 const longitude = position.coords.longitude;
-        //                 const latitude = position.coords.latitude;
-        //                 console.log("longitude", longitude);
-        //                 console.log("latitude", latitude);
-        //                 this.drawSelfMark(latitude, longitude);
-        //                 this.$emit("getData", { longitude, latitude });
-        //             },
-        //             (event) => {
-        //                 const { code, message } = event;
-        //                 console.log("error", `code=${code}, msg=${message}`);
-        //             }
-        //         );
-        //     }
-        // },
         cleanMarker() {
             markLayer.clearLayers();
             map.eachLayer((layer) => {
@@ -68,66 +52,93 @@ export default {
                 }
             });
         },
-        drawSelfMark(latitude, longitude) {
-            map.setView([latitude, longitude], 18);
-            L.marker([latitude, longitude], { icon: markSelf })
-                .addTo(map)
-                .bindPopup("你在這～")
-                .openPopup();
+        cleanBus() {
+            busLayer.clearLayers();
         },
         setView(latitude, longitude) {
-            map.setView([latitude, longitude], 18);
+            console.log("latitude, longitude", latitude, longitude);
+            map.setView([latitude, longitude], 16);
         },
         createMark() {
-            markNoAvailable = new L.Icon({
-                iconUrl: "images/mark/no-rent.png",
+            stationMark = new L.Icon({
+                iconUrl: "images/mark/BusStop.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
-            markAvailable = new L.Icon({
-                iconUrl: "images/mark/bike.png",
+            selfMark = new L.Icon({
+                iconUrl: "images/mark/TrackingSpot.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                // shadowSize: [41, 41]
-            });
-            markSelf = new L.Icon({
-                iconUrl: "images/mark/currentLocation.png",
-                shadowUrl: "",
-                iconSize: [40, 41],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
         },
-        drawMark() {
-            this.singlePageList.forEach((item) => {
-                let { PositionLat, PositionLon } = item.StationPosition;
-                let {
-                    AvailableRentBikes,
-                    AvailableReturnBikes,
-                    UpdateTime,
-                    StationName,
-                    StationAddress,
-                } = item;
-                const mark =
-                    AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
+        drawMark(mapInfo) {
+            console.log("drawMark");
+            mapInfo.forEach((item) => {
+                let { PositionLat, PositionLon } = item.StopPosition;
+                let { StopName } = item;
+
                 markLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: mark })
-                        .bindPopup(`
-                <h2 class="title">${StationName.Zh_tw}</h2>
-                <h4>更新時間:${UpdateTime}</h4>
-                <h4>地址:${StationAddress.Zh_tw}</h4>
-                <h4>可借單車:${AvailableRentBikes}</h4>
-                <h4>可停車位:${AvailableReturnBikes}</h4>
-                <a target="_blank" href='https://www.google.com/maps/search/?api=1&query=${PositionLat},${PositionLon}'>在google map上查看</a>`)
+                    L.marker([PositionLat, PositionLon], {
+                        icon: stationMark,
+                    }).bindPopup(` <h2 class="title">${StopName.Zh_tw}</h2>`)
                 );
             });
             map.addLayer(markLayer);
+        },
+        drawBus(busInfo) {
+            this.cleanBus();
+            busInfo.forEach((item) => {
+                let { PositionLat, PositionLon } = item.BusPosition;
+                let { PlateNumb } = item;
+                busLayer.addLayer(
+                    L.marker([PositionLat, PositionLon], { icon: selfMark }).bindPopup(`
+                            <h2 class="title">${PlateNumb}</h2>
+                        `)
+                );
+            });
+            map.addLayer(busLayer);
+        },
+        drawLine(Geometry) {
+            console.log("Geometry", Geometry);
+            // Create a new Wicket instance
+            const wicket = new Wkt.Wkt();
+            //Read in any kind of WKT string
+            wicket.read(Geometry);
+            const geojsonFeature = wicket.toJson();
+            const lineStyle = { color: "#C50047", weight: 3 };
+            routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(map);
+            routeLayer.addData(geojsonFeature);
+            map.fitBounds(routeLayer.getBounds());
+            map.addLayer(routeLayer);
+            // this.drawMark(Geometry);
+        },
+        createMarkerCluster() {
+            return new L.markerClusterGroup({
+                showCoverageOnHover: false,
+                spiderfyOnMaxZoom: true,
+                zoomToBoundsOnClick: true,
+                argumentsspiderfyOnMaxZoom: false,
+                maxClusterRadius: 120,
+                iconCreateFunction: function (cluster) {
+                    const markers = cluster.getAllChildMarkers();
+                    const html = `
+                            <div class="circle">
+                                    ${markers.length}
+                                    </div>
+                            . `;
+                    return L.divIcon({
+                        html: html,
+                        className: "clusterBikeIcon",
+                        iconSize: L.point(49, 49),
+                    });
+                },
+            });
         },
     },
     mounted() {
@@ -137,6 +148,8 @@ export default {
     beforeDestroy() {
         map = null;
         markLayer = null;
+        routeLayer = null;
+        busLayer = null;
     },
 };
 </script>

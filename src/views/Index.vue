@@ -1,68 +1,32 @@
 <template>
     <div class="home">
         <Header />
-        <router-link to="/busRoute">/busRoute</router-link>
-        <router-link to="/busSearch">/busSearch</router-link>
-        <router-link to="/favorite">/favorite</router-link>
-        <router-link to="/busNear">/busNear</router-link>
-        <router-link to="/busmap">/busmap</router-link>
         <div class="px-4">
-            <ul class="mt-4">
-                <li class="list-item">
+            <ul class="mt-8">
+                <li class="list-item" @click="goPath('/bussearch')">
                     <p class="w-2/3 text-left">
-                        <span class="text-lg font-bold block text-black"
-                            >公車快找</span
-                        >
-                        <span class="text-gray-600 text-sm"
-                            >直接輸入路線名稱獲得資訊！</span
-                        >
+                        <span class="text-lg font-bold block text-black">公車快找</span>
+                        <span class="text-gray-600 text-sm">直接輸入路線名稱獲得資訊！</span>
                     </p>
                     <img src="images/Index-section-image04_m.svg" alt="" />
                 </li>
-                <li class="list-item">
+                <li class="list-item" @click="goPath('/busnear')">
                     <p class="w-2/3 text-left">
-                        <span class="text-lg font-bold block text-black"
-                            >公車快找</span
-                        >
-                        <span class="text-gray-600 text-sm"
-                            >直接輸入路線名稱獲得資訊！</span
-                        >
+                        <span class="text-lg font-bold block text-black">查詢站牌</span>
+                        <span class="text-gray-600 text-sm">附近站牌 / 公車動態及路線圖</span>
                     </p>
                     <img src="images/Index-section-image01_m.svg" alt="" />
                 </li>
-                <li class="list-item">
+                <li class="list-item" @click="goPath('/')">
                     <p class="w-2/3 text-left">
-                        <span class="text-lg font-bold block text-black"
-                            >公車快找</span
-                        >
-                        <span class="text-gray-600 text-sm"
-                            >直接輸入路線名稱獲得資訊！</span
-                        >
+                        <span class="text-lg font-bold block text-black">推薦公車路線</span>
+                        <span class="text-gray-600 text-sm">直接輸入路線名稱獲得資訊！</span>
                     </p>
                     <img src="images/Index-section-image02_m.svg" alt="" />
                 </li>
             </ul>
-            <p class="text-md font-bold block text-black pt-6">
-                開啟裝置定位功能，以便為您提供更好的服務。
-            </p>
-            <p class="text-sm text-primary-700 pb-2">
-                我們將用在提供您所在位置附近的交通等資訊。
-            </p>
-            <button
-                class="
-                    border-2
-                    w-full
-                    h-12
-                    text-primary-500
-                    border-primary-500
-                    rounded-3xl
-                "
-                @click="getNowPos"
-            >
-                開啟定位功能
-            </button>
         </div>
-        <near-stop v-show="showNear" ref="near" />
+        <near-stop />
         <Footer />
     </div>
 </template>
@@ -77,28 +41,11 @@ export default {
     name: "Home",
     components: { Footer, Header, NearStop },
     data() {
-        return {
-            showNear: false,
-        };
+        return {};
     },
     methods: {
-        getNowPos() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const longitude = position.coords.longitude;
-                        const latitude = position.coords.latitude;
-                        console.log("longitude", longitude);
-                        console.log("latitude", latitude);
-                        this.showNear = true;
-                        this.$refs.near.getNearStop(latitude, longitude);
-                    },
-                    (event) => {
-                        const { code, message } = event;
-                        console.log("error", `code=${code}, msg=${message}`);
-                    }
-                );
-            }
+        goPath(path) {
+            this.$router.push(path);
         },
     },
 };
