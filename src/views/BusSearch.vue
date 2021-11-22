@@ -35,12 +35,14 @@
             </ul>
         </div>
         <!-- <search-history v-else /> -->
-        <key-board
-            v-if="showKeyboard"
-            @setRouteName="setRouteName"
-            @reset="reset"
-            @deleteRouteName="deleteRouteName"
-        />
+        <transition name="slide-fade">
+            <key-board
+                v-if="showKeyboard"
+                @setRouteName="setRouteName"
+                @reset="reset"
+                @deleteRouteName="deleteRouteName"
+            />
+        </transition>
         <keyboard-btn @ctrlKeyboard="ctrlKeyboard" />
     </div>
 </template>
@@ -136,3 +138,17 @@ export default {
     },
 };
 </script>
+
+<style lang="postcss">
+.slide-fade-enter-active {
+    transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+    transition: all 0.3s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateY(50px);
+    opacity: 0;
+}
+</style>

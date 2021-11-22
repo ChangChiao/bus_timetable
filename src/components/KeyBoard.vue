@@ -2,6 +2,9 @@
     <ul
         class="
             fixed
+            bottom-0
+            left-0
+            w-full
             p-2
             h-56
             flex

@@ -1,10 +1,11 @@
 <template>
     <div
+        @click="ctrlKeyboard"
         class="
             rounded-full
             touch-ball
             fixed
-            top-12
+            top-56
             right-0
             bg-light
             w-16
@@ -15,21 +16,35 @@
             shadow-lg
         "
     >
-        <img src="images/keyboard.svg" alt="" />
+        <img src="images/keyboard.svg" alt="" v-if="showKeyboard" />
+        <p class="text-gray-500" v-else>TOP</p>
     </div>
 </template>
 
 <script>
 export default {
     data() {
-        return {};
+        return {
+            showKeyboard: true,
+        };
     },
     methods: {
         ctrlKeyboard() {
-            this.$emit("ctrlKeyboard");
+            this.showKeyboard && this.$emit("ctrlKeyboard");
+            if (!this.showKeyboard) {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            }
+        },
+        scrollEvent() {
+            this.showKeyboard = window.pageYOffset < window.innerHeight;
         },
     },
-    mounted() {},
+    mounted() {
+        window.addEventListener("scroll", this.scrollEvent);
+    },
+    beforeDestroy() {
+        window.removeEventListener("scroll", this.scrollEvent);
+    },
 };
 </script>
 
