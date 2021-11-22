@@ -1,10 +1,7 @@
 <template>
     <div id="app">
-        <!-- <router-link to="/">
-            <font-awesome-icon icon="user-secret" />
-        </router-link> -->
         <router-view />
-        <mobile-menu v-if="false" />
+        <mobile-menu />
         <Loading v-if="showLoading" />
     </div>
 </template>

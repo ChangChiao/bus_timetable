@@ -1,27 +1,19 @@
 <template>
-    <div id="map" class="w-screen h-screen"></div>
+    <div id="map" class="relative z-10 w-screen h-screen"></div>
 </template>
 
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import * as Wkt from "wicket";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 let map = null;
 let markLayer = null;
-let routeLayer = null;
-let busLayer = null;
+let stationLayer = null;
 let stationMark = null;
 let selfMark = null;
 export default {
-    props: {
-        mapInfo: {
-            type: Array,
-            default: () => [],
-        },
-    },
     data() {
         return {};
     },
@@ -44,8 +36,8 @@ export default {
             ).addTo(map);
             console.log("init!!!!");
             markLayer = new L.MarkerClusterGroup().addTo(map);
-            busLayer = new L.MarkerClusterGroup().addTo(map);
-            this.$emit("initData");
+            stationLayer = new L.MarkerClusterGroup().addTo(map);
+            this.$emit("getNowPos");
         },
         cleanMarker() {
             markLayer.clearLayers();
@@ -55,8 +47,8 @@ export default {
                 }
             });
         },
-        cleanBus() {
-            busLayer.clearLayers();
+        cleanStation() {
+            stationLayer.clearLayers();
         },
         setView(latitude, longitude) {
             console.log("latitude, longitude", latitude, longitude);
@@ -72,7 +64,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             selfMark = new L.Icon({
-                iconUrl: "images/mark/TrackingSpot.png",
+                iconUrl: "images/mark/TrackingSpot.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -80,49 +72,27 @@ export default {
                 // shadowSize: [41, 41]
             });
         },
-        drawMark(mapInfo) {
-            console.log("drawMark");
-            mapInfo.forEach((item) => {
-                let { PositionLat, PositionLon } = item.StopPosition;
-                let { StopName } = item;
-
-                markLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], {
-                        icon: stationMark,
-                    }).bindPopup(` <h2 class="title">${StopName.Zh_tw}</h2>`)
-                );
-            });
+        drawSelfMark(latitude, longitude) {
+            markLayer.addLayer(
+                L.marker([latitude, longitude], {
+                    icon: selfMark,
+                })
+            );
             map.addLayer(markLayer);
+            this.setView(latitude, longitude);
         },
-        drawBus(busInfo) {
-            this.cleanBus();
-            busInfo.forEach((item) => {
-                let { PositionLat, PositionLon } = item.BusPosition;
-                let { PlateNumb } = item;
-                busLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: selfMark })
+        drawStation(stopInfo) {
+            this.cleanStation();
+            stopInfo.forEach((item) => {
+                let { PositionLat, PositionLon } = item.StationPosition;
+                stationLayer.addLayer(
+                    L.marker([PositionLat, PositionLon], { icon: stationMark })
                         .bindPopup(`
-                            <h2 class="title">${PlateNumb}</h2>
+                            <h2 class="title">${item.StationName.Zh_tw}</h2>
                         `)
                 );
             });
-            map.addLayer(busLayer);
-        },
-        drawLine(Geometry) {
-            console.log("Geometry", Geometry);
-            // Create a new Wicket instance
-            const wicket = new Wkt.Wkt();
-            //Read in any kind of WKT string
-            wicket.read(Geometry);
-            const geojsonFeature = wicket.toJson();
-            const lineStyle = { color: "#C50047", weight: 3 };
-            routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(
-                map
-            );
-            routeLayer.addData(geojsonFeature);
-            map.fitBounds(routeLayer.getBounds());
-            map.addLayer(routeLayer);
-            // this.drawMark(Geometry);
+            map.addLayer(stationLayer);
         },
         createMarkerCluster() {
             return new L.markerClusterGroup({
@@ -154,8 +124,7 @@ export default {
     beforeDestroy() {
         map = null;
         markLayer = null;
-        routeLayer = null;
-        busLayer = null;
+        stationLayer = null;
     },
 };
 </script>

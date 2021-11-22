@@ -1,21 +1,5 @@
 <template>
-    <div
-        @click="ctrlKeyboard"
-        class="
-            rounded-full
-            touch-ball
-            fixed
-            top-56
-            right-0
-            bg-light
-            w-16
-            h-16
-            flex
-            justify-center
-            items-center
-            shadow-lg
-        "
-    >
+    <div @click="ctrlKeyboard" class="ball touch-ball">
         <img src="images/keyboard.svg" alt="" v-if="showKeyboard" />
         <p class="text-gray-500" v-else>TOP</p>
     </div>

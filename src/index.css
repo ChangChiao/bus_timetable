@@ -49,6 +49,18 @@
     .gradients-dark{
         @apply bg-gradient-to-tr from-gradients-900 to-gradients-800;
     }
+    .ball{
+        @apply  
+            rounded-full
+            fixed
+            bg-light
+            w-16
+            h-16
+            flex
+            justify-center
+            items-center
+            shadow-lg
+    }
 }
 
 

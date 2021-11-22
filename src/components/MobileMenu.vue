@@ -1,43 +1,52 @@
 <template>
-    <div class="fixed w-screen h-screen top-0 left-0 z-20">
-        <div class="mask"></div>
-        <nav
-            class="
-                menu
-                overflow-hidden
-                fixed
-                right-0
-                top-0
-                w-60
-                gradients-dark
-                z-30
-            "
-        >
-            <div class="hamburger">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
-            </div>
-            <ul
+    <div>
+        <div class="fixed w-screen h-screen top-0 left-0 z-20" v-if="active">
+            <div class="mask"></div>
+            <nav
                 class="
-                    menu-list
-                    absolute
-                    pt-10
-                    pr-32
-                    top-16
-                    rounded-full
-                    gradients
+                    menu
+                    overflow-hidden
+                    fixed
+                    right-0
+                    top-0
+                    w-60
+                    gradients-dark
+                    z-30
                 "
             >
-                <li
-                    v-for="item in menuList"
-                    class="text-white pr-40 py-4 text-right text-xl"
-                    :key="item.path"
+                <!-- <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div> -->
+                <ul
+                    class="
+                        menu-list
+                        absolute
+                        pt-16
+                        pr-48
+                        top-16
+                        rounded-full
+                        gradients
+                    "
                 >
-                    <router-link :to="item.path">{{ item.name }}</router-link>
-                </li>
-            </ul>
-        </nav>
+                    <li
+                        v-for="item in menuList"
+                        class="text-white pr-40 py-4 text-right text-lg"
+                        :key="item.path"
+                    >
+                        <router-link :to="item.path">{{
+                            item.name
+                        }}</router-link>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="hamburger" @click="ctrlMenu">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </div>
     </div>
 </template>
 
@@ -47,14 +56,19 @@ export default {
         return {
             menuList: [
                 { name: "回首頁", path: "/" },
-                { name: "公車快找", path: "/a" },
-                { name: "查詢公車", path: "/bussearch" },
+                { name: "公車快找", path: "/bussearch" },
+                { name: "查詢公車", path: "/busnear" },
                 { name: "該搭哪一台公車", path: "/b" },
                 { name: "我的最愛", path: "/favorite" },
             ],
+            active: false,
         };
     },
-    methods: {},
+    methods: {
+        ctrlMenu() {
+            this.active = !this.active;
+        },
+    },
 };
 </script>
 
@@ -62,6 +76,7 @@ export default {
 .menu {
     border-bottom-left-radius: 160px;
     height: 475px;
+    transition: 0.5s;
 }
 
 .menu-list {
@@ -75,6 +90,7 @@ export default {
     background: #d5d6d8;
     overflow: hidden;
     position: absolute;
+    z-index: 100;
     right: -57px;
     top: -50px;
     padding-top: 40px;
