@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="w-screen h-screen"></div>
+    <div id="map" class="relative z-10 w-screen h-screen"></div>
 </template>
 
 <script>
@@ -64,7 +64,7 @@ export default {
         },
         createMark() {
             stationMark = new L.Icon({
-                iconUrl: "images/mark/no_rent.png",
+                iconUrl: "images/mark/BusStop.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -72,7 +72,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             busMark = new L.Icon({
-                iconUrl: "images/mark/bike.png",
+                iconUrl: "images/mark/bus.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -115,7 +115,7 @@ export default {
             //Read in any kind of WKT string
             wicket.read(Geometry);
             const geojsonFeature = wicket.toJson();
-            const lineStyle = { color: "#C50047", weight: 3 };
+            const lineStyle = { color: "#7550cc", weight: 3 };
             routeLayer = L.geoJSON(geojsonFeature, { style: lineStyle }).addTo(
                 map
             );
@@ -146,11 +146,12 @@ export default {
                 },
             });
         },
+        initMap() {
+            this.createMark();
+            this.createMap();
+        },
     },
-    mounted() {
-        this.createMark();
-        this.createMap();
-    },
+    mounted() {},
     beforeDestroy() {
         map = null;
         markLayer = null;

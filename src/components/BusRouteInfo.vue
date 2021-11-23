@@ -6,7 +6,7 @@
             overflow-y-scroll
             bottom-0
             left-0
-            h-3/4
+            h-1/3
             w-screen
             z-20
             p-4
@@ -29,17 +29,25 @@
             </li>
         </ul>
         <ul v-for="item in typeBusList" :key="item.StopUID">
-            <li class="w-full border-b p-4 border-line">
+            <li class="w-full border-b p-4 border-line relative">
                 <span :class="{ red: item.EstimateTime <= 90 }">
                     {{ transStatus(item.EstimateTime) }}
                 </span>
                 <span>{{ item.StopName.Zh_tw }}</span>
-                <!-- <span>{{ item.StopUID }}</span> -->
-                <!-- <span
-                    :class="{ 'bg-primary-500': item.EstimateTime === 0 }"
-                    class="border border-gray-400 w-4 h-4 rounded-full"
+                <span
+                    :class="{ 'bg-primary-500': item.EstimateTime <= 30 }"
+                    class="
+                        border
+                        absolute
+                        right-2
+                        top-6
+                        border-gray-400
+                        w-3
+                        h-3
+                        rounded-full
+                    "
                 ></span>
-                <span>{{ item.PlateNumb }}</span> -->
+                <!-- <span>{{ item.PlateNumb }}</span> -->
             </li>
         </ul>
         <div class="line"></div>
@@ -76,22 +84,8 @@ export default {
     },
 
     computed: {
-        filterRepeat() {
-            // const record = [];
-            // return this.routeList.filter((item) => {
-            //     if (!record.includes(item.StationID)) {
-            //         record.push(item.StationID);
-            //         return item;
-            //     }
-            // });
-            return [];
-        },
-        liveBus() {
-            return this.busData;
-            // return this.busData.filter((item) => item.StopStatus === 0);
-        },
         sortedBusData() {
-            const copy = [...this.liveBus];
+            const copy = [...this.busData];
             return copy.sort((a, b) => Number(a.StopID) - Number(b.StopID));
         },
         goBus() {
