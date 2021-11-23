@@ -35,7 +35,10 @@
                         {{ direction[item.Bearing] }}
                     </span>
                 </h3>
-                <p class="text-primary-700"></p>
+                <p class="text-primary-700">
+                    <!-- {{ item.routeList }} -->
+                    {{ transRoute(item.Stop) }}
+                </p>
             </li>
         </ul>
     </div>
@@ -62,6 +65,16 @@ export default {
                 NW: "西北行",
             },
         };
+    },
+    methods: {
+        // transStop(arr) {
+        //     const temp = arr.map((vo) => vo.RouteName.Zh_tw);
+        //     return temp.join(",");
+        // },
+        transRoute(arr) {
+            const temp = arr.map((vo) => vo.RouteName.Zh_tw);
+            return temp.join(",");
+        },
     },
 };
 </script>

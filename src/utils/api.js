@@ -8,7 +8,7 @@ import {
     API_BUS_STOP_NEAR,
     API_BUS_ROUTE_NEAR,
     API_BUS_ESTIMATED_NEAR,
-    API_BUS_STATION_ID,
+    API_BUS_STATION_ROUTE,
     API_BUS_ESTIMATED_STATION,
 } from "../global/constant";
 import jsSHA from "jssha";
@@ -123,7 +123,7 @@ export const getNearEstimated = (sendData) => {
     return api.get(API_BUS_ESTIMATED_NEAR, config);
 };
 
-export const getStation = (sendData) => {
+export const getStationRoute = (sendData) => {
     const { cityPath, data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
@@ -132,7 +132,7 @@ export const getStation = (sendData) => {
         },
     };
     return api.get(
-        API_BUS_STATION_ID +
+        API_BUS_STATION_ROUTE +
             `/${cityPath}/PassThrough/Station/${data.stationId}`,
         config
     );

@@ -22,18 +22,7 @@
             <img class="" @click="reset" src="images/search.svg" alt="" />
         </div>
         <h2>{{ routeName }}</h2>
-        <div>
-            <h3 class="text-left pt-4 text-gray-500">搜尋結果</h3>
-            <ul>
-                <template v-for="item in pageData">
-                    <BusListItem :itemData="item" :key="item.RouteUID" />
-                </template>
-                <li v-if="pageData.length === 0">
-                    <p>哎呀!查無結果</p>
-                    <p>請重新搜尋關鍵字或切換縣市</p>
-                </li>
-            </ul>
-        </div>
+        <bus-search-list :pageData="pageData" />
         <!-- <search-history v-else /> -->
         <transition name="slide-fade">
             <key-board
@@ -43,29 +32,28 @@
                 @deleteRouteName="deleteRouteName"
             />
         </transition>
-        <keyboard-btn @ctrlKeyboard="ctrlKeyboard" />
+        <bus-search-btn @ctrlKeyboard="ctrlKeyboard" />
     </div>
 </template>
 
 <script>
-import BusListItem from "../components/BusListItem.vue";
+import BusSearchList from "../components/BusSearchList.vue";
 import KeyBoard from "../components/KeyBoard.vue";
-import KeyboardBtn from "../components/keyboardBtn.vue";
+import BusSearchBtn from "../components/BusSearchBtn.vue";
 // import SearchHistory from "../components/SearchHistory.vue";
 import { CITY_LIST } from "../global/constant";
 import { getBusRoute } from "../utils/api";
 export default {
     components: {
         KeyBoard,
-        BusListItem,
-        // SearchHistory,
-        KeyboardBtn,
+        BusSearchList,
+        BusSearchBtn,
     },
     data() {
         return {
             CITY_LIST,
-            routeName: "",
             city: CITY_LIST[0].value,
+            routeName: "",
             busList: [],
             showKeyboard: false,
             pageData: [],
@@ -84,7 +72,6 @@ export default {
         async getRoute() {
             const sendData = {
                 city: this.city,
-                // routeName: this.routeName,
                 $filter: this.routeName
                     ? `contains(RouteName/Zh_tw, '${this.routeName}')`
                     : "",

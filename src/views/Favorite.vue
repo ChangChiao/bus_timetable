@@ -1,18 +1,13 @@
 <template>
     <ul>
-        <template v-for="item in favoriteList">
-            <BusListItem :key="item" />
-        </template>
+        <li v-for="item in favoriteList" :key="item"></li>
     </ul>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import BusListItem from "../components/BusListItem.vue";
 export default {
-    components: {
-        BusListItem,
-    },
+    components: {},
     computed: {
         ...mapState(["favoriteList"]),
     },

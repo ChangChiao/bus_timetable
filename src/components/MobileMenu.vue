@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="w-screen overflow-hidden">
         <div class="fixed w-screen h-screen top-0 left-0 z-20" v-if="active">
             <div class="mask"></div>
             <nav
@@ -89,7 +89,7 @@ export default {
     border-radius: 50%;
     background: #d5d6d8;
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     z-index: 100;
     right: -57px;
     top: -50px;

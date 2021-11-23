@@ -44,3 +44,27 @@ export const getDistance = (lat1, lon1, lat2, lon2, unit = "K") => {
         return dist;
     }
 };
+
+export const transMinute = (sec) => {
+    return Math.floor(sec / 60);
+};
+
+export const transBusStatus = (sec) => {
+    const time = transMinute(sec);
+    let text = "";
+    switch (true) {
+        case time === 0:
+            text = "進站中";
+            break;
+        case time <= 1 && 0 < time:
+            text = "即將到站";
+            break;
+        case !time:
+            text = "尚未發車";
+            break;
+        default:
+            text = time + "分鐘";
+            break;
+    }
+    return text;
+};
