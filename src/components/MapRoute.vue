@@ -60,7 +60,7 @@ export default {
         },
         setView(latitude, longitude) {
             console.log("latitude, longitude", latitude, longitude);
-            map.setView([latitude, longitude], 16);
+            map.setView([latitude, longitude], 14);
         },
         createMark() {
             stationMark = new L.Icon({

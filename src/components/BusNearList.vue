@@ -11,6 +11,7 @@
             fixed
             z-20
             bottom-0
+            overflow-y-scroll
         "
     >
         <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
@@ -19,6 +20,7 @@
             <li
                 v-for="item in stopList"
                 :key="item.StationUID"
+                @click="selectRoute(item)"
                 class="p-2 my-2 border border-purple-300 rounded-lg text-left"
             >
                 <h3 class="font-bold text-black py-2">
@@ -37,7 +39,7 @@
                 </h3>
                 <p class="text-primary-700">
                     <!-- {{ item.routeList }} -->
-                    {{ transRoute(item.Stop) }}
+                    {{ transRoute(item.Stops) }}
                 </p>
             </li>
         </ul>
@@ -67,10 +69,9 @@ export default {
         };
     },
     methods: {
-        // transStop(arr) {
-        //     const temp = arr.map((vo) => vo.RouteName.Zh_tw);
-        //     return temp.join(",");
-        // },
+        selectRoute(obj) {
+            this.$emit("selectRoute", obj);
+        },
         transRoute(arr) {
             const temp = arr.map((vo) => vo.RouteName.Zh_tw);
             return temp.join(",");

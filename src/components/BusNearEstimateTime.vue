@@ -1,17 +1,25 @@
 <template>
-    <div class="">
-        <ul v-for="item in liveBusList" :key="item.StopUID">
-            <li class="w-full border p-2">
-                <span>{{ item.StopName.Zh_tw }}</span>
-                <span :class="{ red: item.EstimateTime <= 1 }">
+    <div
+        class="
+            pt-2
+            rounded-tl-3xl
+            px-4
+            h-72
+            w-screen
+            rounded-rl-3xl
+            bg-light
+            fixed
+            z-20
+            bottom-0
+            overflow-y-scroll
+        "
+    >
+        <ul v-for="item in busData" :key="item.StopUID">
+            <li class="w-full border-b p-4 border-line relative">
+                <span :class="{ red: item.EstimateTime <= 90 }">
                     {{ transStatus(item.EstimateTime) }}
                 </span>
-                <!-- <span>{{ item.StopUID }}</span> -->
-                <span
-                    :class="{ 'bg-primary-500': item.EstimateTime === 0 }"
-                    class="border border-gray-400 w-4 h-4 rounded-full"
-                ></span>
-                <span>{{ item.PlateNumb }}</span>
+                <span>{{ item.RouteName.Zh_tw }}</span>
             </li>
         </ul>
         <div class="line"></div>
@@ -19,21 +27,17 @@
 </template>
 
 <script>
-import transStatus from "../utils/common";
+import { transBusStatus } from "../utils/common";
 import { getStationEstimated } from "../utils/api";
 export default {
     props: {
-        routeName: {
+        stationId: {
             type: String,
             default: "",
         },
         city: {
             type: String,
             default: "",
-        },
-        destination: {
-            type: Object,
-            default: () => {},
         },
     },
     computed: {
@@ -47,10 +51,6 @@ export default {
             const copy = [...this.liveBus];
             return copy.sort((a, b) => a.StopUID.localeCompare(b.StopUID));
         },
-        liveBus() {
-            return this.busData.filter((item) => item.StopStatus === 0);
-            // return this.busData.filter((item) => item.PlateNumb);
-        },
     },
     data() {
         return {
@@ -58,20 +58,20 @@ export default {
             listType: 0,
             second: 60,
             busData: [],
-            busPos: [],
         };
     },
     methods: {
         transStatus(sec) {
-            return transStatus(sec);
+            console.warn("sec", sec);
+            return transBusStatus(sec);
         },
+
         getDataByTimer() {
             this.timer = setInterval(() => {
                 this.second -= 1;
                 if (this.second <= 0) {
                     this.second = 60;
-                    this.getBusArrive();
-                    // this.getBusPos();
+                    // this.getBusArrive();
                 }
             }, 1000);
         },
@@ -79,12 +79,9 @@ export default {
             try {
                 const sendData = {
                     city: this.city,
-                    routeName: this.routeName,
+                    stationId: this.stationId,
                 };
-                this.$bus.$emit("setLoading", true);
                 const result = await getStationEstimated(sendData);
-                this.$bus.$emit("setLoading", false);
-
                 this.busData = result;
                 console.log("result");
             } catch (error) {
