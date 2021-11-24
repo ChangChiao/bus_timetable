@@ -3,18 +3,17 @@
 </template>
 
 <script>
-import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import * as Wkt from "wicket";
-import "leaflet.markercluster/dist/MarkerCluster.css";
-import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import "leaflet.markercluster/dist/leaflet.markercluster";
+import { createMarkerCluster } from "../utils/common";
 let map = null;
 let markLayer = null;
 let routeLayer = null;
 let busLayer = null;
 let stationMark = null;
 let busMark = null;
+let startMark = null;
+let endMark = null;
 export default {
     props: {
         mapInfo: {
@@ -43,7 +42,7 @@ export default {
                 }
             ).addTo(map);
             console.log("init!!!!");
-            markLayer = new L.MarkerClusterGroup().addTo(map);
+            markLayer = createMarkerCluster().addTo(map);
             busLayer = new L.MarkerClusterGroup().addTo(map);
             this.$emit("initData");
         },
@@ -71,6 +70,7 @@ export default {
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
+            console.log("stationMark", stationMark);
             busMark = new L.Icon({
                 iconUrl: "images/mark/bus.svg",
                 shadowUrl: "",
@@ -79,17 +79,68 @@ export default {
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
+            startMark = new L.Icon({
+                iconUrl: "images/mark/BusStop-start.svg",
+                shadowUrl: "",
+                iconSize: [40, 40],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                // shadowSize: [41, 41]
+            });
+            endMark = new L.Icon({
+                iconUrl: "images/mark/BusStop-end.svg",
+                shadowUrl: "",
+                iconSize: [40, 40],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                // shadowSize: [41, 41]
+            });
         },
         drawMark(mapInfo) {
+            const temp = [...mapInfo];
+            let start = temp.shift();
+            let end = temp.pop();
             console.log("drawMark");
-            mapInfo.forEach((item) => {
-                let { PositionLat, PositionLon } = item.StopPosition;
-                let { StopName } = item;
 
+            markLayer.addLayer(
+                L.marker(
+                    [
+                        start?.StopPosition?.PositionLat,
+                        start?.StopPosition?.PositionLon,
+                    ],
+                    {
+                        icon: startMark,
+                    }
+                ).bindPopup(` <h2 class="title">${start.StopName.Zh_tw}</h2>`)
+            );
+
+            markLayer.addLayer(
+                L.marker(
+                    [
+                        end?.StopPosition?.PositionLat,
+                        end?.StopPosition?.PositionLon,
+                    ],
+                    {
+                        icon: endMark,
+                    }
+                ).bindPopup(` <h2 class="title">${end.StopName.Zh_tw}</h2>`)
+            );
+
+            temp.forEach((item, i) => {
+                let { PositionLat, PositionLon } = item.StopPosition;
                 markLayer.addLayer(
                     L.marker([PositionLat, PositionLon], {
-                        icon: stationMark,
-                    }).bindPopup(` <h2 class="title">${StopName.Zh_tw}</h2>`)
+                        icon: new L.DivIcon({
+                            className: "bus-icon",
+                            html: `
+                            <div class="w-16 h-14 relative flex justify-center items-center">
+                                <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
+                                <span class="text-light font-bold text-base text-center relative z-10 pb-2">${
+                                    i + 1
+                                }</span>
+                            </div>`,
+                        }),
+                    })
                 );
             });
             map.addLayer(markLayer);
@@ -123,28 +174,6 @@ export default {
             map.fitBounds(routeLayer.getBounds());
             map.addLayer(routeLayer);
             // this.drawMark(Geometry);
-        },
-        createMarkerCluster() {
-            return new L.markerClusterGroup({
-                showCoverageOnHover: false,
-                spiderfyOnMaxZoom: true,
-                zoomToBoundsOnClick: true,
-                argumentsspiderfyOnMaxZoom: false,
-                maxClusterRadius: 120,
-                iconCreateFunction: function (cluster) {
-                    const markers = cluster.getAllChildMarkers();
-                    const html = `
-                            <div class="circle">
-                                    ${markers.length}
-                                    </div>
-                            . `;
-                    return L.divIcon({
-                        html: html,
-                        className: "clusterBikeIcon",
-                        iconSize: L.point(49, 49),
-                    });
-                },
-            });
         },
         initMap() {
             this.createMark();

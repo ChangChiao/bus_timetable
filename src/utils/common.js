@@ -1,4 +1,5 @@
 import moment from "moment";
+import L from "leaflet";
 export const showToast = (msg, type = "success") => {
     if (msg) {
         console.log("msg", msg, type);
@@ -63,8 +64,43 @@ export const transBusStatus = (sec) => {
             text = "尚未發車";
             break;
         default:
-            text = time + "分鐘";
+            text = `${time}< class="font-normal">分</>`;
             break;
     }
     return text;
+};
+
+export const createMarkerCluster = () => {
+    return new L.markerClusterGroup({
+        showCoverageOnHover: false,
+        spiderfyOnMaxZoom: true,
+        zoomToBoundsOnClick: true,
+        argumentsspiderfyOnMaxZoom: false,
+        maxClusterRadius: 120,
+        iconCreateFunction: function (cluster) {
+            const markers = cluster.getAllChildMarkers();
+            let c = " marker-cluster-";
+            if (markers < 10) {
+                c += "small";
+            } else if (markers < 100) {
+                c += "medium";
+            } else {
+                c += "large";
+            }
+
+            const html = `
+                    <div class="group">
+                        <span>
+                            ${markers.length}
+                        </span>
+                    </div>
+                    `;
+
+            return new L.DivIcon({
+                html,
+                className: "marker-cluster" + c,
+                iconSize: new L.Point(40, 40),
+            });
+        },
+    });
 };

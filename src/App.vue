@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <router-view />
-        <mobile-menu />
+        <mobile-menu v-if="showMobileMenu" />
         <Loading v-if="showLoading" />
     </div>
 </template>
@@ -14,9 +14,18 @@ export default {
         Loading,
         MobileMenu,
     },
+    watch: {
+        $route: {
+            immediate: true,
+            handler: function (to) {
+                this.showMobileMenu = to.path !== "/";
+            },
+        },
+    },
     data() {
         return {
             showLoading: false,
+            showMobileMenu: false,
         };
     },
     created() {

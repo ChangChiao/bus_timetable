@@ -3,11 +3,8 @@
 </template>
 
 <script>
-import "leaflet/dist/leaflet.css";
+import { createMarkerCluster } from "../utils/common";
 import L from "leaflet";
-import "leaflet.markercluster/dist/MarkerCluster.css";
-import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import "leaflet.markercluster/dist/leaflet.markercluster";
 let map = null;
 let markLayer = null;
 let stationLayer = null;
@@ -35,8 +32,9 @@ export default {
                 }
             ).addTo(map);
             console.log("init!!!!");
+            let customCluster = createMarkerCluster();
             markLayer = new L.MarkerClusterGroup().addTo(map);
-            stationLayer = new L.MarkerClusterGroup().addTo(map);
+            stationLayer = customCluster.addTo(map);
             this.$emit("getNowPos");
         },
         cleanMarker() {
@@ -56,13 +54,14 @@ export default {
         },
         createMark() {
             stationMark = new L.Icon({
-                iconUrl: "images/mark/BusStop.svg",
+                iconUrl: "images/mark/BusStop_blank.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
+            console.log("stationMark", stationMark);
             selfMark = new L.Icon({
                 iconUrl: "images/mark/TrackingSpot.svg",
                 shadowUrl: "",
@@ -83,38 +82,39 @@ export default {
         },
         drawStation(stopInfo) {
             this.cleanStation();
-            stopInfo.forEach((item) => {
+            stopInfo.forEach((item, i) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
                 stationLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: stationMark })
-                        .bindPopup(`
-                            <h2 class="title">${item.StationName.Zh_tw}</h2>
-                        `)
+                    L.marker([PositionLat, PositionLon], {
+                        icon: new L.DivIcon({
+                            className: "bus-icon",
+                            html: `
+                            <div class="w-16 h-14 relative flex justify-center items-center">
+                                <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
+                                <span class="text-light font-bold text-base text-center relative z-10 pb-2">${
+                                    i + 1
+                                }</span>
+                            </div>`,
+                        }),
+                    }).on("click", this.markerOnClick)
                 );
             });
             map.addLayer(stationLayer);
         },
-        createMarkerCluster() {
-            return new L.markerClusterGroup({
-                showCoverageOnHover: false,
-                spiderfyOnMaxZoom: true,
-                zoomToBoundsOnClick: true,
-                argumentsspiderfyOnMaxZoom: false,
-                maxClusterRadius: 120,
-                iconCreateFunction: function (cluster) {
-                    const markers = cluster.getAllChildMarkers();
-                    const html = `
-                            <div class="circle">
-                                    ${markers.length}
-                                    </div>
-                            . `;
-                    return L.divIcon({
-                        html: html,
-                        className: "clusterBikeIcon",
-                        iconSize: L.point(49, 49),
-                    });
-                },
+        markerOnClick(e) {
+            let i = 1;
+            const myIcon = new L.DivIcon({
+                className: "bus-icon-active",
+                html: `
+                <div class="w-16 h-14 relative flex justify-center items-center">
+                    <img class="absolute w-full block" src="images/mark/BusStop_active_blank.svg"/>
+                    <span class="text-primary-500 font-bold text-base text-center relative z-10 pb-2">${
+                        i + 1
+                    }</span>
+                </div>`,
             });
+            // console.log("e======", e);
+            e.target.setIcon(myIcon);
         },
     },
     mounted() {
@@ -128,3 +128,5 @@ export default {
     },
 };
 </script>
+
+<style lang="postcss" scoped></style>

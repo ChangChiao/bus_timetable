@@ -2,8 +2,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./index.css";
+import "./style/main.css";
 import "tailwindcss/tailwind.css";
+import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import "leaflet.markercluster/dist/leaflet.markercluster";
 import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

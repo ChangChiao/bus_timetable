@@ -33,19 +33,27 @@
                     <li
                         v-for="item in menuList"
                         class="text-white pr-40 py-4 text-right text-lg"
+                        @click="goPath(item.path)"
                         :key="item.path"
                     >
-                        <router-link :to="item.path">{{
-                            item.name
-                        }}</router-link>
+                        {{ item.name }}
                     </li>
                 </ul>
             </nav>
         </div>
-        <div class="hamburger" @click="ctrlMenu">
-            <span class="line"></span>
-            <span class="line"></span>
-            <span class="line"></span>
+        <div :class="['mobile-menu-btn', { active: active }]">
+            <div class="hamburger" @click="ctrlMenu">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+            <img
+                class="absolute h-8 w-8 top-12 left-0"
+                :src="`images/header/HeadMenu-quarter-${
+                    active ? 'W' : 'P'
+                }_mobile.svg`"
+                alt=""
+            />
         </div>
     </div>
 </template>
@@ -68,6 +76,10 @@ export default {
         ctrlMenu() {
             this.active = !this.active;
         },
+        goPath(path) {
+            this.$router.push(path);
+            this.active = false;
+        },
     },
 };
 </script>
@@ -83,53 +95,59 @@ export default {
     height: 500px;
     width: 500px;
 }
-.hamburger {
+
+.mobile-menu-btn {
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    background: #d5d6d8;
+    background: linear-gradient(60.96deg, #493289 2.55%, #6a45c5 100%);
     overflow: hidden;
     position: fixed;
     z-index: 100;
     right: -57px;
     top: -50px;
-    padding-top: 40px;
-    padding-right: 40px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-menu-btn.active {
+    background: linear-gradient(228.69deg, #eeeff1 0%, #d5d6d8 100%);
+}
+
+.mobile-menu-btn.active .line {
+    background-color: #7550cc;
+}
+
+.hamburger {
+    width: 30px;
+    height: 30px;
     display: flex;
+    position: absolute;
+    top: 64px;
+    left: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.hamburger::after {
-    content: "";
-    top: 50px;
-    left: 0;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    background-image: url("/images/Frame 4-1.svg");
-}
-
 .line {
-    width: 30px;
+    width: 20px;
     height: 3px;
-    background-color: #7550cc;
+    background-color: #fff;
     display: block;
-    margin: 3px 0;
-    transition: all 0.3s ease-in-out;
+    margin: 2px 0;
+    transition: all 0.2s ease-in-out;
 }
 
-.line:nth-child(1) {
+.mobile-menu-btn.active .line:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
 
-.line:nth-child(2) {
+.mobile-menu-btn.active .line:nth-child(2) {
     opacity: 0;
 }
 
-.line:nth-child(3) {
-    transform: translateY(-10px) rotate(-45deg);
+.mobile-menu-btn.active .line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
 }
 </style>

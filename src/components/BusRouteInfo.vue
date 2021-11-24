@@ -1,17 +1,5 @@
 <template>
-    <div
-        class="
-            fixed
-            bg-light
-            overflow-y-scroll
-            bottom-0
-            left-0
-            h-1/3
-            w-screen
-            z-20
-            p-4
-        "
-    >
+    <div>
         <p class="text-gray-500 text-sm">於{{ second }}秒前更新</p>
         <h1 class="text-3xl pb-4">{{ routeName }}</h1>
         <ul class="flex justify-between items-center border-b border-gray-300">
@@ -109,7 +97,6 @@ export default {
     },
     methods: {
         transStatus(sec) {
-            console.warn("sec", sec);
             return transBusStatus(sec);
         },
         getDataByTimer() {

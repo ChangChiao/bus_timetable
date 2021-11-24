@@ -1,11 +1,25 @@
 <template>
     <div>
         <map-route ref="mapRoute" @initData="initData" :mapInfo="mapInfo" />
-        <bus-route-info
-            :destination="destination"
-            :city="city"
-            :routeName="routeName"
-        />
+        <div
+            class="
+                fixed
+                bg-light
+                overflow-y-scroll
+                bottom-0
+                left-0
+                h-1/3
+                w-screen
+                z-20
+                p-4
+            "
+        >
+            <bus-route-info
+                :destination="destination"
+                :city="city"
+                :routeName="routeName"
+            />
+        </div>
     </div>
 </template>
 

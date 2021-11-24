@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    input {
+        outline: none;
+        @apply bg-transparent border-0 text-gray-900;
+    }
+    button {
+        @apply cursor-pointer border-0 text-center text-white rounded-lg h-10;
+    }
+    select {
+        @apply text-primary-500 rounded-lg bg-transparent px-2 outline-none;
+    }
+    option {
+        @apply text-center p-2;
+    }
+    body{
+        background-color: #e5e5e5;
+    }
+}
+
+@layer components {
+    .mask {
+        @apply fixed w-screen h-screen z-10 bg-black opacity-50 top-0 left-0;
+    }
+    .sub-title {
+        @apply text-primary-500 text-lg font-bold pr-2;
+    }
+    .input-box {
+        @apply flex items-center bg-light shadow-md px-2 h-12 rounded-md;
+    }
+
+    .input-box-round{
+        @apply input-box rounded-lg;
+    }
+    .status {
+        @apply rounded-md h-4 w-8 border mr-2 p-1;
+    }
+    .gradients{
+        @apply bg-gradient-to-tr from-gradients-200 to-gradients-100;
+    }
+
+    .gradients-deep{
+        @apply bg-gradient-to-tr from-gradients-500 to-gradients-400;
+    }
+
+    .gradients-dark{
+        @apply bg-gradient-to-tr from-gradients-900 to-gradients-800;
+    }
+    .ball{
+        @apply
+            rounded-full
+            fixed
+            bg-light
+            w-16
+            h-16
+            flex
+            justify-center
+            items-center
+            shadow-lg
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .for-mobile {
+        display: block;
+    }
+    .for-mobile-flex {
+        display: flex;
+    }
+    .map {
+        left: 0px;
+        height: calc(100vh - 80px);
+        @apply w-screen;
+    }
+    .list {
+        height: calc(100vh - 80px - 280px);
+    }
+}
+
+.red{
+    color:#FB5B44
+}

@@ -22,7 +22,7 @@
             @selectRoute="selectRoute"
             :stopList="stopList"
         />
-        <bus-near-estimate-time v-else :stationId="stationId" :city="city" />
+        <bus-near-estimate v-else :stationId="stationId" :city="city" />
     </div>
 </template>
 
@@ -31,9 +31,9 @@ import { CITY_LIST } from "../global/constant";
 import { getStopNear } from "../utils/api";
 import BusNearList from "../components/BusNearList.vue";
 import MapNear from "../components/MapNear.vue";
-import BusNearEstimateTime from "../components/BusNearEstimateTime.vue";
+import BusNearEstimate from "../components/BusNearEstimate.vue";
 export default {
-    components: { BusNearList, MapNear, BusNearEstimateTime },
+    components: { BusNearList, MapNear, BusNearEstimate },
     data: function () {
         return {
             stopList: [],

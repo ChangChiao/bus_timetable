@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="pos-btn px-4" v-show="!showList">
-            <p class="text-md font-bold block text-black pt-6">
+            <p class="text-center text-md font-bold block text-black pt-6">
                 開啟裝置定位功能，以便為您提供更好的服務。
             </p>
-            <p class="text-sm text-primary-700 pb-2">
+            <p class="text-center text-sm text-primary-700 pb-2">
                 我們將用在提供您所在位置附近的交通等資訊。
             </p>
             <button
@@ -21,18 +21,52 @@
                 開啟定位功能
             </button>
         </div>
-        <div class="near-list bg-light mt-8 py-4 px-4" v-show="showList">
-            <p class="text-lg text-left font-bold text-gray-500">最近站牌</p>
-            <ul>
-                <li v-for="item in stopList" :key="item.StopUID">
-                    <p class="font-bold text-black">
-                        {{ item.StopName.Zh_tw }}
+        <div class="near-list bg-light mt-8 py-4 px-4 min-h" v-show="showList">
+            <p class="text-sm text-left font-bold text-gray-500">最近站牌</p>
+            <div class="flex items-center justify-between">
+                <p class="font-bold text-lg">
+                    {{ nearStop.StationName && nearStop.StationName.Zh_tw }}
+                </p>
+                <span class="text-sm text-left font-bold text-gray-500"
+                    >{{ second }}秒後更新
+                    <img class="inline" src="images/Refresh.svg" alt=""
+                /></span>
+            </div>
+            <ul class="overflow-y-scroll">
+                <li
+                    v-for="item in timeList"
+                    :key="item.RouteUID"
+                    class="
+                        flex
+                        items-center
+                        justify-between
+                        flex-wrap
+                        h-16
+                        border-b
+                        px-2
+                        border-line
+                    "
+                >
+                    <p
+                        :class="{ red: item.EstimateTime <= 90 }"
+                        class="w-1/5 font-bold"
+                        v-html="transStatus(item.EstimateTime)"
+                    ></p>
+                    <p class="font-bold text-black w-3/5">
+                        {{ item.RouteName.Zh_tw }}
+                        <span class="text-gray-400 text-sm block w-full">
+                            開往</span
+                        >
                     </p>
-                    <p class="text-gray-600">{{ item.StopName.StopAddress }}</p>
+                    <img
+                        class="w-6 block"
+                        src="images/arrow/arrow-right-light.svg"
+                        alt=""
+                    />
                 </li>
                 <li
                     class="text-primary-500 text-md"
-                    v-show="stopList.length === 0"
+                    v-show="filterBusList.length === 0"
                 >
                     附近無站牌
                 </li>
@@ -43,11 +77,17 @@
 
 <script>
 import { getStopNear, getNearEstimated } from "../utils/api";
-import { getDistance } from "../utils/common";
+import { getDistance, transBusStatus } from "../utils/common";
 export default {
     data: function () {
         return {
             showList: false,
+            timer: null,
+            second: 60,
+            nearPos: {
+                latitude: "",
+                longitude: "",
+            },
             stopList: [],
             nearStop: {},
             timeList: [],
@@ -55,16 +95,28 @@ export default {
     },
     computed: {
         filterBusList() {
-            const temp = this.stopList.filter((vo, i, arr) => {
-                i ===
-                    arr.findIndex((item) => {
-                        return item.StopName.Zh_tw === vo.StopName.Zh_tw;
-                    });
+            const record = [];
+            return this.stopList.filter((item) => {
+                if (!record.includes(item.StationID)) {
+                    record.push(item.StationID);
+                    return item;
+                }
             });
-            return temp;
         },
     },
     methods: {
+        transStatus(sec) {
+            return transBusStatus(sec);
+        },
+        getDataByTimer() {
+            this.timer = setInterval(() => {
+                this.second -= 1;
+                if (this.second <= 0) {
+                    this.second = 60;
+                    this.getNearEstimated();
+                }
+            }, 1000);
+        },
         getNowPos() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -90,9 +142,9 @@ export default {
             try {
                 const result = await getStopNear(sendData);
                 this.stopList = result;
-                console.log("this.lineInfo", this.lineInfo);
+                console.log("this.lineInfo", this.stopList);
 
-                // result.length > 0 && this.calcDistance(latitude, longitude);
+                result.length > 0 && this.calcDistance(latitude, longitude);
             } catch (error) {
                 console.log("error", error);
             }
@@ -104,8 +156,8 @@ export default {
             }
             const newArr = this.stopList.map((vo) => {
                 return [
-                    vo.StopPosition?.PositionLat,
-                    vo.StopPosition?.PositionLon,
+                    vo.StationPosition?.PositionLat,
+                    vo.StationPosition?.PositionLon,
                 ];
             });
             const compare = newArr.map((item) => {
@@ -114,21 +166,31 @@ export default {
             });
             const minIndex = compare.indexOf(Math.min(...compare));
             this.nearStop = this.stopList[minIndex];
-            const { PositionLat, PositionLon } = this.nearStop.StopPosition;
-            this.getNearEstimated(PositionLat, PositionLon);
+            const { PositionLat, PositionLon } = this.nearStop.StationPosition;
+            this.nearPos = {
+                latitude: PositionLat,
+                longitude: PositionLon,
+            };
+            console.log("xxxx", this.nearStop.StationPosition);
+            this.getNearEstimated();
+            this.getDataByTimer();
         },
-        async getNearEstimated(latitude, longitude) {
+        async getNearEstimated() {
+            const { latitude, longitude } = this.nearPos;
             const sendData = {
                 $spatialFilter: `nearby(${latitude},${longitude},30)`,
             };
             try {
                 const result = await getNearEstimated(sendData);
                 this.timeList = result;
-                console.log("this.timeList", this.timeList);
+                console.warn("this.timeList", this.timeList);
             } catch (error) {
                 console.log("error", error);
             }
         },
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
 };
 </script>
