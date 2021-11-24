@@ -91,7 +91,7 @@ export default {
                             html: `
                             <div class="w-16 h-14 relative flex justify-center items-center">
                                 <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
-                                <span class="text-light font-bold text-base text-center relative z-10 pb-2">${
+                                <span class="text-light font-bold text-base text-center relative z-10 pb-4">${
                                     i + 1
                                 }</span>
                             </div>`,
@@ -108,7 +108,7 @@ export default {
                 html: `
                 <div class="w-16 h-14 relative flex justify-center items-center">
                     <img class="absolute w-full block" src="images/mark/BusStop_active_blank.svg"/>
-                    <span class="text-primary-500 font-bold text-base text-center relative z-10 pb-2">${
+                    <span class="text-primary-500 font-bold text-base text-center relative z-10 pb-4">${
                         i + 1
                     }</span>
                 </div>`,

@@ -27,7 +27,9 @@
                 <p class="font-bold text-lg">
                     {{ nearStop.StationName && nearStop.StationName.Zh_tw }}
                 </p>
-                <span class="text-sm text-left font-bold text-gray-500"
+                <span
+                    class="text-sm text-left font-bold text-gray-500"
+                    v-show="timeList.length > 0"
                     >{{ second }}秒後更新
                     <img class="inline" src="images/Refresh.svg" alt=""
                 /></span>
@@ -55,8 +57,8 @@
                     <p class="font-bold text-black w-3/5">
                         {{ item.RouteName.Zh_tw }}
                         <span class="text-gray-400 text-sm block w-full">
-                            開往</span
-                        >
+                            {{ (item.head && `開往${item.head}`) || "--" }}
+                        </span>
                     </p>
                     <img
                         class="w-6 block"
@@ -66,7 +68,7 @@
                 </li>
                 <li
                     class="text-primary-500 text-md"
-                    v-show="filterBusList.length === 0"
+                    v-show="timeList.length === 0"
                 >
                     附近無站牌
                 </li>
@@ -76,7 +78,8 @@
 </template>
 
 <script>
-import { getStopNear, getNearEstimated } from "../utils/api";
+import { CITY_LIST } from "../global/constant";
+import { getStopNear, getNearEstimated, getBusRoute } from "../utils/api";
 import { getDistance, transBusStatus } from "../utils/common";
 export default {
     data: function () {
@@ -109,6 +112,7 @@ export default {
             return transBusStatus(sec);
         },
         getDataByTimer() {
+            clearInterval(this.timer);
             this.timer = setInterval(() => {
                 this.second -= 1;
                 if (this.second <= 0) {
@@ -173,20 +177,52 @@ export default {
             };
             console.log("xxxx", this.nearStop.StationPosition);
             this.getNearEstimated();
-            this.getDataByTimer();
         },
         async getNearEstimated() {
             const { latitude, longitude } = this.nearPos;
             const sendData = {
-                $spatialFilter: `nearby(${latitude},${longitude},30)`,
+                $spatialFilter: `nearby(${latitude},${longitude}, 30)`,
             };
             try {
                 const result = await getNearEstimated(sendData);
                 this.timeList = result;
+                if (this.timeList.length > 0) {
+                    this.getDataByTimer();
+                }
+                this.getBusInfo();
                 console.warn("this.timeList", this.timeList);
             } catch (error) {
                 console.log("error", error);
             }
+        },
+        async getBusInfo() {
+            let temp = [...this.timeList];
+            for (let i = 0; i < temp.length; i++) {
+                const { RouteUID, Direction } = this.timeList[i];
+                const cityCode = RouteUID.substr(0, 3);
+                const { value: city } = CITY_LIST.find(
+                    (item) => item.ISO === cityCode
+                );
+
+                const sendData = {
+                    city,
+                    $filter: `contains(RouteUID, '${RouteUID}')`,
+                };
+                try {
+                    const result = await getBusRoute(sendData);
+                    const { DepartureStopNameZh, DestinationStopNameZh } =
+                        result[0];
+                    let head =
+                        Direction === 0
+                            ? DestinationStopNameZh
+                            : DepartureStopNameZh;
+                    temp[i].head = head;
+                    console.warn("head----", head);
+                } catch (error) {
+                    console.log("error", error);
+                }
+            }
+            this.timeList = temp;
         },
     },
     beforeDestroy() {

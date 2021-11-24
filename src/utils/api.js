@@ -38,7 +38,7 @@ const setPath = (data) => {
 };
 
 export const getBusRoute = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
+    const { cityPath, routeName = "", data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
         params: {
@@ -61,7 +61,7 @@ export const getEstimatedTime = (sendData) => {
 };
 
 export const getBusStop = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
+    const { cityPath, routeName = "", data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),
         params: {

@@ -13,7 +13,7 @@ export const API_BUS_ROUTE_NEAR = API_URL + "/Route/NearBy"; //取得附近公�
 //取得指定站牌
 export const API_BUS_ESTIMATED_STATION =
     API_URL + "/EstimatedTimeOfArrival/City"; //取得指定站牌到站預估
-export const API_BUS_STATION_ROUTE = API_URL + "/Route/City"; //取得指定站牌到站預估
+export const API_BUS_STATION_ROUTE = API_URL + "/Route/City"; //取得公車路線資料
 //公車資訊
 export const API_BUS_SCHEDULE = API_URL + "/Schedule/City";
 //not use

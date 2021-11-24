@@ -64,7 +64,7 @@ export const transBusStatus = (sec) => {
             text = "尚未發車";
             break;
         default:
-            text = `${time}< class="font-normal">分</>`;
+            text = `${time}<span class="font-normal">分</span>`;
             break;
     }
     return text;
