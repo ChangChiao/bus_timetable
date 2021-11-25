@@ -94,6 +94,7 @@ export default {
             stopList: [],
             nearStop: {},
             timeList: [],
+            initFlag: false,
         };
     },
     computed: {
@@ -189,7 +190,7 @@ export default {
                 if (this.timeList.length > 0) {
                     this.getDataByTimer();
                 }
-                this.getBusInfo();
+                !this.initFlag && this.getBusInfo();
                 console.warn("this.timeList", this.timeList);
             } catch (error) {
                 console.log("error", error);
@@ -223,6 +224,7 @@ export default {
                 }
             }
             this.timeList = temp;
+            this.nitFlag = true;
         },
     },
     beforeDestroy() {

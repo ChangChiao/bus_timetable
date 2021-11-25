@@ -9,7 +9,7 @@
         @apply bg-transparent border-0 text-gray-900;
     }
     button {
-        @apply cursor-pointer border-0 text-center text-white rounded-lg h-10;
+        @apply cursor-pointer border text-center text-white rounded-lg h-10;
     }
     select {
         @apply text-primary-500 rounded-lg bg-transparent px-2 outline-none;

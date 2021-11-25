@@ -25,7 +25,7 @@
                     </p>
                     <img src="images/Index-section-image01_m.svg" alt="" />
                 </li>
-                <li class="list-item" @click="goPath('/')">
+                <li class="list-item" @click="goPath('/favorite')">
                     <p class="w-2/3 text-left">
                         <span class="text-lg font-bold block text-black"
                             >推薦公車路線</span

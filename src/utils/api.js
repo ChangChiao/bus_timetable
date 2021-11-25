@@ -138,7 +138,7 @@ export const getStationRoute = (sendData) => {
     );
 };
 
-export const getStationEstimated = (sendData) => {
+export const getBusSchedule = (sendData) => {
     const { cityPath, routeName, data } = setPath(sendData);
     let config = {
         headers: getAuthorizationHeader(),

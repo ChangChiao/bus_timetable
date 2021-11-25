@@ -66,7 +66,6 @@ export default {
                 { name: "回首頁", path: "/" },
                 { name: "公車快找", path: "/bussearch" },
                 { name: "查詢公車", path: "/busnear" },
-                { name: "該搭哪一台公車", path: "/b" },
                 { name: "我的最愛", path: "/favorite" },
             ],
             active: false,
