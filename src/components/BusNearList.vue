@@ -1,20 +1,5 @@
 <template>
-    <div
-        class="
-            pt-2
-            rounded-tl-3xl
-            px-4
-            h-72
-            w-screen
-            rounded-rl-3xl
-            bg-light
-            fixed
-            z-20
-            bottom-0
-            overflow-y-scroll
-        "
-    >
-        <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
+    <div>
         <h2 class="py-4 text-gray-400 text-left">最近站牌</h2>
         <ul>
             <li
@@ -47,7 +32,11 @@
 </template>
 
 <script>
+import Panel from "../components/Panel"
 export default {
+    components:{
+        Panel
+    },
     props: {
         stopList: {
             type: Array,

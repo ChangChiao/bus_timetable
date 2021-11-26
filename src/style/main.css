@@ -1,2 +1,9 @@
 @import "./tailwind-custom.css";
 @import "./leaflet.css";
+
+.for-web{
+    display:block;
+    @media (max-width: 980px) {
+        display:none;
+    }
+}

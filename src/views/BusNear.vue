@@ -17,16 +17,19 @@
         >
             <img src="images/cursor.svg" alt="" />
         </div>
-        <bus-near-list
-            v-if="showNearStation"
-            @selectRoute="selectRoute"
-            :stopList="stopList"
-        />
-        <bus-near-estimate v-else :stationId="stationId" :city="city" />
+        <Panel>
+            <bus-near-list
+                v-if="showNearStation"
+                @selectRoute="selectRoute"
+                :stopList="stopList"
+            />
+            <bus-near-estimate v-else :stationId="stationId" :city="city" />
+        </Panel>
     </div>
 </template>
 
 <script>
+import Panel from "../components/Panel"
 import { CITY_LIST } from "../global/constant";
 import { getStopNear } from "../utils/api";
 import BusNearList from "../components/BusNearList.vue";
@@ -43,6 +46,9 @@ export default {
             city: "",
             showNearStation: true,
         };
+    },
+    components:{
+        Panel
     },
     computed: {
         stationIDList() {

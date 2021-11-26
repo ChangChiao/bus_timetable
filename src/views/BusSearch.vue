@@ -1,5 +1,6 @@
 <template>
     <div class="px-4 pt-10">
+        <map-route />
         <select v-model="city" @change="getRoute">
             <option
                 v-for="item in CITY_LIST"
@@ -23,7 +24,6 @@
         </div>
         <h2>{{ routeName }}</h2>
         <bus-search-list :pageData="pageData" />
-        <!-- <search-history v-else /> -->
         <transition name="slide-fade">
             <key-board
                 v-if="showKeyboard"
@@ -43,11 +43,13 @@ import BusSearchBtn from "../components/BusSearchBtn.vue";
 // import SearchHistory from "../components/SearchHistory.vue";
 import { CITY_LIST } from "../global/constant";
 import { getBusRoute } from "../utils/api";
+import MapRoute from '../components/MapRoute.vue';
 export default {
     components: {
         KeyBoard,
         BusSearchList,
         BusSearchBtn,
+        MapRoute,
     },
     data() {
         return {

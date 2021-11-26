@@ -189,3 +189,16 @@ export default {
     },
 };
 </script>
+
+<style lang="postcss" scoped>
+#map{
+    position: relative;
+    z-index: 100;
+    width: calc(100vw - 300px);
+    height: calc(100vh - 80px);
+    @media (max-width: 980px) {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+</style>

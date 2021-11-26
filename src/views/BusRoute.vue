@@ -1,29 +1,18 @@
 <template>
     <div>
         <map-route ref="mapRoute" @initData="initData" :mapInfo="mapInfo" />
-        <div
-            class="
-                fixed
-                bg-light
-                overflow-y-scroll
-                bottom-0
-                left-0
-                h-1/3
-                w-screen
-                z-20
-                p-4
-            "
-        >
+        <Panel>
             <bus-route-info
                 :destination="destination"
                 :city="city"
                 :routeName="routeName"
             />
-        </div>
+        </Panel>
     </div>
 </template>
 
 <script>
+import Panel from "../components/Panel"
 import BusRouteInfo from "../components/BusRouteInfo.vue";
 import MapRoute from "../components/MapRoute.vue";
 import { getBusStop, getBusLine, getBusPosition } from "../utils/api";
@@ -32,6 +21,7 @@ export default {
     components: {
         BusRouteInfo,
         MapRoute,
+        Panel
         // Map,
     },
     data() {

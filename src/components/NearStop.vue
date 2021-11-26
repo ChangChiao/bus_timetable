@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="md:fixed md:bottom-8 md:left-0">
         <div class="pos-btn px-4" v-show="!showList">
             <p class="text-center text-md font-bold block text-black pt-6">
                 開啟裝置定位功能，以便為您提供更好的服務。

@@ -11,14 +11,14 @@ import "leaflet.markercluster/dist/leaflet.markercluster";
 import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-    faUserSecret,
+    faHeart,
     faMapMarkerAlt,
     faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("pagination", Pagination);
-library.add(faUserSecret);
+library.add(faHeart);
 library.add(faMapMarkerAlt);
 library.add(faSearch);
 Vue.config.productionTip = false;

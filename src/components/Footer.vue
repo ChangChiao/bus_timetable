@@ -10,6 +10,8 @@
             justify-center
             items-center
             text-white
+            md:w-3/4
+            md:right-0
         "
     >
         The F2E 3rd Week3 - Bus
