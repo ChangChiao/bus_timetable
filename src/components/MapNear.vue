@@ -8,7 +8,6 @@ import L from "leaflet";
 let map = null;
 let markLayer = null;
 let stationLayer = null;
-let stationMark = null;
 let selfMark = null;
 export default {
     data() {
@@ -51,14 +50,6 @@ export default {
             map.setView([latitude, longitude], 16);
         },
         createMark() {
-            stationMark = new L.Icon({
-                iconUrl: "images/mark/BusStop_blank.svg",
-                shadowUrl: "",
-                iconSize: [40, 40],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                // shadowSize: [41, 41]
-            });
             selfMark = new L.Icon({
                 iconUrl: "images/mark/TrackingSpot.svg",
                 shadowUrl: "",

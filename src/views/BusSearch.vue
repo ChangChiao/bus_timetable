@@ -60,8 +60,8 @@ export default {
         KeyBoard,
         BusSearchList,
         BusSearchBtn,
-        Footer,
         MapSearchs,
+        Footer,
         Header,
     },
     data() {

@@ -10,7 +10,6 @@ let map = null;
 let markLayer = null;
 let routeLayer = null;
 let busLayer = null;
-let stationMark = null;
 let busMark = null;
 let startMark = null;
 let endMark = null;
@@ -64,14 +63,6 @@ export default {
             map.setView([latitude, longitude], 14);
         },
         createMark() {
-            stationMark = new L.Icon({
-                iconUrl: "images/mark/BusStop.svg",
-                shadowUrl: "",
-                iconSize: [40, 40],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                // shadowSize: [41, 41]
-            });
             busMark = new L.Icon({
                 iconUrl: "images/mark/bus.svg",
                 shadowUrl: "",

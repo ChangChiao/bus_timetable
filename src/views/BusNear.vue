@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <map-near ref="mapNear" @getNowPos="getNowPos" />
         <div
             class="
@@ -17,26 +18,36 @@
         >
             <img src="images/cursor.svg" alt="" />
         </div>
-        <Panel>
-            <bus-near-list
-                v-if="showNearStation"
-                @selectRoute="selectRoute"
-                :stopList="stopList"
-            />
-            <bus-near-estimate v-else :stationId="stationId" :city="city" />
-        </Panel>
+        <!-- <Panel> -->
+        <bus-near-list
+            v-if="showNearStation"
+            @selectRoute="selectRoute"
+            :stopList="stopList"
+        />
+        <bus-near-estimate v-else :stationId="stationId" :city="city" />
+        <!-- </Panel> -->
+        <Footer />
     </div>
 </template>
 
 <script>
-import Panel from "../components/Panel";
+import Footer from "../components/Footer.vue";
+import Header from "../components/Header.vue";
+// import Panel from "../components/Panel";
 import { CITY_LIST } from "../global/constant";
 import { getStopNear } from "../utils/api";
 import BusNearList from "../components/BusNearList.vue";
 import MapNear from "../components/MapNear.vue";
 import BusNearEstimate from "../components/BusNearEstimate.vue";
 export default {
-    components: { BusNearList, MapNear, BusNearEstimate, Panel },
+    components: {
+        BusNearList,
+        MapNear,
+        BusNearEstimate,
+        // Panel,
+        Footer,
+        Header,
+    },
     data: function () {
         return {
             stopList: [],
@@ -81,7 +92,7 @@ export default {
             try {
                 const result = await getStopNear(sendData);
                 this.stopList = this.filterReapeatList(result);
-                this.$refs.mapNear.drawStation(result);
+                this.$refs.mapNear.drawStation(this.stopList);
             } catch (error) {
                 console.log("error", error);
             }
