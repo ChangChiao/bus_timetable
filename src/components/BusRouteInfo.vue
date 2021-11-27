@@ -35,13 +35,19 @@
         </ul>
         <ul>
             <li
-                class="w-full border-b p-4 border-line relative"
+                class="
+                    w-full
+                    flex
+                    items-center
+                    border-b
+                    p-4
+                    border-line
+                    relative
+                "
                 v-for="item in typeBusList"
                 :key="item.StopUID"
             >
-                <span :class="{ red: item.EstimateTime <= 90 }">
-                    {{ transStatus(item.EstimateTime) }}
-                </span>
+                <span class="w-24" v-html="transStatus(item)"> </span>
                 <span>{{ item.StopName.Zh_tw }}</span>
                 <span
                     :class="{ 'bg-primary-500': item.EstimateTime <= 30 }"
@@ -117,8 +123,8 @@ export default {
         };
     },
     methods: {
-        transStatus(sec) {
-            return transBusStatus(sec);
+        transStatus(obj) {
+            return transBusStatus(obj);
         },
         refresh() {
             this.second = 60;

@@ -1,11 +1,11 @@
 <template>
-    <div class="side-block px-4">
+    <div class="md:px-4">
         <h2 class="py-4 text-gray-400 text-left">最近站牌</h2>
         <ul class="relative z-30 w-full">
             <li
                 v-for="(item, i) in stopList"
                 :key="item.StationUID"
-                @click="selectRoute(item)"
+                @click="selectStop(item)"
                 class="p-2 my-2 border border-purple-300 rounded-lg text-left"
             >
                 <h3 class="font-bold text-black py-2">
@@ -55,8 +55,8 @@ export default {
         };
     },
     methods: {
-        selectRoute(obj) {
-            this.$emit("selectRoute", obj);
+        selectStop(obj) {
+            this.$emit("selectStop", obj);
         },
         transRoute(arr) {
             const temp = arr.map((vo) => vo.RouteName.Zh_tw);

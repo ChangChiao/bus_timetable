@@ -1,21 +1,7 @@
 <template>
-    <div
-        class="
-            pt-2
-            rounded-tl-3xl
-            px-4
-            h-72
-            w-screen
-            rounded-rl-3xl
-            bg-light
-            fixed
-            z-20
-            bottom-0
-            overflow-y-scroll
-        "
-    >
+    <div>
         <ul>
-            <template v-for="item in busData">
+            <template v-for="item in timeList">
                 <bus-near-estimate-item :key="item.StopUID" :itemData="item" />
             </template>
         </ul>
@@ -24,68 +10,87 @@
 </template>
 
 <script>
-import { getStationEstimated } from "../utils/api";
+import { CITY_LIST } from "../global/constant";
+import { getNearEstimated, getBusRoute } from "../utils/api";
 import BusNearEstimateItem from "./BusNearEstimateItem.vue";
 export default {
     components: { BusNearEstimateItem },
     props: {
-        stationId: {
-            type: String,
-            default: "",
-        },
-        city: {
-            type: String,
-            default: "",
+        stopInfo: {
+            type: Object,
+            default: () => {},
         },
     },
-    computed: {
-        goBus() {
-            return this.sortedBusData.filter((item) => item.Direction === 0);
-        },
-        backBus() {
-            return this.sortedBusData.filter((item) => item.Direction === 1);
-        },
-        sortedBusData() {
-            const copy = [...this.liveBus];
-            return copy.sort((a, b) => a.StopUID.localeCompare(b.StopUID));
-        },
-    },
+    computed: {},
     data() {
         return {
             timer: null,
             listType: 0,
             second: 60,
-            busData: [],
+            timeList: [],
+            initFlag: false,
         };
     },
     methods: {
         getDataByTimer() {
+            clearInterval(this.timer);
             this.timer = setInterval(() => {
                 this.second -= 1;
                 if (this.second <= 0) {
                     this.second = 60;
-                    // this.getBusArrive();
+                    this.getNearEstimated();
                 }
             }, 1000);
         },
-        async getBusArrive() {
+        async getNearEstimated() {
+            console.warn("this.stopInfo", this.stopInfo);
+            const { PositionLat, PositionLon } = this.stopInfo.StationPosition;
+            const sendData = {
+                $spatialFilter: `nearby(${PositionLat},${PositionLon}, 30)`,
+            };
             try {
-                const sendData = {
-                    city: this.city,
-                    stationId: this.stationId,
-                };
-                const result = await getStationEstimated(sendData);
-                this.busData = result;
+                const result = await getNearEstimated(sendData);
+                this.timeList = result;
+                if (this.timeList.length > 0) {
+                    this.getDataByTimer();
+                }
+                !this.initFlag && this.getBusInfo();
             } catch (error) {
                 console.log("error", error);
             }
         },
-        setTab(type) {
-            this.listType = type;
+        async getBusInfo() {
+            let temp = [...this.timeList];
+            for (let i = 0; i < temp.length; i++) {
+                const { RouteUID, Direction } = this.timeList[i];
+                const cityCode = RouteUID.substr(0, 3);
+                const { value: city } = CITY_LIST.find(
+                    (item) => item.ISO === cityCode
+                );
+                const sendData = {
+                    city,
+                    $filter: `contains(RouteUID,
+                            '${RouteUID}')`,
+                };
+                try {
+                    const result = await getBusRoute(sendData);
+                    const { DepartureStopNameZh, DestinationStopNameZh } =
+                        result[0];
+                    let head =
+                        Direction === 0
+                            ? DestinationStopNameZh
+                            : DepartureStopNameZh;
+                    temp[i].head = head;
+                } catch (error) {
+                    console.log("error", error);
+                }
+            }
+            this.timeList = temp;
+            this.initFlag = true;
         },
     },
     mounted() {
-        this.getBusArrive();
+        this.getNearEstimated();
         this.getDataByTimer();
     },
     beforeDestroy() {

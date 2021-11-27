@@ -60,8 +60,8 @@
                 >
                     <p
                         :class="{ red: item.EstimateTime <= 90 }"
-                        class="w-1/5 font-bold"
-                        v-html="transStatus(item.EstimateTime)"
+                        class="w-24 font-bold"
+                        v-html="transStatus(item)"
                     ></p>
                     <p class="font-bold text-black w-3/5">
                         {{ item.RouteName.Zh_tw }}
@@ -108,8 +108,8 @@ export default {
         };
     },
     methods: {
-        transStatus(sec) {
-            return transBusStatus(sec);
+        transStatus(obj) {
+            return transBusStatus(obj);
         },
         refresh() {
             this.second = 60;
@@ -238,7 +238,7 @@ export default {
                 }
             }
             this.timeList = temp;
-            this.nitFlag = true;
+            this.initFlag = true;
         },
     },
     beforeDestroy() {

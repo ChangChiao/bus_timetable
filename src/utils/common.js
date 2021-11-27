@@ -50,21 +50,28 @@ export const transMinute = (sec) => {
     return Math.floor(sec / 60);
 };
 
-export const transBusStatus = (sec) => {
-    const time = transMinute(sec);
+export const transBusStatus = (obj) => {
+    const { EstimateTime, StopStatus } = obj;
+    const time = transMinute(EstimateTime);
+    const statusObj = {
+        1: "尚未發車",
+        2: "交管不停靠",
+        3: "末班車已過",
+        4: "今日未營運",
+    };
+    if (StopStatus !== 0) {
+        return `<span class='bg-gray-500 text-white text-sm p-2 mr-2 rounded-md'>${statusObj[StopStatus]}</span>`;
+    }
     let text = "";
     switch (true) {
         case time === 0:
-            text = "進站中";
+            text = "<span class='red'>進站中</span>";
             break;
         case time <= 1 && 0 < time:
-            text = "即將到站";
-            break;
-        case !time:
-            text = "尚未發車";
+            text = "<span class='red'>即將到站</span>";
             break;
         default:
-            text = `${time}<span class="font-normal">分</span>`;
+            text = `<span class="font-bold text-lg px-2">${time}</span><span class="font-normal">分</span>`;
             break;
     }
     return text;

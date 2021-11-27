@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="for-web"></div>
+    <div id="map"></div>
 </template>
 
 <script>
@@ -46,8 +46,8 @@ export default {
         cleanStation() {
             stationLayer.clearLayers();
         },
-        setView(latitude, longitude) {
-            map.setView([latitude, longitude], 16);
+        setView(latitude, longitude, scale = 16) {
+            map.setView([latitude, longitude], scale);
         },
         createMark() {
             selfMark = new L.Icon({

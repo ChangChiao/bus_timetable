@@ -2,7 +2,7 @@
     <div>
         <Header />
         <map-near ref="mapNear" @getNowPos="getNowPos" />
-        <div
+        <!-- <div
             class="
                 rounded-full
                 touch-ball
@@ -17,15 +17,21 @@
             "
         >
             <img src="images/cursor.svg" alt="" />
+        </div> -->
+        <div
+            class="panel side-block"
+            :style="{ transform: 'translateY(' + this.moveY + 'vh)' }"
+        >
+            <div class="h-10 md:hidden" @click="ctrlPanel">
+                <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
+            </div>
+            <bus-near-list
+                v-if="showNearStation"
+                @selectStop="selectStop"
+                :stopList="stopList"
+            />
+            <bus-near-estimate v-else :stopInfo="stopInfo" />
         </div>
-        <!-- <Panel> -->
-        <bus-near-list
-            v-if="showNearStation"
-            @selectRoute="selectRoute"
-            :stopList="stopList"
-        />
-        <bus-near-estimate v-else :stationId="stationId" :city="city" />
-        <!-- </Panel> -->
         <Footer />
     </div>
 </template>
@@ -34,12 +40,12 @@
 import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
 // import Panel from "../components/Panel";
-import { CITY_LIST } from "../global/constant";
 import { getStopNear } from "../utils/api";
 import BusNearList from "../components/BusNearList.vue";
 import MapNear from "../components/MapNear.vue";
 import BusNearEstimate from "../components/BusNearEstimate.vue";
 export default {
+    inject: ["appData"],
     components: {
         BusNearList,
         MapNear,
@@ -50,17 +56,27 @@ export default {
     },
     data: function () {
         return {
+            moveY: 60,
             stopList: [],
             timeList: [],
             routeList: [],
-            stationId: "",
-            city: "",
+            stopInfo: {},
             showNearStation: true,
         };
     },
     computed: {
         stationIDList() {
             return this.stopList.map((vo) => vo.StationID);
+        },
+        isMobile() {
+            return this.appData?.windowSize < 780;
+        },
+    },
+    watch: {
+        isMobile(val) {
+            if (!val) {
+                this.moveY = 0;
+            }
         },
     },
     methods: {
@@ -87,7 +103,7 @@ export default {
         },
         async getNearStop(latitude, longitude) {
             const sendData = {
-                $spatialFilter: `nearby(${latitude},${longitude},200)`,
+                $spatialFilter: `nearby(${latitude},${longitude}, 500)`,
             };
             try {
                 const result = await getStopNear(sendData);
@@ -106,14 +122,14 @@ export default {
                 }
             });
         },
-        selectRoute(obj) {
-            const { LocationCityCode, StationID } = obj;
-            const { value } = CITY_LIST.find(
-                (item) => item.ISO === LocationCityCode
-            );
-            this.stationId = StationID;
-            this.city = value;
+        selectStop(obj) {
+            const { PositionLat, PositionLon } = obj.StationPosition;
+            this.stopInfo = obj;
             this.showNearStation = false;
+            this.$refs.mapNear.setView(PositionLat, PositionLon, 18);
+        },
+        ctrlPanel() {
+            this.moveY = this.moveY === 60 ? 0 : 60;
         },
     },
 };
