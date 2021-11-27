@@ -1,8 +1,20 @@
 <template>
-    <div>
-        <p class="text-gray-500 text-sm">於{{ second }}秒前更新</p>
-        <h1 class="text-3xl pb-4">{{ routeName }}</h1>
-        <ul class="flex justify-between items-center border-b border-gray-300">
+    <div class="">
+        <p class="text-gray-500 text-sm">
+            於{{ second }}秒前更新
+            <img class="inline" src="images/Refresh.svg" alt="" />
+        </p>
+        <h1 class="text-3xl font-bold pb-4">{{ routeName }}</h1>
+        <ul
+            class="
+                flex
+                justify-between
+                items-center
+                border-b border-gray-300
+                relative
+                z-30
+            "
+        >
             <li
                 :class="['tab-item', { active: listType === 0 }]"
                 @click="setTab(0)"
@@ -16,8 +28,12 @@
                 往{{ destination.back }}
             </li>
         </ul>
-        <ul v-for="item in typeBusList" :key="item.StopUID">
-            <li class="w-full border-b p-4 border-line relative">
+        <ul>
+            <li
+                class="w-full border-b p-4 border-line relative"
+                v-for="item in typeBusList"
+                :key="item.StopUID"
+            >
                 <span :class="{ red: item.EstimateTime <= 90 }">
                     {{ transStatus(item.EstimateTime) }}
                 </span>

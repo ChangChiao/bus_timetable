@@ -1,5 +1,6 @@
 <template>
     <footer
+        v-if="!isMobile || (isMobile && isIndex)"
         class="
             bg-primary-700
             h-9
@@ -18,7 +19,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+    inject: ["appData"],
+    computed: {
+        isMobile() {
+            return this.appData?.windowSize < 780;
+        },
+    },
+    data() {
+        return {
+            isIndex: false,
+        };
+    },
+    mounted() {
+        if (this.$route.path === "/") {
+            this.isIndex = true;
+        }
+    },
+};
 </script>
 
 <style lang="postcss">

@@ -64,7 +64,7 @@ export default {
         },
         createMark() {
             busMark = new L.Icon({
-                iconUrl: "images/mark/bus.svg",
+                iconUrl: "images/mark/BusStop.svg",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],

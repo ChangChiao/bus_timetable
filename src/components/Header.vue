@@ -38,6 +38,7 @@
             </li>
         </ul>
         <img
+            @click="goPath('/')"
             class="absolute top-1 left-1 md:h-16 md:left-3"
             src="images/Index-header-logo.svg"
             alt=""

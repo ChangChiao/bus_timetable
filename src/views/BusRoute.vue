@@ -1,18 +1,23 @@
 <template>
     <div>
         <map-route ref="mapRoute" @initData="initData" :mapInfo="mapInfo" />
-        <Panel>
+        <div
+            class="panel"
+            :style="{ transform: 'translateY(' + this.moveY + 'vh)' }"
+        >
+            <div class="h-10 md:hidden" @click="ctrlPanel">
+                <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
+            </div>
             <bus-route-info
                 :destination="destination"
                 :city="city"
                 :routeName="routeName"
             />
-        </Panel>
+        </div>
     </div>
 </template>
 
 <script>
-import Panel from "../components/Panel";
 import BusRouteInfo from "../components/BusRouteInfo.vue";
 import MapRoute from "../components/MapRoute.vue";
 import { getBusStop, getBusLine, getBusPosition } from "../utils/api";
@@ -21,11 +26,11 @@ export default {
     components: {
         BusRouteInfo,
         MapRoute,
-        Panel,
         // Map,
     },
     data() {
         return {
+            moveY: 60,
             routeName: "",
             city: "",
             mapInfo: [],
@@ -75,6 +80,9 @@ export default {
             const { PositionLat, PositionLon } = mapInfo[0]?.StopPosition;
             this.$refs.mapRoute.drawMark(mapInfo);
             this.$refs.mapRoute.setView(PositionLat, PositionLon);
+        },
+        ctrlPanel() {
+            this.moveY = this.moveY === 60 ? 0 : 60;
         },
     },
     mounted() {

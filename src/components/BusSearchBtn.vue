@@ -1,29 +1,39 @@
 <template>
     <div
         @click="ctrlKeyboard"
-        class="ball touch-ball md:absolute md:right-2 md:top-32 cursor-pointer"
+        class="ball touch-ball fixed md:absolute right-2 top-32 cursor-pointer"
     >
-        <img src="images/keyboard.svg" alt="" v-if="showKeyboard" />
+        <img
+            :src="`images/${showKeyboard ? 'keyboard' : 'command'}.svg`"
+            alt=""
+            v-if="inView"
+        />
         <p class="text-gray-500" v-else>TOP</p>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        showKeyboard: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
-            showKeyboard: true,
+            inView: true,
         };
     },
     methods: {
         ctrlKeyboard() {
-            this.showKeyboard && this.$emit("ctrlKeyboard");
-            if (!this.showKeyboard) {
+            this.inView && this.$emit("ctrlKeyboard");
+            if (!this.inView) {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             }
         },
         scrollEvent() {
-            this.showKeyboard = window.pageYOffset < window.innerHeight;
+            this.inView = window.pageYOffset < window.innerHeight;
         },
     },
     mounted() {

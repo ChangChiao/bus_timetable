@@ -20,6 +20,7 @@
             <div class="input-box">
                 <input
                     type="text"
+                    @input="test"
                     placeholder="請輸入公車路線"
                     v-model="routeName"
                 />
@@ -40,7 +41,10 @@
                     @deleteRouteName="deleteRouteName"
                 />
             </transition>
-            <bus-search-btn @ctrlKeyboard="ctrlKeyboard" />
+            <bus-search-btn
+                :showKeyboard="showKeyboard"
+                @ctrlKeyboard="ctrlKeyboard"
+            />
         </div>
         <Footer />
     </div>
@@ -114,6 +118,9 @@ export default {
                 0,
                 this.routeName.length - 1
             );
+        },
+        test(event) {
+            console.log("fefefe", event.target.value);
         },
         reset() {
             this.routeName = "";

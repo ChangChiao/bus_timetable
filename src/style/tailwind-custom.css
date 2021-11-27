@@ -63,9 +63,14 @@
             shadow-lg
     }
     .side-block{
-       min-height: 580px;
-       border-top-right-radius: 60px;
+        @screen md{
+            min-height: 580px;
+            border-top-right-radius: 60px;
+        }
        @apply md:fixed md:w-96 md:shadow-lg md:h-3/4 md:pb-10 md:bottom-0 md:left-0 md:bg-light z-50;
+    }
+    .panel {
+        @apply pt-2  px-4 rounded-tl-3xl  w-screen h-screen rounded-tr-3xl bg-light fixed z-50 bottom-0 overflow-y-scroll;
     }
 }
 
