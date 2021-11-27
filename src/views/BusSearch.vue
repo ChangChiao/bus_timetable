@@ -4,7 +4,7 @@
         <map-searchs ref="mapSearch" :setClass="'for-web'" />
         <!-- <map-searchs :setClass="'for-web'" /> -->
         <div class="px-4 pt-10 side-block">
-            <select v-model="city" @change="getRoute">
+            <select class="mb-2" v-model="city" @change="getRoute">
                 <option
                     v-for="item in CITY_LIST"
                     :key="item.value"
@@ -20,18 +20,18 @@
             <div class="input-box">
                 <input
                     type="text"
-                    @input="test"
+                    @input="keyIn"
                     placeholder="請輸入公車路線"
                     v-model="routeName"
                 />
                 <img
+                    v-if="routeName"
                     class="w-6"
                     @click="reset"
-                    src="images/search.svg"
+                    src="images/close-style2.svg"
                     alt=""
                 />
             </div>
-            <h2>{{ routeName }}</h2>
             <bus-search-list :pageData="pageData" />
             <transition name="slide-fade">
                 <key-board
@@ -98,6 +98,7 @@ export default {
             try {
                 const result = await getBusRoute(sendData);
                 this.busList = result;
+                this.pageData = [];
                 this.splitData();
             } catch (error) {
                 console.log("error", error);
@@ -110,6 +111,7 @@ export default {
             this.pageData = this.pageData.concat(temp);
         },
         setRouteName(word) {
+            console.warn("setRouteName");
             this.routeName += word;
             this.getRoute();
         },
@@ -119,8 +121,9 @@ export default {
                 this.routeName.length - 1
             );
         },
-        test(event) {
-            console.log("fefefe", event.target.value);
+        keyIn(event) {
+            this.routeName = event.target.value;
+            this.getRoute();
         },
         reset() {
             this.routeName = "";

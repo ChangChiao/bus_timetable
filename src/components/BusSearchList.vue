@@ -16,7 +16,7 @@
                     <span> - </span>
                     {{ item.DestinationStopNameZh }}
                 </p>
-                <font-awesome-icon @click="setFavorite" icon="fa-heart" />
+                <!-- <font-awesome-icon @click="setFavorite" icon="fa-heart" /> -->
             </li>
             <li v-if="pageData.length === 0">
                 <p>哎呀!查無結果</p>
