@@ -1,12 +1,12 @@
 <template>
-    <li class="w-full border-b p-4 border-line relative">
-        <p class="w-24" v-html="transStatus(itemData.EstimateTime)"></p>
+    <li class="w-full flex items-center border-b p-4 border-line relative">
+        <p class="w-24" v-html="transStatus(itemData)"></p>
         <p>
+            <span>{{ itemData.RouteName.Zh_tw }}</span>
             <span class="text-gray-400 text-sm block w-full">
-                {{ itemData }}
                 {{
-                    (terminalList[item.RouteUID] &&
-                       `開往${terminalList[item.RouteUID]}`) ||
+                    (terminalList[itemData.RouteUID] &&
+                        `開往${terminalList[itemData.RouteUID]}`) ||
                     "--"
                 }}
             </span>
