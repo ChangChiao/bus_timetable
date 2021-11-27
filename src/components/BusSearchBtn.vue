@@ -1,5 +1,8 @@
 <template>
-    <div @click="ctrlKeyboard" class="ball touch-ball">
+    <div
+        @click="ctrlKeyboard"
+        class="ball touch-ball md:absolute md:right-2 md:top-32 cursor-pointer"
+    >
         <img src="images/keyboard.svg" alt="" v-if="showKeyboard" />
         <p class="text-gray-500" v-else>TOP</p>
     </div>

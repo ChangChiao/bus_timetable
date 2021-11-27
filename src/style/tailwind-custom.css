@@ -30,7 +30,7 @@
         @apply text-primary-500 text-lg font-bold pr-2;
     }
     .input-box {
-        @apply flex items-center bg-light shadow-md px-2 h-12 rounded-md;
+        @apply flex justify-between items-center bg-light shadow-md px-2 h-12 rounded-md;
     }
 
     .input-box-round{
@@ -52,7 +52,7 @@
     }
     .ball{
         @apply
-            rounded-full
+            rounded-full                
             fixed
             bg-light
             w-16
@@ -61,6 +61,11 @@
             justify-center
             items-center
             shadow-lg
+    }
+    .side-block{
+       min-height: 580px;
+       border-top-right-radius: 60px;
+       @apply md:fixed md:w-96 md:shadow-lg md:h-3/4 md:pb-10 md:bottom-0 md:left-0 md:bg-light z-50;
     }
 }
 

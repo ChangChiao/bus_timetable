@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen overflow-hidden">
+    <div class="w-screen overflow-hidden md:hidden">
         <div class="fixed w-screen h-screen top-0 left-0 z-20" v-if="active">
             <div class="mask"></div>
             <nav

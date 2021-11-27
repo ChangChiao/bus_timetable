@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="relative z-10 w-screen h-screen"></div>
+    <div id="map" :class="setClass"></div>
 </template>
 
 <script>
@@ -19,6 +19,10 @@ export default {
         mapInfo: {
             type: Array,
             default: () => [],
+        },
+        setClass: {
+            type: String,
+            default: "",
         },
     },
     data() {
@@ -190,15 +194,4 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
-#map{
-    position: relative;
-    z-index: 100;
-    width: calc(100vw - 300px);
-    height: calc(100vh - 80px);
-    @media (max-width: 980px) {
-        width: 100vw;
-        height: 100vh;
-    }
-}
-</style>
+<style lang="postcss" scoped></style>

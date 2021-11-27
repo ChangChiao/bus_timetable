@@ -1,55 +1,67 @@
 <template>
-    <div class="px-4 pt-10">
-        <map-route />
-        <select v-model="city" @change="getRoute">
-            <option
-                v-for="item in CITY_LIST"
-                :key="item.value"
-                :value="item.value"
-            >
-                {{ item.label }}
-            </option>
-        </select>
-        <p>
-            <!-- <input type="checkbox" id="" value=""> -->
-            <!-- 僅顯示提供無障礙的公車路線 -->
-        </p>
-        <div class="input-box">
-            <input
-                type="text"
-                placeholder="請輸入公車路線/起訖站名"
-                v-model="routeName"
-            />
-            <img class="" @click="reset" src="images/search.svg" alt="" />
+    <div>
+        <Header />
+        <map-route :setClass="'for-web'" />
+        <div class="px-4 pt-10 side-block">
+            <select v-model="city" @change="getRoute">
+                <option
+                    v-for="item in CITY_LIST"
+                    :key="item.value"
+                    :value="item.value"
+                >
+                    {{ item.label }}
+                </option>
+            </select>
+            <p>
+                <!-- <input type="checkbox" id="" value=""> -->
+                <!-- 僅顯示提供無障礙的公車路線 -->
+            </p>
+            <div class="input-box">
+                <input
+                    type="text"
+                    placeholder="請輸入公車路線"
+                    v-model="routeName"
+                />
+                <img
+                    class="w-6"
+                    @click="reset"
+                    src="images/search.svg"
+                    alt=""
+                />
+            </div>
+            <h2>{{ routeName }}</h2>
+            <bus-search-list :pageData="pageData" />
+            <transition name="slide-fade">
+                <key-board
+                    v-if="showKeyboard"
+                    @setRouteName="setRouteName"
+                    @reset="reset"
+                    @deleteRouteName="deleteRouteName"
+                />
+            </transition>
+            <bus-search-btn @ctrlKeyboard="ctrlKeyboard" />
         </div>
-        <h2>{{ routeName }}</h2>
-        <bus-search-list :pageData="pageData" />
-        <transition name="slide-fade">
-            <key-board
-                v-if="showKeyboard"
-                @setRouteName="setRouteName"
-                @reset="reset"
-                @deleteRouteName="deleteRouteName"
-            />
-        </transition>
-        <bus-search-btn @ctrlKeyboard="ctrlKeyboard" />
+        <Footer />
     </div>
 </template>
 
 <script>
+import Footer from "../components/Footer.vue";
+import Header from "../components/Header.vue";
 import BusSearchList from "../components/BusSearchList.vue";
 import KeyBoard from "../components/KeyBoard.vue";
 import BusSearchBtn from "../components/BusSearchBtn.vue";
-// import SearchHistory from "../components/SearchHistory.vue";
 import { CITY_LIST } from "../global/constant";
 import { getBusRoute } from "../utils/api";
-import MapRoute from '../components/MapRoute.vue';
+import MapRoute from "../components/MapRoute.vue";
 export default {
     components: {
         KeyBoard,
         BusSearchList,
         BusSearchBtn,
         MapRoute,
+        Footer,
+        Header,
     },
     data() {
         return {

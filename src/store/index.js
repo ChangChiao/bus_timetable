@@ -20,7 +20,15 @@ export default new Vuex.Store({
     state: initialState,
     mutations: {
         updateFavoriteList(state, data) {
-            state.favoriteList = data;
+            const { RouteUID } = data;
+            const index = state.favoriteList.findIndex(
+                (vo) => vo.RouteUID === RouteUID
+            );
+            if (index >= 0) {
+                state.favoriteList.splice(index, 1);
+            } else {
+                state.favoriteList.push(data);
+            }
         },
     },
     actions: {},

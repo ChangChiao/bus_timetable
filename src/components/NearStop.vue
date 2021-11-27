@@ -1,5 +1,5 @@
 <template>
-    <div class="md:fixed md:bottom-8 md:left-0">
+    <div class="near-stop side-block">
         <div class="pos-btn px-4" v-show="!showList">
             <p class="text-center text-md font-bold block text-black pt-6">
                 開啟裝置定位功能，以便為您提供更好的服務。
@@ -21,8 +21,13 @@
                 開啟定位功能
             </button>
         </div>
-        <div class="near-list bg-light mt-8 py-4 px-4 min-h" v-show="showList">
-            <p class="text-sm text-left font-bold text-gray-500">最近站牌</p>
+        <div
+            class="near-list bg-light mt-8 py-4 px-4 pb-16 min-h"
+            v-show="showList"
+        >
+            <p class="text-sm text-left py-2 font-bold text-gray-500">
+                最近站牌
+            </p>
             <div class="flex items-center justify-between">
                 <p class="font-bold text-lg">
                     {{ nearStop.StationName && nearStop.StationName.Zh_tw }}
@@ -34,7 +39,7 @@
                     <img class="inline" src="images/Refresh.svg" alt=""
                 /></span>
             </div>
-            <ul class="overflow-y-scroll">
+            <ul class="overflow-y-scroll md:h-96">
                 <li
                     v-for="item in timeList"
                     :key="item.RouteUID"
@@ -95,18 +100,8 @@ export default {
             nearStop: {},
             timeList: [],
             initFlag: false,
+            isPendding: false,
         };
-    },
-    computed: {
-        filterBusList() {
-            const record = [];
-            return this.stopList.filter((item) => {
-                if (!record.includes(item.StationID)) {
-                    record.push(item.StationID);
-                    return item;
-                }
-            });
-        },
     },
     methods: {
         transStatus(sec) {
@@ -124,6 +119,7 @@ export default {
         },
         getNowPos() {
             if (navigator.geolocation) {
+                this.$bus.$emit("setLoading", true);
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const longitude = position.coords.longitude;
@@ -132,23 +128,36 @@ export default {
                         console.log("latitude", latitude);
                         this.showList = true;
                         this.getNearStop(latitude, longitude);
+                        this.setNowPos({ latitude, longitude });
+                        this.$bus.$emit("setLoading", false);
                     },
                     (event) => {
                         const { code, message } = event;
                         console.log("error", `code=${code}, msg=${message}`);
+                        this.$bus.$emit("setLoading", false);
                     }
                 );
             }
         },
+        setNowPos(obj) {
+            this.$emit("setNowPos", obj);
+        },
+        filterBusList(result) {
+            const record = [];
+            return result.filter((item) => {
+                if (!record.includes(item.StationID)) {
+                    record.push(item.StationID);
+                    return item;
+                }
+            });
+        },
         async getNearStop(latitude, longitude) {
             const sendData = {
-                $spatialFilter: `nearby(${latitude},${longitude},170)`,
+                $spatialFilter: `nearby(${latitude},${longitude},200)`,
             };
             try {
                 const result = await getStopNear(sendData);
-                this.stopList = result;
-                console.log("this.lineInfo", this.stopList);
-
+                this.stopList = this.filterBusList(result);
                 result.length > 0 && this.calcDistance(latitude, longitude);
             } catch (error) {
                 console.log("error", error);
@@ -177,6 +186,7 @@ export default {
                 longitude: PositionLon,
             };
             console.log("xxxx", this.nearStop.StationPosition);
+            this.$emit("drawStation", { PositionLat, PositionLon });
             this.getNearEstimated();
         },
         async getNearEstimated() {
@@ -233,8 +243,10 @@ export default {
 };
 </script>
 
-<style lang="postcss">
+<style lang="css" scoped>
 .near-list {
     border-top-right-radius: 60px;
+}
+@media screen and (max-width: 768px) {
 }
 </style>

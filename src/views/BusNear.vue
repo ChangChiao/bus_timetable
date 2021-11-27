@@ -29,14 +29,14 @@
 </template>
 
 <script>
-import Panel from "../components/Panel"
+import Panel from "../components/Panel";
 import { CITY_LIST } from "../global/constant";
 import { getStopNear } from "../utils/api";
 import BusNearList from "../components/BusNearList.vue";
 import MapNear from "../components/MapNear.vue";
 import BusNearEstimate from "../components/BusNearEstimate.vue";
 export default {
-    components: { BusNearList, MapNear, BusNearEstimate },
+    components: { BusNearList, MapNear, BusNearEstimate, Panel },
     data: function () {
         return {
             stopList: [],
@@ -46,9 +46,6 @@ export default {
             city: "",
             showNearStation: true,
         };
-    },
-    components:{
-        Panel
     },
     computed: {
         stationIDList() {

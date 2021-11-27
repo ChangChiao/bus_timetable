@@ -3,7 +3,23 @@
 
 .for-web{
     display:block;
-    @media (max-width: 980px) {
+}                                                                                   
+
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 30;
+    left: 0;
+}
+
+@media screen and (max-width: 768px){
+    .for-web{
         display:none;
+    }
+    #map{
+        width: 100vw;
+        height: 100vh;
     }
 }

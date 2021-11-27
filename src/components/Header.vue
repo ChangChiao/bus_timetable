@@ -1,5 +1,6 @@
 <template>
     <header
+        :class="setClass"
         class="
             gradients-deep
             flex flex-wrap
@@ -9,17 +10,26 @@
             h-24
             w-full
             text-white
-            md:justify-between
+            md:h-20 md:justify-between
         "
     >
-        <h1 class="w-full text-2xl text-right pr-5 md:hidden">
+        <h1 class="w-full text-2xl text-left pl-24 md:w-2/5">
             機智公車族
             <p class="text-base">全台公車動態時刻查詢應用服務</p>
         </h1>
-        <ul class="hidden md:block">
+        <ul
+            class="
+                hidden
+                md:flex md:justify-end
+                justify-center
+                items-center
+                pr-12
+                w-2/5
+            "
+        >
             <li
                 v-for="item in menuList"
-                class="text-white pr-40 py-4 text-right text-lg"
+                class="text-white cursor-pointer text-lg md:mr-3"
                 @click="goPath(item.path)"
                 :key="item.path"
             >
@@ -27,7 +37,7 @@
             </li>
         </ul>
         <img
-            class="absolute top-1 left-1"
+            class="absolute top-1 left-1 md:h-16 md:left-3"
             src="images/Index-header-logo.svg"
             alt=""
         />
@@ -41,17 +51,26 @@
 
 <script>
 export default {
-    data(){
-        return{
+    props: {
+        setClass: {
+            type: String,
+            default: "",
+        },
+    },
+    data() {
+        return {
             menuList: [
-                { name: "回首頁", path: "/" },
                 { name: "公車快找", path: "/bussearch" },
                 { name: "查詢公車", path: "/busnear" },
                 { name: "我的最愛", path: "/favorite" },
             ],
-        }
+        };
     },
-    components: {},
+    methods: {
+        goPath(path) {
+            this.$router.push(path);
+        },
+    },
 };
 </script>
 

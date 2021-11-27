@@ -53,9 +53,23 @@ export default {
             });
         },
         setFavorite(item) {
-            const { RouteUID, RouteName,  DepartureStopNameZh, DestinationStopNameZh, City, CityCode} = item
-            this.$store.commit("setFavorite", {RouteName,  DepartureStopNameZh, DestinationStopNameZh, City, CityCode})
-        }
+            const {
+                RouteUID,
+                RouteName,
+                DepartureStopNameZh,
+                DestinationStopNameZh,
+                City,
+                CityCode,
+            } = item;
+            this.$store.commit("setFavorite", {
+                RouteUID,
+                RouteName,
+                DepartureStopNameZh,
+                DestinationStopNameZh,
+                City,
+                CityCode,
+            });
+        },
     },
 };
 </script>

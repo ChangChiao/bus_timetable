@@ -6,11 +6,10 @@
             fixed
             bottom-0
             flex
-            w-full
             justify-center
             items-center
             text-white
-            md:w-3/4
+            z-50
             md:right-0
         "
     >
@@ -25,5 +24,11 @@ export default {};
 <style lang="postcss">
 footer {
     border-top-left-radius: 100px;
+    width: calc(100vw - 384px);
+}
+@media screen and (max-width: 768px) {
+    footer {
+        width: 100vw;
+    }
 }
 </style>

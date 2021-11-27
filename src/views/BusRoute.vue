@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Panel from "../components/Panel"
+import Panel from "../components/Panel";
 import BusRouteInfo from "../components/BusRouteInfo.vue";
 import MapRoute from "../components/MapRoute.vue";
 import { getBusStop, getBusLine, getBusPosition } from "../utils/api";
@@ -21,7 +21,7 @@ export default {
     components: {
         BusRouteInfo,
         MapRoute,
-        Panel
+        Panel,
         // Map,
     },
     data() {

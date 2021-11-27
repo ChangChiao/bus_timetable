@@ -12,6 +12,7 @@
             flex-wrap
             bg-gray-300
             border-t border-gray-500
+            md:absolute
         "
     >
         <li
