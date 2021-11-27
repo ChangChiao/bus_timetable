@@ -60,7 +60,6 @@ export default {
             });
         },
         drawSelfMark(latitude, longitude) {
-            console.warn("drawfeferff");
             markLayer.addLayer(
                 L.marker([latitude, longitude], {
                     icon: selfMark,

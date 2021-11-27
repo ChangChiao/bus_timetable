@@ -35,8 +35,12 @@
                 <span
                     class="text-sm text-left font-bold text-gray-500"
                     v-show="timeList.length > 0"
-                    >{{ second }}秒後更新
-                    <img class="inline" src="images/Refresh.svg" alt=""
+                    >將於{{ second }}秒後更新
+                    <img
+                        @click="refresh"
+                        class="inline"
+                        src="images/Refresh.svg"
+                        alt=""
                 /></span>
             </div>
             <ul class="overflow-y-scroll md:h-96">
@@ -106,6 +110,11 @@ export default {
     methods: {
         transStatus(sec) {
             return transBusStatus(sec);
+        },
+        refresh() {
+            this.second = 60;
+            this.getNearEstimated();
+            this.getDataByTimer();
         },
         getDataByTimer() {
             clearInterval(this.timer);
@@ -198,7 +207,6 @@ export default {
                     this.getDataByTimer();
                 }
                 !this.initFlag && this.getBusInfo();
-                console.warn("this.timeList", this.timeList);
             } catch (error) {
                 console.log("error", error);
             }
@@ -225,7 +233,6 @@ export default {
                             ? DestinationStopNameZh
                             : DepartureStopNameZh;
                     temp[i].head = head;
-                    console.warn("head----", head);
                 } catch (error) {
                     console.log("error", error);
                 }

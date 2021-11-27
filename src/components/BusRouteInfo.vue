@@ -1,8 +1,13 @@
 <template>
     <div class="">
         <p class="text-gray-500 text-sm">
-            於{{ second }}秒前更新
-            <img class="inline" src="images/Refresh.svg" alt="" />
+            將於{{ second }}秒後更新
+            <img
+                @click="refresh"
+                class="inline"
+                src="images/Refresh.svg"
+                alt=""
+            />
         </p>
         <h1 class="text-3xl font-bold pb-4">{{ routeName }}</h1>
         <ul
@@ -115,6 +120,11 @@ export default {
         transStatus(sec) {
             return transBusStatus(sec);
         },
+        refresh() {
+            this.second = 60;
+            this.getBusArrive();
+            this.getDataByTimer();
+        },
         getDataByTimer() {
             clearInterval(this.timer);
             this.timer = setInterval(() => {
@@ -122,7 +132,6 @@ export default {
                 if (this.second <= 0) {
                     this.second = 60;
                     this.getBusArrive();
-                    // this.getBusPos();
                 }
             }, 1000);
         },

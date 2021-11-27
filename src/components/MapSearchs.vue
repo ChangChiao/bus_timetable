@@ -44,7 +44,6 @@ export default {
                     accessToken: mapToken,
                 }
             ).addTo(map);
-            console.warn("000000000000");
             markLayer = createMarkerCluster().addTo(map);
             busLayer = new L.MarkerClusterGroup().addTo(map);
             this.setView(25.033876641528444, 121.56456344001262);
