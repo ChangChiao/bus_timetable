@@ -7,12 +7,14 @@ const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
     reducer: (state) => ({
         favoriteList: state.favoriteList,
+        terminalList: state.terminalList,
     }),
 });
 
 const initialState = () => {
     return {
         favoriteList: [],
+        terminalList: [],
     };
 };
 
@@ -29,6 +31,10 @@ export default new Vuex.Store({
             } else {
                 state.favoriteList.push(data);
             }
+        },
+        updateTerminalList(state, obj) {
+            const { RouteUID, head } = obj;
+            Vue.set(state.terminalList, RouteUID, head);
         },
     },
     actions: {},

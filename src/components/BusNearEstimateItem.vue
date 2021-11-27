@@ -4,7 +4,11 @@
         <p>
             <span class="text-gray-400 text-sm block w-full">
                 {{ itemData }}
-                {{ (itemData.head && `開往${itemData.head}`) || "--" }}
+                {{
+                    (terminalList[item.RouteUID] &&
+                       `開往${terminalList[item.RouteUID]}`) ||
+                    "--"
+                }}
             </span>
         </p>
         <img
@@ -16,6 +20,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { transBusStatus } from "../utils/common";
 export default {
     props: {
@@ -24,6 +29,8 @@ export default {
             default: () => {},
         },
     },
+    computed: { ...mapState(["terminalList"]) },
+
     methods: {
         transStatus(obj) {
             return transBusStatus(obj);

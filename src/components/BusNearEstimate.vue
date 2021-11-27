@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { CITY_LIST } from "../global/constant";
 import { getNearEstimated, getBusRoute } from "../utils/api";
 import BusNearEstimateItem from "./BusNearEstimateItem.vue";
@@ -21,7 +22,8 @@ export default {
             default: () => {},
         },
     },
-    computed: {},
+    computed: { ...mapState(["terminalList"]) },
+
     data() {
         return {
             timer: null,
@@ -67,6 +69,7 @@ export default {
                 const { value: city } = CITY_LIST.find(
                     (item) => item.ISO === cityCode
                 );
+                if (this.terminalList[RouteUID]) return;
                 const sendData = {
                     city,
                     $filter: `contains(RouteUID,
@@ -80,12 +83,14 @@ export default {
                         Direction === 0
                             ? DestinationStopNameZh
                             : DepartureStopNameZh;
-                    temp[i].head = head;
+                    this.$store.commit("updateTerminalList", {
+                        RouteUID,
+                        head,
+                    });
                 } catch (error) {
                     console.log("error", error);
                 }
             }
-            this.timeList = temp;
             this.initFlag = true;
         },
     },

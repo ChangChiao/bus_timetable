@@ -66,7 +66,11 @@
                     <p class="font-bold text-black w-3/5">
                         {{ item.RouteName.Zh_tw }}
                         <span class="text-gray-400 text-sm block w-full">
-                            {{ (item.head && `開往${item.head}`) || "--" }}
+                            {{
+                                (terminalList[item.RouteUID] &&
+                                    `開往${terminalList[item.RouteUID]}`) ||
+                                "--"
+                            }}
                         </span>
                     </p>
                     <img
@@ -87,6 +91,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { CITY_LIST } from "../global/constant";
 import { getStopNear, getNearEstimated, getBusRoute } from "../utils/api";
 import { getDistance, transBusStatus } from "../utils/common";
@@ -106,6 +111,9 @@ export default {
             initFlag: false,
             isPendding: false,
         };
+    },
+    computed: {
+        ...mapState(["terminalList"]),
     },
     methods: {
         transStatus(obj) {
@@ -219,7 +227,7 @@ export default {
                 const { value: city } = CITY_LIST.find(
                     (item) => item.ISO === cityCode
                 );
-
+                if (this.terminalList[RouteUID]) return;
                 const sendData = {
                     city,
                     $filter: `contains(RouteUID, '${RouteUID}')`,
@@ -232,12 +240,14 @@ export default {
                         Direction === 0
                             ? DestinationStopNameZh
                             : DepartureStopNameZh;
-                    temp[i].head = head;
+                    this.$store.commit("updateTerminalList", {
+                        RouteUID,
+                        head,
+                    });
                 } catch (error) {
                     console.log("error", error);
                 }
             }
-            this.timeList = temp;
             this.initFlag = true;
         },
     },
