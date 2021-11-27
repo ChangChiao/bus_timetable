@@ -124,8 +124,6 @@ export default {
                     (position) => {
                         const longitude = position.coords.longitude;
                         const latitude = position.coords.latitude;
-                        console.log("longitude", longitude);
-                        console.log("latitude", latitude);
                         this.showList = true;
                         this.getNearStop(latitude, longitude);
                         this.setNowPos({ latitude, longitude });
@@ -185,7 +183,6 @@ export default {
                 latitude: PositionLat,
                 longitude: PositionLon,
             };
-            console.log("xxxx", this.nearStop.StationPosition);
             this.$emit("drawStation", { PositionLat, PositionLon });
             this.getNearEstimated();
         },

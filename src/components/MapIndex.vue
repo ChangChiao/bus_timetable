@@ -30,7 +30,6 @@ export default {
                     accessToken: mapToken,
                 }
             ).addTo(map);
-            console.log("init!!!!");
             let customCluster = createMarkerCluster();
             markLayer = new L.MarkerClusterGroup().addTo(map);
             stationLayer = customCluster.addTo(map);
@@ -48,7 +47,6 @@ export default {
             stationLayer.clearLayers();
         },
         setView(latitude, longitude) {
-            console.log("latitude, longitude", latitude, longitude);
             map.setView([latitude, longitude], 16);
         },
         createMark() {

@@ -103,11 +103,9 @@ export default {
             this.$emit("setRouteName", word);
         },
         deleteRouteName() {
-            console.log("deleteRouteName");
             this.$emit("deleteRouteName");
         },
         reset() {
-            console.log("Reset");
             this.$emit("reset");
         },
         ctrlKeyboard() {

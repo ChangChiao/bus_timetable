@@ -45,7 +45,6 @@ export default {
                     accessToken: mapToken,
                 }
             ).addTo(map);
-            console.log("init!!!!");
             markLayer = createMarkerCluster().addTo(map);
             busLayer = new L.MarkerClusterGroup().addTo(map);
             this.$emit("initData");
@@ -62,7 +61,6 @@ export default {
             busLayer.clearLayers();
         },
         setView(latitude, longitude) {
-            console.log("latitude, longitude", latitude, longitude);
             map.setView([latitude, longitude], 14);
         },
         createMark() {
@@ -74,7 +72,6 @@ export default {
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
-            console.log("stationMark", stationMark);
             busMark = new L.Icon({
                 iconUrl: "images/mark/bus.svg",
                 shadowUrl: "",
@@ -104,7 +101,6 @@ export default {
             const temp = [...mapInfo];
             let start = temp.shift();
             let end = temp.pop();
-            console.log("drawMark");
 
             markLayer.addLayer(
                 L.marker(
@@ -164,7 +160,6 @@ export default {
             map.addLayer(busLayer);
         },
         drawLine(Geometry) {
-            console.log("Geometry", Geometry);
             // Create a new Wicket instance
             const wicket = new Wkt.Wkt();
             //Read in any kind of WKT string

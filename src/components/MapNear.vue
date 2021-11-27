@@ -31,7 +31,6 @@ export default {
                     accessToken: mapToken,
                 }
             ).addTo(map);
-            console.log("init!!!!");
             let customCluster = createMarkerCluster();
             markLayer = new L.MarkerClusterGroup().addTo(map);
             stationLayer = customCluster.addTo(map);
@@ -49,7 +48,6 @@ export default {
             stationLayer.clearLayers();
         },
         setView(latitude, longitude) {
-            console.log("latitude, longitude", latitude, longitude);
             map.setView([latitude, longitude], 16);
         },
         createMark() {
@@ -61,7 +59,6 @@ export default {
                 popupAnchor: [1, -34],
                 // shadowSize: [41, 41]
             });
-            console.log("stationMark", stationMark);
             selfMark = new L.Icon({
                 iconUrl: "images/mark/TrackingSpot.svg",
                 shadowUrl: "",
@@ -113,7 +110,6 @@ export default {
                     }</span>
                 </div>`,
             });
-            // console.log("e======", e);
             e.target.setIcon(myIcon);
         },
     },

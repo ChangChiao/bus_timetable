@@ -45,7 +45,6 @@ export const getBusRoute = (sendData) => {
             ...data,
         },
     };
-    console.log("routeName", routeName);
     return api.get(API_ROUTE + `/${cityPath}/${routeName}`, config);
 };
 

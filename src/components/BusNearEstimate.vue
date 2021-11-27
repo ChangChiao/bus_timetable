@@ -76,7 +76,6 @@ export default {
                 };
                 const result = await getStationEstimated(sendData);
                 this.busData = result;
-                console.log("result");
             } catch (error) {
                 console.log("error", error);
             }

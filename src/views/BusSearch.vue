@@ -1,7 +1,8 @@
 <template>
     <div>
         <Header />
-        <map-route :setClass="'for-web'" />
+        <map-searchs ref="mapSearch" :setClass="'for-web'" />
+        <!-- <map-searchs :setClass="'for-web'" /> -->
         <div class="px-4 pt-10 side-block">
             <select v-model="city" @change="getRoute">
                 <option
@@ -53,14 +54,14 @@ import KeyBoard from "../components/KeyBoard.vue";
 import BusSearchBtn from "../components/BusSearchBtn.vue";
 import { CITY_LIST } from "../global/constant";
 import { getBusRoute } from "../utils/api";
-import MapRoute from "../components/MapRoute.vue";
+import MapSearchs from "../components/MapSearchs.vue";
 export default {
     components: {
         KeyBoard,
         BusSearchList,
         BusSearchBtn,
-        MapRoute,
         Footer,
+        MapSearchs,
         Header,
     },
     data() {
@@ -94,10 +95,10 @@ export default {
                 const result = await getBusRoute(sendData);
                 this.busList = result;
                 this.splitData();
-                console.log("result", result);
             } catch (error) {
                 console.log("error", error);
             }
+            this.setView();
         },
         splitData() {
             if (this.busList.length === 0) this.endFlag = true;
@@ -128,6 +129,11 @@ export default {
             ) {
                 this.splitData();
             }
+        },
+        setView() {
+            const { pos } = CITY_LIST.find((vo) => vo.value === this.city);
+            const { lat, lon } = pos;
+            this.$refs.mapSearch.setView(lat, lon);
         },
     },
     mounted() {

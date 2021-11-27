@@ -40,9 +40,7 @@ export default {
             const sendData = { routeName: this.routeName, city: this.city };
             try {
                 const result = await getBusStop(sendData);
-                console.log("result", result);
                 let mapInfo = result[0].Stops;
-                console.log("this.mapInfo", mapInfo);
                 this.setView(mapInfo);
             } catch (error) {
                 console.log("error", error);
@@ -53,7 +51,6 @@ export default {
             try {
                 const result = await getBusLine(sendData);
                 let lineInfo = result[0].Geometry;
-                console.log("this.lineInfo", this.lineInfo);
                 this.$refs.mapRoute.drawLine(lineInfo);
             } catch (error) {
                 console.log("error", error);
@@ -64,7 +61,6 @@ export default {
             try {
                 const result = await getBusPosition(sendData);
                 let busInfo = result;
-                console.log("this.busInfo", busInfo);
                 this.$refs.mapRoute.drawBus(busInfo);
             } catch (error) {
                 console.log("error", error);

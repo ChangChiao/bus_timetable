@@ -38,7 +38,6 @@ export default {
             try {
                 const result = await getBusSchedule(sendData);
                 this.stopList = result[0]?.Timetables;
-                console.log("this.lineInfo", this.stopList);
             } catch (error) {
                 console.log("error", error);
             }

@@ -121,7 +121,6 @@ export default {
                 this.$bus.$emit("setLoading", false);
 
                 this.busData = result;
-                console.log("result");
             } catch (error) {
                 console.log("error", error);
             }
@@ -131,7 +130,6 @@ export default {
             try {
                 const result = await getBusPosition(sendData);
                 this.busPos = result;
-                console.log("this.busPos", this.busPos);
             } catch (error) {
                 console.log("error", error);
             }
