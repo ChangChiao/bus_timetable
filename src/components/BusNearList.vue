@@ -1,7 +1,7 @@
 <template>
     <div class="side-block px-4">
         <h2 class="py-4 text-gray-400 text-left">最近站牌</h2>
-        <ul class="relative z-50 w-full">
+        <ul class="relative z-30 w-full">
             <li
                 v-for="(item, i) in stopList"
                 :key="item.StationUID"

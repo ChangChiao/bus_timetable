@@ -1,6 +1,6 @@
 <template>
     <div class="w-screen overflow-hidden md:hidden">
-        <div class="fixed w-screen h-screen top-0 left-0 z-20" v-if="active">
+        <div class="fixed w-screen h-screen top-0 left-0 z-50" v-if="active">
             <div class="mask"></div>
             <nav
                 class="
@@ -36,7 +36,7 @@
                 </ul>
             </nav>
         </div>
-        <div :class="['mobile-menu-btn', { active: active }]">
+        <div :class="['mobile-menu-btn', { active: active }]" v-if="showHam">
             <div class="hamburger" @click="ctrlMenu">
                 <span class="line"></span>
                 <span class="line"></span>
@@ -64,6 +64,7 @@ export default {
                 { name: "我的最愛", path: "/favorite" },
             ],
             active: false,
+            showHam: true,
         };
     },
     methods: {
@@ -74,6 +75,9 @@ export default {
             this.$router.push(path);
             this.active = false;
         },
+    },
+    mounted() {
+        this.showHam = this.$route.path !== "/";
     },
 };
 </script>

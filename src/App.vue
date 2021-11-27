@@ -26,6 +26,7 @@ export default {
         return {
             showLoading: false,
             showMobileMenu: false,
+            windowSize: 0,
         };
     },
     created() {
@@ -33,8 +34,24 @@ export default {
             this.showLoading = boolean;
         });
     },
+    methods: {
+        resizeEvent() {
+            this.windowSize = window.innerWidth;
+        },
+    },
+    mounted() {
+        this.windowSize = window.innerWidth;
+        window.addEventListener("resize", this.resizeEvent);
+    },
     beforeDestroy() {
         this.$bus.$off("setLoading");
+    },
+    provide() {
+        const appData = {};
+        Object.defineProperty(appData, "windowSize", {
+            get: () => this.windowSize,
+        });
+        return { appData };
     },
 };
 </script>
