@@ -59,8 +59,8 @@ export default {
         cleanBus() {
             busLayer.clearLayers();
         },
-        setView(latitude, longitude) {
-            map.setView([latitude, longitude], 14);
+        setView(latitude, longitude, scale = 14) {
+            map.setView([latitude, longitude], scale);
         },
         createMark() {
             busMark = new L.Icon({

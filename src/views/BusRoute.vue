@@ -8,10 +8,11 @@
                 'transition-duration': '0.3s',
             }"
         >
-            <div class="h-10 md:hidden" @click="ctrlPanel">
+            <div class="h-8 md:hidden" @click="ctrlPanel">
                 <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
             </div>
             <bus-route-info
+                @clickStop="clickStop"
                 :destination="destination"
                 :city="city"
                 :routeUID="routeUID"
@@ -50,8 +51,8 @@ export default {
             const sendData = { routeName: this.routeName, city: this.city };
             try {
                 const result = await getBusStop(sendData);
-                let mapInfo = result[0].Stops;
-                this.setView(mapInfo);
+                this.mapInfo = result[0].Stops;
+                this.setView(this.mapInfo);
             } catch (error) {
                 console.log("error", error);
             }
@@ -88,6 +89,12 @@ export default {
         },
         ctrlPanel() {
             this.moveY = this.moveY === 60 ? 0 : 60;
+        },
+        clickStop(obj) {
+            const { StopUID } = obj;
+            const target = this.mapInfo.find((vo) => vo.StopUID === StopUID);
+            const { PositionLat, PositionLon } = target.StopPosition;
+            this.$refs.mapRoute.setView(PositionLat, PositionLon, 18);
         },
     },
     mounted() {

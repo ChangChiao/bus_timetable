@@ -45,11 +45,15 @@
                     border-line
                     relative
                 "
-                v-for="item in typeBusList"
+                v-for="(item, i) in typeBusList"
                 :key="item.StopUID"
+                @click="clickStop(item)"
             >
                 <span class="w-22" v-html="transStatus(item)"> </span>
-                <span>{{ item.StopName.Zh_tw }}</span>
+                <span>
+                    <strong>{{ i }}.</strong>
+                    {{ item.StopName.Zh_tw }}
+                </span>
                 <span
                     :class="{ 'bg-primary-500': item.PlateNumb }"
                     class="
@@ -206,6 +210,9 @@ export default {
         },
         goBack() {
             this.$router.go(-1);
+        },
+        clickStop(obj) {
+            this.$emit("clickStop", obj);
         },
     },
     mounted() {},
