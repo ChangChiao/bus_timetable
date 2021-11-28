@@ -150,7 +150,7 @@ export default {
             this.$refs.mapNear.setView(PositionLat, PositionLon, 18);
         },
         ctrlPanel() {
-            this.moveY = this.moveY === 60 ? 0 : 60;
+            this.moveY = this.moveY === 60 ? 10 : 60;
         },
         goBack() {
             this.showNearStation = true;

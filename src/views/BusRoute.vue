@@ -121,10 +121,10 @@ export default {
         setView(mapInfo) {
             const { PositionLat, PositionLon } = mapInfo[0]?.StopPosition;
             this.$refs.mapRoute.drawMark(mapInfo);
-            this.$refs.mapRoute.setView(PositionLat, PositionLon);
+            this.$refs.mapRoute.setView(PositionLat, PositionLon, 12);
         },
         ctrlPanel() {
-            this.moveY = this.moveY === 60 ? 0 : 60;
+            this.moveY = this.moveY === 60 ? 10 : 60;
         },
         clickStop(obj) {
             console.log("obj====", obj);

@@ -6,7 +6,7 @@
 @layer base {
     input {
         outline: none;
-        @apply bg-transparent border-0 text-gray-900;
+        @apply bg-transparent border-0 text-gray-900 w-4/5;
     }
     button {
         @apply cursor-pointer border text-center text-white rounded-lg h-10;

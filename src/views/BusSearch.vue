@@ -22,7 +22,7 @@
                 />
                 <img
                     v-if="routeName"
-                    class="w-6"
+                    class="w-6 cursor-pointer"
                     @click="reset"
                     src="images/close-style2.svg"
                     alt=""
