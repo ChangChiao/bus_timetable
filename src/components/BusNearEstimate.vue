@@ -12,7 +12,7 @@
                 {{ stopInfo && direction[stopInfo.Bearing] }}
             </span>
         </h3>
-        <ul>
+        <ul class="scroll-list">
             <template v-for="(item, i) in timeList">
                 <bus-near-estimate-item
                     :key="item.RouteUID"
@@ -74,6 +74,7 @@ export default {
         async getNearEstimated() {
             console.warn("this.stopInfo", this.stopInfo);
             const { PositionLat, PositionLon } = this.stopInfo.StationPosition;
+            this.$bus.$emit("setLoading", true);
             const sendData = {
                 $spatialFilter: `nearby(${PositionLat},${PositionLon}, 30)`,
             };
@@ -87,6 +88,7 @@ export default {
             } catch (error) {
                 console.log("error", error);
             }
+            this.$bus.$emit("setLoading", false);
         },
         async getBusInfo() {
             let temp = [...this.timeList];

@@ -1,7 +1,15 @@
 <template>
     <li
         @click="toBusRoute()"
-        class="rounded-md pl-4 py-2 border-line border-b text-left relative"
+        class="
+            rounded-md
+            pl-4
+            py-2
+            border-line border-b
+            text-left
+            relative
+            cursor-pointer
+        "
     >
         <h3 class="font-bold text-black">
             {{ item.RouteName.Zh_tw }}

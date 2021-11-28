@@ -88,4 +88,8 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.scroll-list {
+    height: calc(100vh - 100px);
+}
+</style>

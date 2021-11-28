@@ -1,7 +1,7 @@
 <template>
     <div class="md:px-4">
         <h2 class="py-4 text-gray-400 text-left">最近站牌</h2>
-        <ul class="relative z-30 w-full">
+        <ul class="relative scroll-list z-30 w-full">
             <li
                 v-for="(item, i) in stopList"
                 :key="item.StationUID"
@@ -67,4 +67,8 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.scroll-list {
+    height: calc(100vh - 120px);
+}
+</style>

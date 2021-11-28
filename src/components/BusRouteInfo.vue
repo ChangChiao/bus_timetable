@@ -70,17 +70,20 @@
                     {{ item.StopName.Zh_tw }}
                 </span>
                 <span
-                    :class="{ 'bg-primary-500': item.PlateNumb }"
+                    class="h-full w-px bg-gray-300 absolute line top-0"
+                ></span>
+                <span
                     class="
                         border
                         absolute
-                        right-2
+                        right-1.5
                         top-6
                         border-gray-400
                         w-3
                         h-3
                         rounded-full
                     "
+                    :class="item.PlateNumb ? 'bg-primary-500' : 'bg-light'"
                 ></span>
                 <span
                     v-if="item.PlateNumb"
@@ -262,5 +265,9 @@ export default {
 
 .tab-item.active {
     border-bottom: 4px solid #7550cc;
+}
+
+.line {
+    right: 11px;
 }
 </style>
