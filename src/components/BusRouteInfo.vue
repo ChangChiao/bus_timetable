@@ -1,5 +1,6 @@
 <template>
     <div class="">
+        <img src="images/arrow/back.svg" @click="goBack" alt="" />
         <p class="text-gray-500 text-sm">
             將於{{ second }}秒後更新
             <img
@@ -33,7 +34,7 @@
                 往{{ destination.back }}
             </li>
         </ul>
-        <ul>
+        <ul class="scroll-list">
             <li
                 class="
                     w-full
@@ -47,7 +48,7 @@
                 v-for="item in typeBusList"
                 :key="item.StopUID"
             >
-                <span class="w-20" v-html="transStatus(item)"> </span>
+                <span class="w-22" v-html="transStatus(item)"> </span>
                 <span>{{ item.StopName.Zh_tw }}</span>
                 <span
                     :class="{ 'bg-primary-500': item.PlateNumb }"
@@ -202,6 +203,9 @@ export default {
 
         setTab(type) {
             this.listType = type;
+        },
+        goBack() {
+            this.$router.go(-1);
         },
     },
     mounted() {},

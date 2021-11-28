@@ -7,7 +7,10 @@
         </div>
         <div
             class="panel side-block"
-            :style="{ transform: 'translateY(' + this.moveY + 'vh)' }"
+            :style="{
+                transform: 'translateY(' + this.moveY + 'vh)',
+                'transition-duration': '0.3s',
+            }"
         >
             <div class="h-10 md:hidden" @click="ctrlPanel">
                 <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>

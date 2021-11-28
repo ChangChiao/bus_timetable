@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="text-left pt-4 text-gray-500">搜尋結果</h3>
-        <ul>
+        <ul class="scroll-list">
             <li
                 v-for="item in pageData"
                 :key="item.RouteUID"

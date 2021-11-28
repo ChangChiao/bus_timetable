@@ -19,7 +19,10 @@
         ></p>
 
         <p class="text-black w-3/5">
-            <span>{{ order }}. {{ itemData.RouteName.Zh_tw }}</span>
+            <span
+                ><strong v-if="!isIndex">{{ order }}.</strong>
+                {{ itemData.RouteName.Zh_tw }}</span
+            >
             <span class="text-gray-400 text-sm block w-full">
                 {{ (head && `開往${head}`) || "--" }}
             </span>
@@ -55,6 +58,9 @@ export default {
             return this.itemData.Direction === 0
                 ? this.target?.DestinationStopNameZh
                 : this.target?.DepartureStopNameZh;
+        },
+        isIndex() {
+            return this.$route.path === "/";
         },
     },
     methods: {

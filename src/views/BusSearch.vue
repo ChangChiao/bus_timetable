@@ -13,10 +13,6 @@
                     {{ item.label }}
                 </option>
             </select>
-            <p>
-                <!-- <input type="checkbox" id="" value=""> -->
-                <!-- 僅顯示提供無障礙的公車路線 -->
-            </p>
             <div class="input-box">
                 <input
                     type="text"
@@ -133,9 +129,10 @@ export default {
         },
         scrollEvent() {
             if (this.endFlag) return;
+            const target = document.querySelector(".scroll-list");
             if (
-                window.innerHeight + window.pageYOffset >=
-                document.body.offsetHeight
+                target.scrollTop ===
+                target.scrollHeight - target.offsetHeight
             ) {
                 this.splitData();
             }
@@ -148,10 +145,12 @@ export default {
     },
     mounted() {
         this.getRoute();
-        window.addEventListener("scroll", this.scrollEvent);
+        const target = document.querySelector(".scroll-list");
+        target.addEventListener("scroll", this.scrollEvent);
     },
     beforeDestroy() {
-        window.removeEventListener("scroll", this.scrollEvent);
+        const target = document.querySelector(".scroll-list");
+        target.removeEventListener("scroll", this.scrollEvent);
     },
 };
 </script>

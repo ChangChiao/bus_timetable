@@ -10,7 +10,6 @@ import {
     API_BUS_ESTIMATED_STATION,
     API_BUS_ESTIMATED_NEAR,
     API_BUS_REALTIME,
-    API_BUS_SCHEDULE,
 } from "../global/constant";
 import jsSHA from "jssha";
 
@@ -121,17 +120,6 @@ export const getNearEstimated = (sendData) => {
         },
     };
     return api.get(API_BUS_ESTIMATED_NEAR, config);
-};
-
-export const getBusSchedule = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
-    let config = {
-        headers: getAuthorizationHeader(),
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_SCHEDULE + `/${cityPath}/${routeName}`, config);
 };
 
 export const getBusRealTime = (sendData) => {

@@ -65,7 +65,12 @@
             cursor-pointer
     }
     .panel {
-        @apply pt-2  px-4 rounded-tl-3xl  w-screen h-screen rounded-tr-3xl bg-light fixed z-50 bottom-0 overflow-y-scroll;
+        @apply pt-2 px-4 rounded-tl-3xl  w-screen h-screen rounded-tr-3xl bg-light fixed z-50 bottom-0;
+    }
+
+    .scroll-list{
+        height: calc(100vh - 150px);
+        @apply overflow-y-scroll pb-6;
     }
     .side-block{
         @screen md{
