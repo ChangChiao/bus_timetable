@@ -2,7 +2,10 @@
     <div>
         <Header />
         <map-near ref="mapNear" @setStop="setStop" @getNowPos="getNowPos" />
-        <div class="touch-ball z-50 right-0 top-72" @click="focusSelf">
+        <div
+            class="touch-ball z-50 right-0 top-72 md:left-0 md:top-48"
+            @click="focusSelf"
+        >
             <img src="images/cursor.svg" alt="" />
         </div>
         <div

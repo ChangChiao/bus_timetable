@@ -19,7 +19,7 @@
         <h1 class="text-3xl font-bold pb-4">
             {{ routeName }}
             <font-awesome-icon
-                class="text-gray-400 text-2xl"
+                class="text-gray-400 text-2xl cursor-pointer"
                 :class="{ 'text-status-error': isExistFavorite }"
                 @click="setFavorite"
                 icon="heart"
@@ -39,13 +39,13 @@
                 :class="['tab-item', { active: listType === 0 }]"
                 @click="setTab(0)"
             >
-                往{{ destination.to }}
+                往{{ destination.back }}
             </li>
             <li
                 :class="['tab-item', { active: listType === 1 }]"
                 @click="setTab(1)"
             >
-                往{{ destination.back }}
+                往{{ destination.to }}
             </li>
         </ul>
         <ul class="scroll-list">
@@ -59,14 +59,15 @@
                     cursor-pointer
                     border-line
                     relative
+                    hover:bg-gray-200
                 "
                 v-for="(item, i) in typeBusList"
                 :key="item.StopUID"
                 @click="clickStop(item)"
             >
-                <span class="w-20" v-html="transStatus(item)"> </span>
+                <span class="w-24" v-html="transStatus(item)"> </span>
                 <span>
-                    <strong>{{ i }}.</strong>
+                    <strong>{{ i + 1 }}.</strong>
                     {{ item.StopName.Zh_tw }}
                 </span>
                 <span
@@ -130,6 +131,10 @@ export default {
             type: Object,
             default: () => {},
         },
+        stopInfo: {
+            type: Array,
+            default: () => [],
+        },
     },
     watch: {
         routeName: {
@@ -143,15 +148,13 @@ export default {
     },
     computed: {
         ...mapState(["favoriteList"]),
-        sortedBusData() {
-            const copy = [...this.busData];
-            return copy.sort((a, b) => Number(a.StopID) - Number(b.StopID));
-        },
         goBus() {
-            return this.sortedBusData.filter((item) => item.Direction === 0);
+            const list = this.busData.filter((item) => item.Direction === 0);
+            return this.sortData(list, 0);
         },
         backBus() {
-            return this.sortedBusData.filter((item) => item.Direction === 1);
+            const list = this.busData.filter((item) => item.Direction === 1);
+            return this.sortData(list, 1);
         },
         typeBusList() {
             return this.listType === 0 ? this.goBus : this.backBus;
@@ -248,6 +251,18 @@ export default {
             };
             this.$store.commit("updateFavoriteList", obj);
         },
+        sortData(arr = [], order) {
+            let temp = [];
+            console.warn("arr", arr);
+            console.warn("this.stopInfo~~~", this.stopInfo);
+            this.stopInfo[order]["Stops"].forEach((vo) => {
+                const target = arr.find((item) => item.StopUID === vo.StopUID);
+                temp.push(target);
+            });
+            console.warn("order", order);
+            console.warn("temp", temp);
+            return temp;
+        },
     },
     mounted() {},
     beforeDestroy() {
@@ -258,7 +273,7 @@ export default {
 
 <style lang="postcss" scoped>
 .tab-item {
-    @apply text-center w-1/2 pb-2  border-primary-500;
+    @apply text-center w-1/2 pb-2  border-primary-500 cursor-pointer;
 }
 
 .tab-item.active {

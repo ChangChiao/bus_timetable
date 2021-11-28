@@ -36,7 +36,7 @@
 
     .keyboard-item {
        width: 19%;
-       @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light;
+       @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light hover:bg-gray-400;
     }
 
     .status {
@@ -72,7 +72,7 @@
     }
 
     .scroll-list{
-        height: calc(100vh - 200px);
+        height: 550px;
         @apply overflow-y-scroll pb-4;
     }
     .side-block{
@@ -104,6 +104,10 @@
     }
     .list {
         height: calc(100vh - 80px - 280px);
+    }
+    .scroll-list{
+        height: calc(100vh - 200px);
+        @apply overflow-y-scroll pb-4;
     }
 }
 

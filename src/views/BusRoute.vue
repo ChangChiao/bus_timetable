@@ -14,6 +14,7 @@
             </div>
             <bus-route-info
                 @clickStop="clickStop"
+                :stopInfo="stopInfo"
                 :destination="destination"
                 :city="city"
                 :routeUID="routeUID"
@@ -60,6 +61,7 @@ export default {
             routeUID: "",
             city: "",
             mapInfo: [],
+            stopInfo: [],
             destination: {
                 to: "",
                 back: "",
@@ -68,17 +70,27 @@ export default {
     },
     methods: {
         async getRouteMapMark() {
-            const sendData = { routeName: this.routeName, city: this.city };
+            const sendData = {
+                city: this.city,
+                $filter: `contains(RouteUID,'${this.routeUID}')`,
+                $select: "Direction, Stops",
+            };
+
             try {
                 const result = await getBusStop(sendData);
                 this.mapInfo = result[0].Stops;
+                this.stopInfo = result;
                 this.setView(this.mapInfo);
             } catch (error) {
                 console.log("error", error);
             }
         },
         async getRouteLine() {
-            const sendData = { routeName: this.routeName, city: this.city };
+            const sendData = {
+                city: this.city,
+                $filter: `contains(RouteUID,'${this.routeUID}')`,
+            };
+
             try {
                 const result = await getBusLine(sendData);
                 let lineInfo = result[0].Geometry;
@@ -88,7 +100,11 @@ export default {
             }
         },
         async getBusPos() {
-            const sendData = { routeName: this.routeName, city: this.city };
+            const sendData = {
+                city: this.city,
+                $filter: `contains(RouteUID,'${this.routeUID}')`,
+            };
+
             try {
                 const result = await getBusPosition(sendData);
                 let busInfo = result;
@@ -111,6 +127,7 @@ export default {
             this.moveY = this.moveY === 60 ? 0 : 60;
         },
         clickStop(obj) {
+            console.log("obj====", obj);
             const { StopUID } = obj;
             const target = this.mapInfo.find((vo) => vo.StopUID === StopUID);
             const { PositionLat, PositionLon } = target.StopPosition;

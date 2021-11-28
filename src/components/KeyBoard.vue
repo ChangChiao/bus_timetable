@@ -92,9 +92,6 @@ export default {
                 { value: "E", style: "", fn: "" },
                 { value: "T", style: "", fn: "" },
                 { value: "返回", style: "gray", fn: "ctrlKeyboard" },
-                // { value: "-", style: "", fn: "" },
-                // { value: "-", style: "", fn: "" },
-                // { value: "-", style: "", fn: "" },
             ],
         };
     },

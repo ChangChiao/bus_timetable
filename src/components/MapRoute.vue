@@ -139,8 +139,8 @@ export default {
                             className: "bus-icon",
                             iconAnchor: [12, 70],
                             html: `
-                                <div class="w-16 h-12 relative">
-                                <p class="font-bold text-sm text-center text-primary-500 relative z-10">
+                                <div class="w-20 h-12 relative">
+                                <p class="font-bold text-sm text-center text-light gradients-deep relative z-10 p-1 rounded-lg" >
                                     ${PlateNumb}
                                 </p>
                                 <img class="w-12 m-auto" src="images/mark/BusStop.svg"/>
