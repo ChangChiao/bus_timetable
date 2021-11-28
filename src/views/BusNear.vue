@@ -2,22 +2,26 @@
     <div>
         <Header />
         <map-near ref="mapNear" @getNowPos="getNowPos" />
-        <!-- <div
+        <div
             class="
                 rounded-full
                 touch-ball
+                z-50
                 fixed
                 bg-light
                 w-16
                 h-16
                 flex
+                right-0
+                top-72
                 justify-center
                 items-center
                 shadow-lg
             "
+            @click="focusSelf"
         >
             <img src="images/cursor.svg" alt="" />
-        </div> -->
+        </div>
         <div
             class="panel side-block"
             :style="{ transform: 'translateY(' + this.moveY + 'vh)' }"
@@ -62,6 +66,7 @@ export default {
             routeList: [],
             stopInfo: {},
             showNearStation: true,
+            selfPos: {},
         };
     },
     computed: {
@@ -86,6 +91,7 @@ export default {
                     (position) => {
                         const longitude = position.coords.longitude;
                         const latitude = position.coords.latitude;
+                        this.selfPos = { latitude, longitude };
                         this.getNearStop(latitude, longitude);
                         this.$refs.mapNear.drawSelfMark(latitude, longitude);
                     },
@@ -100,6 +106,10 @@ export default {
                     }
                 );
             }
+        },
+        focusSelf() {
+            const { latitude, longitude } = this.selfPos;
+            this.$refs.mapNear.setView(latitude, longitude);
         },
         async getNearStop(latitude, longitude) {
             const sendData = {
