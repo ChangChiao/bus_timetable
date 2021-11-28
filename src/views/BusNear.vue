@@ -34,7 +34,7 @@
                 @selectStop="selectStop"
                 :stopList="stopList"
             />
-            <bus-near-estimate v-else :stopInfo="stopInfo" />
+            <bus-near-estimate v-else @goBack="goBack" :stopInfo="stopInfo" />
         </div>
         <Footer />
     </div>
@@ -140,6 +140,10 @@ export default {
         },
         ctrlPanel() {
             this.moveY = this.moveY === 60 ? 0 : 60;
+        },
+        goBack() {
+            this.showNearStation = true;
+            this.focusSelf();
         },
     },
 };

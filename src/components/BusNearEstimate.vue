@@ -1,5 +1,12 @@
 <template>
     <div>
+        <img src="images/arrow/back.svg" @click="goBack" alt="" />
+        <h3 class="font-bold text-black py-2">
+            {{ stopInfo.StationName.Zh_tw }}
+            <span class="rounded-full bg-gray-400 px-2 py-1 text-sm text-white">
+                {{ stopInfo.direction }}
+            </span>
+        </h3>
         <ul>
             <template v-for="(item, i) in timeList">
                 <bus-near-estimate-item
@@ -38,6 +45,9 @@ export default {
         };
     },
     methods: {
+        goBack() {
+            this.$emit("goBack");
+        },
         getDataByTimer() {
             clearInterval(this.timer);
             this.timer = setInterval(() => {

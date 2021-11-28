@@ -57,6 +57,7 @@ export default {
     },
     methods: {
         selectStop(obj) {
+            obj.direction = this.direction[obj.Bearing];
             this.$emit("selectStop", obj);
         },
         transRoute(arr) {
