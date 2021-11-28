@@ -47,10 +47,10 @@
                 v-for="item in typeBusList"
                 :key="item.StopUID"
             >
-                <span class="w-24" v-html="transStatus(item)"> </span>
+                <span class="w-20" v-html="transStatus(item)"> </span>
                 <span>{{ item.StopName.Zh_tw }}</span>
                 <span
-                    :class="{ 'bg-primary-500': item.EstimateTime <= 30 }"
+                    :class="{ 'bg-primary-500': item.PlateNumb }"
                     class="
                         border
                         absolute
@@ -62,7 +62,23 @@
                         rounded-full
                     "
                 ></span>
-                <!-- <span>{{ item.PlateNumb }}</span> -->
+                <span
+                    v-if="item.PlateNumb"
+                    class="
+                        absolute
+                        right-6
+                        flex
+                        items-center
+                        justify-center
+                        top-5
+                        gradients-deep
+                        text-center text-light text-sm
+                        w-20
+                        h-5
+                        rounded-2xl
+                    "
+                    >{{ item.PlateNumb }}</span
+                >
             </li>
         </ul>
         <div class="line"></div>
@@ -71,7 +87,7 @@
 
 <script>
 import { transBusStatus } from "../utils/common";
-import { getEstimatedTime, getBusPosition } from "../utils/api";
+import { getBusArrival, getBusRealTime } from "../utils/api";
 export default {
     props: {
         routeName: {
@@ -79,6 +95,10 @@ export default {
             default: "",
         },
         city: {
+            type: String,
+            default: "",
+        },
+        routeUID: {
             type: String,
             default: "",
         },
@@ -97,7 +117,6 @@ export default {
             },
         },
     },
-
     computed: {
         sortedBusData() {
             const copy = [...this.busData];
@@ -145,25 +164,40 @@ export default {
             try {
                 const sendData = {
                     city: this.city,
-                    routeName: this.routeName,
+                    $filter: `contains(RouteUID,'${this.routeUID}')`,
                 };
                 this.$bus.$emit("setLoading", true);
-                const result = await getEstimatedTime(sendData);
+                const result = await getBusArrival(sendData);
                 this.$bus.$emit("setLoading", false);
-
                 this.busData = result;
+                this.getBusRealInfo();
             } catch (error) {
                 console.log("error", error);
             }
         },
-        async getBusPos() {
-            const sendData = { city: this.city, routeName: this.routeName };
+        async getBusRealInfo() {
             try {
-                const result = await getBusPosition(sendData);
-                this.busPos = result;
+                const sendData = {
+                    city: this.city,
+                    $filter: `contains(RouteUID,'${this.routeUID}')`,
+                };
+                const result = await getBusRealTime(sendData);
+                // this.busData = result;
+                console.warn("result", result);
+                this.combineData(result);
             } catch (error) {
                 console.log("error", error);
             }
+        },
+        combineData(bus) {
+            let temp = [...this.busData];
+            bus.forEach((element) => {
+                const index = this.busData.findIndex(
+                    (vo) => vo.StopUID === element.StopUID
+                );
+                temp[index]["PlateNumb"] = element.PlateNumb;
+            });
+            this.busData = temp;
         },
 
         setTab(type) {

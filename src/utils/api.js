@@ -1,13 +1,15 @@
 import api from "../utils/http";
 import {
     API_ROUTE,
-    API_ESTIMATED_TIME,
     API_BUS_STOP,
     API_BUS_SHAPE,
     API_BUS_POS,
     API_BUS_STOP_NEAR,
     API_BUS_ROUTE_NEAR,
+    API_ESTIMATED_TIME,
+    API_BUS_ESTIMATED_STATION,
     API_BUS_ESTIMATED_NEAR,
+    API_BUS_REALTIME,
     API_BUS_SCHEDULE,
 } from "../global/constant";
 import jsSHA from "jssha";
@@ -130,4 +132,26 @@ export const getBusSchedule = (sendData) => {
         },
     };
     return api.get(API_BUS_SCHEDULE + `/${cityPath}/${routeName}`, config);
+};
+
+export const getBusRealTime = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_REALTIME + `/${cityPath}`, config);
+};
+
+export const getBusArrival = (sendData) => {
+    const { cityPath, data } = setPath(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data,
+        },
+    };
+    return api.get(API_BUS_ESTIMATED_STATION + `/${cityPath}`, config);
 };

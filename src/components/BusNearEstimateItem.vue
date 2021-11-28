@@ -62,13 +62,14 @@ export default {
             return transBusStatus(obj);
         },
         goRouteDetail() {
-            const { RouteName } = this.itemData;
+            const { RouteName, RouteUID } = this.itemData;
             const { DepartureStopNameZh, DestinationStopNameZh, City } =
                 this.target;
 
             this.$router.push({
                 path: "/busroute",
                 query: {
+                    routeUID: RouteUID,
                     routeName: RouteName.Zh_tw,
                     city: City,
                     to: DepartureStopNameZh,

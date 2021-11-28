@@ -5,6 +5,7 @@ export const API_SCHEDULE = API_URL + "/Schedule/City"; //取得公車路線班�
 export const API_BUS_SHAPE = API_URL + "/Shape/City"; //取得公車路線
 export const API_BUS_POS = API_URL + "/RealTimeByFrequency/City"; //取得公車移動位置
 export const API_BUS_STATION = API_URL + "/Station/City"; //
+export const API_BUS_REALTIME = API_URL + "/RealTimeNearStop/City"; //取得公車動態定點資料
 //批次(60秒更新) 逐筆（較快更新不過比較會掉資料）
 export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車所有站點(座標)
 //取得鄰近資訊
@@ -14,7 +15,8 @@ export const API_BUS_ROUTE_NEAR = API_URL + "/Route/NearBy"; //取得附近公�
 export const API_BUS_ESTIMATED_STATION =
     API_URL + "/EstimatedTimeOfArrival/City"; //取得指定站牌到站預估
 //公車資訊
-export const API_BUS_SCHEDULE = API_URL + "/Schedule/City";
+export const API_BUS_SCHAPI_BUS_ESTIMATED_STATIONEDULE =
+    API_URL + "/Schedule/City";
 //not use
 export const API_BUS_ESTIMATED_NEAR =
     API_URL + "/EstimatedTimeOfArrival/NearBy"; //取得附近公車到站時間(僅桃園 台中有提供...) (n/a)

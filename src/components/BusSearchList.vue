@@ -40,11 +40,13 @@ export default {
                 DepartureStopNameZh,
                 DestinationStopNameZh,
                 RouteName,
+                RouteUID,
                 City,
             } = item;
             this.$router.push({
                 path: "/busroute",
                 query: {
+                    routeUID: RouteUID,
                     routeName: RouteName.Zh_tw,
                     city: City,
                     to: DepartureStopNameZh,

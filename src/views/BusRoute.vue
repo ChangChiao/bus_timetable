@@ -11,6 +11,7 @@
             <bus-route-info
                 :destination="destination"
                 :city="city"
+                :routeUID="routeUID"
                 :routeName="routeName"
             />
         </div>
@@ -32,6 +33,7 @@ export default {
         return {
             moveY: 60,
             routeName: "",
+            routeUID: "",
             city: "",
             mapInfo: [],
             destination: {
@@ -87,6 +89,7 @@ export default {
     },
     mounted() {
         this.routeName = this.$route.query.routeName;
+        this.routeUID = this.$route.query.routeUID;
         this.city = this.$route.query.city;
         let to = this.$route.query.to;
         let back = this.$route.query.back;
