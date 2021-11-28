@@ -17,9 +17,6 @@
     option {
         @apply text-center p-2;
     }
-    body{
-        background-color: #e5e5e5;
-    }
 }
 
 @layer components {
@@ -36,6 +33,12 @@
     .input-box-round{
         @apply input-box rounded-lg;
     }
+
+    .keyboard-item {
+       width: 19%;
+       @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light;
+    }
+    
     .status {
         @apply rounded-md h-4 w-8 border mr-2 p-1;
     }
@@ -103,6 +106,3 @@
     }
 }
 
-.red{
-    color:#FB5B44
-}

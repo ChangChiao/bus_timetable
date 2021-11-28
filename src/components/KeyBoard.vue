@@ -28,7 +28,7 @@
         >
             {{ item.value }}
         </li>
-        <li class="keyboard-item bg-gray-600" @click="deleteRouteName">
+        <li class="keyboard-item bg-gray-400" @click="deleteRouteName">
             <img src="images/Keyboard-delete.svg" alt="" />
         </li>
     </ul>
@@ -118,9 +118,4 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
-.keyboard-item {
-    width: 19%;
-    @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light;
-}
-</style>
+<style lang="postcss" scoped></style>

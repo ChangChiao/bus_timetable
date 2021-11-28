@@ -116,6 +116,9 @@ export default {
                 0,
                 this.routeName.length - 1
             );
+            if (!this.routeName) {
+                this.getRoute();
+            }
         },
         keyIn(event) {
             this.routeName = event.target.value;
@@ -123,6 +126,7 @@ export default {
         },
         reset() {
             this.routeName = "";
+            this.getRoute();
         },
         ctrlKeyboard() {
             this.showKeyboard = !this.showKeyboard;

@@ -1,25 +1,4 @@
 @import "./tailwind-custom.css";
+@import "./common.css";
 @import "./leaflet.css";
 
-.for-web{
-    display:block;
-}                                                                                   
-
-
-#map {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    z-index: 30;
-    left: 0;
-}
-
-@media screen and (max-width: 768px){
-    .for-web{
-        display:none;
-    }
-    #map{
-        width: 100vw;
-        height: 100vh;
-    }
-}
