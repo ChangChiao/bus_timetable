@@ -34,8 +34,12 @@ export default {
             this.$refs.mapIndex.drawSelfMark(latitude, longitude);
         },
         drawStation(obj) {
-            const { PositionLat, PositionLon } = obj;
-            this.$refs.mapIndex.drawStation(PositionLat, PositionLon);
+            const { PositionLat, PositionLon, StationName } = obj;
+            this.$refs.mapIndex.drawStation(
+                PositionLat,
+                PositionLon,
+                StationName
+            );
         },
     },
 };

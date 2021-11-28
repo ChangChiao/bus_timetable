@@ -46,8 +46,8 @@ export default {
         cleanStation() {
             stationLayer.clearLayers();
         },
-        setView(latitude, longitude) {
-            map.setView([latitude, longitude], 16);
+        setView(latitude, longitude, scale = 16) {
+            map.setView([latitude, longitude], scale);
         },
         createMark() {
             selfMark = new L.Icon({
@@ -67,16 +67,19 @@ export default {
             map.addLayer(markLayer);
             this.setView(latitude, longitude);
         },
-        drawStation(PositionLat, PositionLon) {
+        drawStation(PositionLat, PositionLon, StationName) {
             this.cleanStation();
             stationLayer.addLayer(
                 L.marker([PositionLat, PositionLon], {
                     icon: new L.DivIcon({
                         className: "bus-icon",
+                        iconAnchor: [12, 40],
                         html: `
-                        <div class="w-16 h-14 relative flex justify-center items-center">
-                            <img class="absolute w-9 block" src="images/mark/BusStop.svg"/>
-                            <span class="text-light font-bold text-base text-center relative z-10 pb-4"></span>
+                        <div class="w-24 h-14 relative">
+                            <p class="text-light font-bold text-sm text-center relative z-10 p-2 bg-primary-700 rounded-lg m-auto">
+                                ${StationName.Zh_tw}
+                            </p>
+                            <img class="w-9 m-auto" src="images/mark/BusStop.svg"/>
                         </div>`,
                     }),
                 }).on("click", this.markerOnClick)

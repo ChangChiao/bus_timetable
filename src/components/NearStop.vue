@@ -181,11 +181,16 @@ export default {
             const minIndex = compare.indexOf(Math.min(...compare));
             this.nearStop = this.stopList[minIndex];
             const { PositionLat, PositionLon } = this.nearStop.StationPosition;
+            const { StationName } = this.nearStop;
             this.nearPos = {
                 latitude: PositionLat,
                 longitude: PositionLon,
             };
-            this.$emit("drawStation", { PositionLat, PositionLon });
+            this.$emit("drawStation", {
+                PositionLat,
+                PositionLon,
+                StationName,
+            });
             this.getNearEstimated();
         },
         async getNearEstimated() {

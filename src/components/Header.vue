@@ -30,7 +30,13 @@
         >
             <li
                 v-for="item in menuList"
-                class="text-white cursor-pointer text-lg md:mr-3"
+                class="
+                    text-white
+                    cursor-pointer
+                    text-lg
+                    md:mr-3
+                    hover:text-purple-200
+                "
                 @click="goPath(item.path)"
                 :key="item.path"
             >

@@ -15,6 +15,7 @@
             <div class="input-box">
                 <input
                     type="text"
+                    ref="inputRouteName"
                     @input="keyIn"
                     placeholder="請輸入公車路線"
                     v-model="routeName"
@@ -128,6 +129,9 @@ export default {
         },
         ctrlKeyboard() {
             this.showKeyboard = !this.showKeyboard;
+            if (!this.showKeyboard) {
+                this.$refs.inputRouteName.focus();
+            }
         },
         scrollEvent() {
             if (this.endFlag) return;
