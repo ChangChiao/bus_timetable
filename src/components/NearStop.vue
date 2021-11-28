@@ -139,7 +139,7 @@ export default {
         },
         async getNearStop(latitude, longitude) {
             const sendData = {
-                $spatialFilter: `nearby(${latitude},${longitude},200)`,
+                $spatialFilter: `nearby(${latitude},${longitude}, 500)`,
             };
             try {
                 const result = await getStopNear(sendData);

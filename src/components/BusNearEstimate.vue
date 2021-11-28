@@ -1,8 +1,12 @@
 <template>
     <div>
         <ul>
-            <template v-for="item in timeList">
-                <bus-near-estimate-item :key="item.RouteUID" :itemData="item" />
+            <template v-for="(item, i) in timeList">
+                <bus-near-estimate-item
+                    :key="item.RouteUID"
+                    :order="i + 1"
+                    :itemData="item"
+                />
             </template>
         </ul>
         <div class="line"></div>
