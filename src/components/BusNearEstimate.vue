@@ -2,7 +2,7 @@
     <div>
         <ul>
             <template v-for="item in timeList">
-                <bus-near-estimate-item :key="item.StopUID" :itemData="item" />
+                <bus-near-estimate-item :key="item.RouteUID" :itemData="item" />
             </template>
         </ul>
         <div class="line"></div>
@@ -64,7 +64,7 @@ export default {
         async getBusInfo() {
             let temp = [...this.timeList];
             for (let i = 0; i < temp.length; i++) {
-                const { RouteUID, Direction } = this.timeList[i];
+                const { RouteUID } = this.timeList[i];
                 const cityCode = RouteUID.substr(0, 3);
                 const { value: city } = CITY_LIST.find(
                     (item) => item.ISO === cityCode
@@ -77,15 +77,18 @@ export default {
                 };
                 try {
                     const result = await getBusRoute(sendData);
-                    const { DepartureStopNameZh, DestinationStopNameZh } =
-                        result[0];
-                    let head =
-                        Direction === 0
-                            ? DestinationStopNameZh
-                            : DepartureStopNameZh;
+                    const {
+                        DepartureStopNameZh,
+                        DestinationStopNameZh,
+                        City,
+                        RouteName,
+                    } = result[0];
                     this.$store.commit("updateTerminalList", {
+                        RouteName: RouteName.Zh_tw,
                         RouteUID,
-                        head,
+                        DestinationStopNameZh,
+                        DepartureStopNameZh,
+                        City,
                     });
                 } catch (error) {
                     console.log("error", error);

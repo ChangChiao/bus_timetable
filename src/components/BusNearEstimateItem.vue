@@ -1,17 +1,30 @@
 <template>
-    <li class="w-full flex items-center border-b p-4 border-line relative">
-        <p class="w-24" v-html="transStatus(itemData)"></p>
-        <p>
+    <li
+        class="
+            flex
+            items-center
+            justify-between
+            flex-wrap
+            h-16
+            border-b
+            px-2
+            border-line
+        "
+    >
+        <p
+            :class="{ red: itemData.EstimateTime <= 90 }"
+            class="w-24 font-bold"
+            v-html="transStatus(itemData)"
+        ></p>
+
+        <p class="font-bold text-black w-3/5">
             <span>{{ itemData.RouteName.Zh_tw }}</span>
             <span class="text-gray-400 text-sm block w-full">
-                {{
-                    (terminalList[itemData.RouteUID] &&
-                        `開往${terminalList[itemData.RouteUID]}`) ||
-                    "--"
-                }}
+                {{ (head && `開往${head}`) || "--" }}
             </span>
         </p>
         <img
+            class="w-6 block"
             src="images/arrow/arrow-right-light.svg"
             @click="goRouteDetail"
             alt=""
@@ -29,8 +42,15 @@ export default {
             default: () => {},
         },
     },
-    computed: { ...mapState(["terminalList"]) },
-
+    computed: {
+        ...mapState(["terminalList"]),
+        head() {
+            let target = this.terminalList[this.itemData.RouteUID];
+            return this.itemData.Direction === 0
+                ? target.DestinationStopNameZh
+                : target.DepartureStopNameZh;
+        },
+    },
     methods: {
         transStatus(obj) {
             return transBusStatus(obj);

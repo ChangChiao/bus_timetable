@@ -33,8 +33,19 @@ export default new Vuex.Store({
             }
         },
         updateTerminalList(state, obj) {
-            const { RouteUID, head } = obj;
-            Vue.set(state.terminalList, RouteUID, head);
+            const {
+                RouteUID,
+                RouteName,
+                DestinationStopNameZh,
+                DepartureStopNameZh,
+                City,
+            } = obj;
+            Vue.set(state.terminalList, RouteUID, {
+                RouteName,
+                DestinationStopNameZh,
+                DepartureStopNameZh,
+                City,
+            });
         },
     },
     actions: {},

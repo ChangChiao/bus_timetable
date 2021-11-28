@@ -44,41 +44,12 @@
                 /></span>
             </div>
             <ul class="overflow-y-scroll md:h-96">
-                <li
-                    v-for="item in timeList"
-                    :key="item.RouteUID"
-                    class="
-                        flex
-                        items-center
-                        justify-between
-                        flex-wrap
-                        h-16
-                        border-b
-                        px-2
-                        border-line
-                    "
-                >
-                    <p
-                        :class="{ red: item.EstimateTime <= 90 }"
-                        class="w-24 font-bold"
-                        v-html="transStatus(item)"
-                    ></p>
-                    <p class="font-bold text-black w-3/5">
-                        {{ item.RouteName.Zh_tw }}
-                        <span class="text-gray-400 text-sm block w-full">
-                            {{
-                                (terminalList[item.RouteUID] &&
-                                    `開往${terminalList[item.RouteUID]}`) ||
-                                "--"
-                            }}
-                        </span>
-                    </p>
-                    <img
-                        class="w-6 block"
-                        src="images/arrow/arrow-right-light.svg"
-                        alt=""
+                <template v-for="item in timeList">
+                    <bus-near-estimate-item
+                        :key="item.StopUID"
+                        :itemData="item"
                     />
-                </li>
+                </template>
                 <li class="no-data" v-show="timeList.length === 0">
                     附近無站牌
                 </li>
@@ -92,8 +63,11 @@ import { mapState } from "vuex";
 import { CITY_LIST } from "../global/constant";
 import { getStopNear, getNearEstimated, getBusRoute } from "../utils/api";
 import { getDistance, transBusStatus } from "../utils/common";
+import BusNearEstimateItem from "./BusNearEstimateItem.vue";
+
 export default {
-    data: function () {
+    components: { BusNearEstimateItem },
+    data() {
         return {
             showList: false,
             timer: null,
@@ -219,7 +193,7 @@ export default {
         async getBusInfo() {
             let temp = [...this.timeList];
             for (let i = 0; i < temp.length; i++) {
-                const { RouteUID, Direction } = this.timeList[i];
+                const { RouteUID } = this.timeList[i];
                 const cityCode = RouteUID.substr(0, 3);
                 const { value: city } = CITY_LIST.find(
                     (item) => item.ISO === cityCode
@@ -231,15 +205,18 @@ export default {
                 };
                 try {
                     const result = await getBusRoute(sendData);
-                    const { DepartureStopNameZh, DestinationStopNameZh } =
-                        result[0];
-                    let head =
-                        Direction === 0
-                            ? DestinationStopNameZh
-                            : DepartureStopNameZh;
+                    const {
+                        DepartureStopNameZh,
+                        DestinationStopNameZh,
+                        City,
+                        RouteName,
+                    } = result[0];
                     this.$store.commit("updateTerminalList", {
+                        RouteName: RouteName.Zh_tw,
                         RouteUID,
-                        head,
+                        DestinationStopNameZh,
+                        DepartureStopNameZh,
+                        City,
                     });
                 } catch (error) {
                     console.log("error", error);

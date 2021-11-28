@@ -36,8 +36,12 @@
                 </ul>
             </nav>
         </div>
-        <div :class="['mobile-menu-btn', { active: active }]" v-if="showHam">
-            <div class="hamburger" @click="ctrlMenu">
+        <div
+            :class="['mobile-menu-btn', { active: active }]"
+            @click="ctrlMenu"
+            v-if="showHam"
+        >
+            <div class="hamburger">
                 <span class="line"></span>
                 <span class="line"></span>
                 <span class="line"></span>
