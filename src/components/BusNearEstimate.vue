@@ -42,7 +42,6 @@ export default {
     computed: { ...mapState(["terminalList"]) },
     watch: {
         stopInfo() {
-            console.log("change!!!", this.stopInfo);
             if (!this.stopInfo) return;
             this.getNearEstimated();
             this.getDataByTimer();
@@ -72,7 +71,6 @@ export default {
             }, 1000);
         },
         async getNearEstimated() {
-            console.warn("this.stopInfo", this.stopInfo);
             const { PositionLat, PositionLon } = this.stopInfo.StationPosition;
             this.$bus.$emit("setLoading", true);
             const sendData = {

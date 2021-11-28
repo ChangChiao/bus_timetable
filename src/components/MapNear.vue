@@ -74,6 +74,7 @@ export default {
                 let { PositionLat, PositionLon } = item.StationPosition;
                 const customMarker = new L.DivIcon({
                     className: "bus-icon",
+                    iconAnchor: [12, 40],
                     html: `
                     <div class="w-16 h-14 relative flex justify-center items-center">
                         <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
@@ -94,7 +95,6 @@ export default {
         markerOnClick(e) {
             const { lat, lng } = e.latlng;
             this.$emit("setStop", { lat, lng });
-            console.log("dddsd", lat, lng);
         },
     },
     mounted() {

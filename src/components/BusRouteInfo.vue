@@ -212,8 +212,6 @@ export default {
                     $filter: `contains(RouteUID,'${this.routeUID}')`,
                 };
                 const result = await getBusRealTime(sendData);
-                // this.busData = result;
-                console.warn("result", result);
                 this.combineData(result);
             } catch (error) {
                 console.log("error", error);

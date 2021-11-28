@@ -159,7 +159,6 @@ export default {
                 const { PositionLat, PositionLon } = vo.StationPosition;
                 return PositionLat === lat && PositionLon === lng;
             });
-            console.log("target", target);
             this.stopInfo = target;
             this.showNearStation = false;
             this.$refs.mapNear.setView(lat, lng, 18);

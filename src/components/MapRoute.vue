@@ -10,7 +10,6 @@ let map = null;
 let markLayer = null;
 let routeLayer = null;
 let busLayer = null;
-let busMark = null;
 let startMark = null;
 let endMark = null;
 export default {
@@ -63,14 +62,6 @@ export default {
             map.setView([latitude, longitude], scale);
         },
         createMark() {
-            busMark = new L.Icon({
-                iconUrl: "images/mark/BusStop.svg",
-                shadowUrl: "",
-                iconSize: [40, 40],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                // shadowSize: [41, 41]
-            });
             startMark = new L.Icon({
                 iconUrl: "images/mark/BusStop-start.svg",
                 shadowUrl: "",
@@ -123,10 +114,11 @@ export default {
                     L.marker([PositionLat, PositionLon], {
                         icon: new L.DivIcon({
                             className: "bus-icon",
+                            iconAnchor: [12, 40],
                             html: `
                             <div class="w-16 h-14 relative flex justify-center items-center">
                                 <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
-                                <span class="text-light font-bold text-base text-center relative z-10 pb-2">${
+                                <span class="text-light font-bold text-base text-center relative z-10 pb-2.5">${
                                     i + 1
                                 }</span>
                             </div>`,
@@ -142,10 +134,25 @@ export default {
                 let { PositionLat, PositionLon } = item.BusPosition;
                 let { PlateNumb } = item;
                 busLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: busMark })
-                        .bindPopup(`
-                            <h2 class="title">${PlateNumb}</h2>
-                        `)
+                    L.marker([PositionLat, PositionLon], {
+                        icon: new L.DivIcon({
+                            className: "bus-icon",
+                            iconAnchor: [12, 70],
+                            html: `
+                                <div class="w-16 h-12 relative">
+                                <p class="font-bold text-sm text-center text-primary-500 relative z-10">
+                                    ${PlateNumb}
+                                </p>
+                                <img class="w-12 m-auto" src="images/mark/BusStop.svg"/>
+                            </div>
+`,
+                        }),
+                    })
+
+                    // L.marker([PositionLat, PositionLon], { icon: busMark })
+                    //     .bindPopup(`
+                    //         <h2 class="title">${PlateNumb}</h2>
+                    //     `)
                 );
             });
             map.addLayer(busLayer);

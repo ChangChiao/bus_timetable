@@ -92,8 +92,6 @@ export default {
             const temp = [...mapInfo];
             let start = temp.shift();
             let end = temp.pop();
-            console.log("drawMark");
-
             markLayer.addLayer(
                 L.marker(
                     [
@@ -124,6 +122,7 @@ export default {
                     L.marker([PositionLat, PositionLon], {
                         icon: new L.DivIcon({
                             className: "bus-icon",
+                            iconAnchor: [12, 40],
                             html: `
                             <div class="w-16 h-14 relative flex justify-center items-center">
                                 <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>

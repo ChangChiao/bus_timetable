@@ -106,7 +106,6 @@ export default {
             this.pageData = this.pageData.concat(temp);
         },
         setRouteName(word) {
-            console.warn("setRouteName");
             this.routeName += word;
             this.getRoute();
         },
