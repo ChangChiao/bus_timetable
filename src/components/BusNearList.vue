@@ -28,6 +28,7 @@
                     {{ transRoute(item.Stops) }}
                 </p>
             </li>
+            <li class="no-data" v-if="stopList.length === 0">附近找不到站牌</li>
         </ul>
     </div>
 </template>

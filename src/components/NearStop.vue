@@ -79,10 +79,7 @@
                         alt=""
                     />
                 </li>
-                <li
-                    class="text-primary-500 text-md"
-                    v-show="timeList.length === 0"
-                >
+                <li class="no-data" v-show="timeList.length === 0">
                     附近無站牌
                 </li>
             </ul>

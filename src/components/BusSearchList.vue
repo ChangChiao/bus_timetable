@@ -18,7 +18,7 @@
                 </p>
                 <!-- <font-awesome-icon @click="setFavorite" icon="fa-heart" /> -->
             </li>
-            <li v-if="pageData.length === 0">
+            <li class="no-data" v-if="pageData.length === 0">
                 <p>哎呀!查無結果</p>
                 <p>請重新搜尋關鍵字或切換縣市</p>
             </li>
