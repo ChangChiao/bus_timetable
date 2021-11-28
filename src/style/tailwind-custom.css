@@ -72,8 +72,8 @@
     }
 
     .scroll-list{
-        height: calc(100vh - 150px);
-        @apply overflow-y-scroll pb-6;
+        height: calc(100vh - 200px);
+        @apply overflow-y-scroll pb-4;
     }
     .side-block{
         @apply md:fixed md:w-96 md:shadow-lg md:h-3/4 md:pb-10 md:bottom-0 md:left-0 md:bg-light z-50;

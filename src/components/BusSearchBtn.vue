@@ -23,24 +23,32 @@ export default {
     data() {
         return {
             inView: true,
+            scrollContainer: null,
         };
     },
     methods: {
         ctrlKeyboard() {
             this.inView && this.$emit("ctrlKeyboard");
             if (!this.inView) {
-                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                this.scrollContainer.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                });
             }
         },
         scrollEvent() {
-            this.inView = window.pageYOffset < window.innerHeight;
+            this.inView =
+                this.scrollContainer.scrollTop <=
+                this.scrollContainer.offsetHeight;
         },
     },
     mounted() {
-        window.addEventListener("scroll", this.scrollEvent);
+        this.scrollContainer = document.querySelector(".scroll-list");
+        this.scrollContainer.addEventListener("scroll", this.scrollEvent);
     },
     beforeDestroy() {
-        window.removeEventListener("scroll", this.scrollEvent);
+        this.scrollContainer.removeEventListener("scroll", this.scrollEvent);
     },
 };
 </script>

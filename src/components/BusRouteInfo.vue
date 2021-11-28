@@ -1,12 +1,13 @@
 <template>
-    <div class="">
+    <div class="relative">
         <img
             class="py-2 cursor-pointer"
             src="images/arrow/back.svg"
             @click="goBack"
             alt=""
         />
-        <p class="text-gray-500 text-sm">
+
+        <p class="text-gray-500 text-sm py-2">
             將於{{ second }}秒後更新
             <img
                 @click="refresh"
@@ -15,7 +16,15 @@
                 alt=""
             />
         </p>
-        <h1 class="text-3xl font-bold pb-4">{{ routeName }}</h1>
+        <h1 class="text-3xl font-bold pb-4">
+            {{ routeName }}
+            <font-awesome-icon
+                class="text-gray-400 text-2xl"
+                :class="{ 'text-status-error': isExistFavorite }"
+                @click="setFavorite"
+                icon="heart"
+            />
+        </h1>
         <ul
             class="
                 flex
@@ -46,7 +55,7 @@
                     flex
                     items-center
                     border-b
-                    p-4
+                    py-4
                     cursor-pointer
                     border-line
                     relative
@@ -55,7 +64,7 @@
                 :key="item.StopUID"
                 @click="clickStop(item)"
             >
-                <span class="w-22" v-html="transStatus(item)"> </span>
+                <span class="w-20" v-html="transStatus(item)"> </span>
                 <span>
                     <strong>{{ i }}.</strong>
                     {{ item.StopName.Zh_tw }}
@@ -97,6 +106,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { transBusStatus } from "../utils/common";
 import { getBusArrival, getBusRealTime } from "../utils/api";
 export default {
@@ -129,6 +139,7 @@ export default {
         },
     },
     computed: {
+        ...mapState(["favoriteList"]),
         sortedBusData() {
             const copy = [...this.busData];
             return copy.sort((a, b) => Number(a.StopID) - Number(b.StopID));
@@ -141,6 +152,11 @@ export default {
         },
         typeBusList() {
             return this.listType === 0 ? this.goBus : this.backBus;
+        },
+        isExistFavorite() {
+            return this.favoriteList.some(
+                (vo) => vo.RouteUID === this.routeUID
+            );
         },
     },
     data() {
@@ -210,7 +226,6 @@ export default {
             });
             this.busData = temp;
         },
-
         setTab(type) {
             this.listType = type;
         },
@@ -219,6 +234,18 @@ export default {
         },
         clickStop(obj) {
             this.$emit("clickStop", obj);
+        },
+        setFavorite() {
+            const obj = {
+                RouteName: {
+                    Zh_tw: this.routeName,
+                },
+                City: this.city,
+                RouteUID: this.routeUID,
+                DepartureStopNameZh: this.destination.to,
+                DestinationStopNameZh: this.destination.back,
+            };
+            this.$store.commit("updateFavoriteList", obj);
         },
     },
     mounted() {},

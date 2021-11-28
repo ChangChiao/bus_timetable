@@ -2,7 +2,6 @@
     <div>
         <Header />
         <map-searchs ref="mapSearch" :setClass="'for-web'" />
-        <!-- <map-searchs :setClass="'for-web'" /> -->
         <div class="px-4 pt-10 side-block">
             <select class="mb-2" v-model="city" @change="getRoute">
                 <option
