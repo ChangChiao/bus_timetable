@@ -1,6 +1,6 @@
 <template>
     <div class="near-stop side-block">
-        <div class="pos-btn px-4" v-show="!showList">
+        <div class="pos-btn px-4 md:py-4" v-show="!showList">
             <p class="text-center text-md font-bold block text-black pt-6">
                 開啟裝置定位功能，以便為您提供更好的服務。
             </p>
@@ -38,7 +38,7 @@
                     >將於{{ second }}秒後更新
                     <img
                         @click="refresh"
-                        class="inline"
+                        class="inline cursor-pointer"
                         src="images/Refresh.svg"
                         alt=""
                 /></span>

@@ -38,7 +38,7 @@
        width: 19%;
        @apply border text-2xl font-bold flex justify-center items-center rounded-lg h-12 cursor-pointer border-line bg-light;
     }
-    
+
     .status {
         @apply rounded-md h-4 w-8 border mr-2 p-1;
     }
@@ -76,18 +76,19 @@
         @apply overflow-y-scroll pb-6;
     }
     .side-block{
-        @screen md{
-            min-height: 580px;
-            border-top-right-radius: 60px;
-        }
-       @apply md:fixed md:w-96 md:shadow-lg md:h-3/4 md:pb-10 md:bottom-0 md:left-0 md:bg-light z-50;
+        @apply md:fixed md:w-96 md:shadow-lg md:h-3/4 md:pb-10 md:bottom-0 md:left-0 md:bg-light z-50;
     }
     .no-data{
        @apply text-center text-lg text-gray-400 pt-2; 
     }
 }
 
-
+@screen md{
+    .side-block{
+        min-height: 580px;
+        border-top-right-radius: 60px;
+    }
+}
 
 @media screen and (max-width: 768px) {
     .for-mobile {

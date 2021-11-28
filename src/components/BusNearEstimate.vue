@@ -1,6 +1,11 @@
 <template>
     <div>
-        <img src="images/arrow/back.svg" @click="goBack" alt="" />
+        <img
+            class="py-2 cursor-pointer"
+            src="images/arrow/back.svg"
+            @click="goBack"
+            alt=""
+        />
         <h3 class="font-bold text-black py-2">
             {{ stopInfo && stopInfo.StationName.Zh_tw }}
             <span class="rounded-full bg-gray-400 px-2 py-1 text-sm text-white">

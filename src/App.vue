@@ -45,6 +45,7 @@ export default {
     },
     beforeDestroy() {
         this.$bus.$off("setLoading");
+        window.removeEventListener("resize", this.resizeEvent);
     },
     provide() {
         const appData = {};

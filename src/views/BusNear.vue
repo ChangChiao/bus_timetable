@@ -80,10 +80,13 @@ export default {
         },
     },
     watch: {
-        isMobile(val) {
-            if (!val) {
-                this.moveY = 0;
-            }
+        isMobile: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.moveY = 0;
+                }
+            },
         },
     },
     methods: {

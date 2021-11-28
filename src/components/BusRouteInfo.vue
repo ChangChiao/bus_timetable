@@ -1,11 +1,16 @@
 <template>
     <div class="">
-        <img src="images/arrow/back.svg" @click="goBack" alt="" />
+        <img
+            class="py-2 cursor-pointer"
+            src="images/arrow/back.svg"
+            @click="goBack"
+            alt=""
+        />
         <p class="text-gray-500 text-sm">
             將於{{ second }}秒後更新
             <img
                 @click="refresh"
-                class="inline"
+                class="inline cursor-pointer"
                 src="images/Refresh.svg"
                 alt=""
             />
@@ -42,6 +47,7 @@
                     items-center
                     border-b
                     p-4
+                    cursor-pointer
                     border-line
                     relative
                 "

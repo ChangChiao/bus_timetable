@@ -9,6 +9,7 @@
             h-16
             border-b
             px-2
+            cursor-pointer
             border-line
         "
     >

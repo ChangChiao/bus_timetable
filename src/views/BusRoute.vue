@@ -1,8 +1,9 @@
 <template>
     <div>
+        <Header />
         <map-route ref="mapRoute" @initData="initData" :mapInfo="mapInfo" />
         <div
-            class="panel"
+            class="panel side-block"
             :style="{
                 transform: 'translateY(' + this.moveY + 'vh)',
                 'transition-duration': '0.3s',
@@ -19,19 +20,38 @@
                 :routeName="routeName"
             />
         </div>
+        <Footer />
     </div>
 </template>
 
 <script>
+import Footer from "../components/Footer.vue";
+import Header from "../components/Header.vue";
 import BusRouteInfo from "../components/BusRouteInfo.vue";
 import MapRoute from "../components/MapRoute.vue";
 import { getBusStop, getBusLine, getBusPosition } from "../utils/api";
-
 export default {
+    inject: ["appData"],
     components: {
         BusRouteInfo,
         MapRoute,
-        // Map,
+        Footer,
+        Header,
+    },
+    computed: {
+        isMobile() {
+            return this.appData?.windowSize < 780;
+        },
+    },
+    watch: {
+        isMobile: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.moveY = 0;
+                }
+            },
+        },
     },
     data() {
         return {
