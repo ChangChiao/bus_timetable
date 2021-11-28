@@ -40,24 +40,16 @@ export default {
             type: Array,
             default: () => [],
         },
+        direction: {
+            type: Object,
+            default: () => {},
+        },
     },
     data() {
-        return {
-            direction: {
-                E: "東行",
-                W: "西行",
-                S: "南行",
-                N: "北行",
-                SE: "東南行",
-                NE: "東北行",
-                SW: "西南行",
-                NW: "西北行",
-            },
-        };
+        return {};
     },
     methods: {
         selectStop(obj) {
-            obj.direction = this.direction[obj.Bearing];
             this.$emit("selectStop", obj);
         },
         transRoute(arr) {

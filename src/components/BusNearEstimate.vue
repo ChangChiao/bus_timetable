@@ -2,9 +2,9 @@
     <div>
         <img src="images/arrow/back.svg" @click="goBack" alt="" />
         <h3 class="font-bold text-black py-2">
-            {{ stopInfo.StationName.Zh_tw }}
+            {{ stopInfo && stopInfo.StationName.Zh_tw }}
             <span class="rounded-full bg-gray-400 px-2 py-1 text-sm text-white">
-                {{ stopInfo.direction }}
+                {{ stopInfo && direction[stopInfo.Bearing] }}
             </span>
         </h3>
         <ul>
@@ -32,9 +32,17 @@ export default {
             type: Object,
             default: () => {},
         },
+        direction: { type: Object, default: () => {} },
     },
     computed: { ...mapState(["terminalList"]) },
-
+    watch: {
+        stopInfo() {
+            console.log("change!!!", this.stopInfo);
+            if (!this.stopInfo) return;
+            this.getNearEstimated();
+            this.getDataByTimer();
+        },
+    },
     data() {
         return {
             timer: null,

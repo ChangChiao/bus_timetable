@@ -72,36 +72,29 @@ export default {
             this.cleanStation();
             stopInfo.forEach((item, i) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
+                const customMarker = new L.DivIcon({
+                    className: "bus-icon",
+                    html: `
+                    <div class="w-16 h-14 relative flex justify-center items-center">
+                        <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
+                        <span class="text-light font-bold text-base text-center relative z-10 pb-4">${
+                            i + 1
+                        }</span>
+                    </div>
+                    `,
+                });
                 stationLayer.addLayer(
                     L.marker([PositionLat, PositionLon], {
-                        icon: new L.DivIcon({
-                            className: "bus-icon",
-                            html: `
-                            <div class="w-16 h-14 relative flex justify-center items-center">
-                                <img class="absolute w-full block" src="images/mark/BusStop_blank.svg"/>
-                                <span class="text-light font-bold text-base text-center relative z-10 pb-4">${
-                                    i + 1
-                                }</span>
-                            </div>`,
-                        }),
+                        icon: customMarker,
                     }).on("click", this.markerOnClick)
                 );
             });
             map.addLayer(stationLayer);
         },
         markerOnClick(e) {
-            let i = 1;
-            const myIcon = new L.DivIcon({
-                className: "bus-icon-active",
-                html: `
-                <div class="w-16 h-14 relative flex justify-center items-center">
-                    <img class="absolute w-full block" src="images/mark/BusStop_active_blank.svg"/>
-                    <span class="text-primary-500 font-bold text-base text-center relative z-10 pb-4">${
-                        i + 1
-                    }</span>
-                </div>`,
-            });
-            e.target.setIcon(myIcon);
+            const { lat, lng } = e.latlng;
+            this.$emit("setStop", { lat, lng });
+            console.log("dddsd", lat, lng);
         },
     },
     mounted() {

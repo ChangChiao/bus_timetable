@@ -1,25 +1,8 @@
 <template>
     <div>
         <Header />
-        <map-near ref="mapNear" @getNowPos="getNowPos" />
-        <div
-            class="
-                rounded-full
-                touch-ball
-                z-50
-                fixed
-                bg-light
-                w-16
-                h-16
-                flex
-                right-0
-                top-72
-                justify-center
-                items-center
-                shadow-lg
-            "
-            @click="focusSelf"
-        >
+        <map-near ref="mapNear" @setStop="setStop" @getNowPos="getNowPos" />
+        <div class="touch-ball z-50 right-0 top-72" @click="focusSelf">
             <img src="images/cursor.svg" alt="" />
         </div>
         <div
@@ -33,8 +16,14 @@
                 v-if="showNearStation"
                 @selectStop="selectStop"
                 :stopList="stopList"
+                :direction="direction"
             />
-            <bus-near-estimate v-else @goBack="goBack" :stopInfo="stopInfo" />
+            <bus-near-estimate
+                v-else
+                @goBack="goBack"
+                :direction="direction"
+                :stopInfo="stopInfo"
+            />
         </div>
         <Footer />
     </div>
@@ -67,6 +56,16 @@ export default {
             stopInfo: {},
             showNearStation: true,
             selfPos: {},
+            direction: {
+                E: "東行",
+                W: "西行",
+                S: "南行",
+                N: "北行",
+                SE: "東南行",
+                NE: "東北行",
+                SW: "西南行",
+                NW: "西北行",
+            },
         };
     },
     computed: {
@@ -87,6 +86,7 @@ export default {
     methods: {
         getNowPos() {
             if (navigator.geolocation) {
+                this.$bus.$emit("setLoading", true);
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const longitude = position.coords.longitude;
@@ -94,10 +94,12 @@ export default {
                         this.selfPos = { latitude, longitude };
                         this.getNearStop(latitude, longitude);
                         this.$refs.mapNear.drawSelfMark(latitude, longitude);
+                        this.$bus.$emit("setLoading", false);
                     },
                     (event) => {
                         const { code, message } = event;
                         this.getNearStop(25.047675, 121.517055);
+                        this.$bus.$emit("setLoading", false);
                         console.log(
                             "error",
                             `code=${code},
@@ -144,6 +146,17 @@ export default {
         goBack() {
             this.showNearStation = true;
             this.focusSelf();
+        },
+        setStop(pos) {
+            const { lat, lng } = pos;
+            const target = this.stopList.find((vo) => {
+                const { PositionLat, PositionLon } = vo.StationPosition;
+                return PositionLat === lat && PositionLon === lng;
+            });
+            console.log("target", target);
+            this.stopInfo = target;
+            this.showNearStation = false;
+            this.$refs.mapNear.setView(lat, lng, 18);
         },
     },
 };

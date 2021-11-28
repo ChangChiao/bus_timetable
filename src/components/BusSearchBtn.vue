@@ -1,7 +1,7 @@
 <template>
     <div
         @click="ctrlKeyboard"
-        class="ball touch-ball fixed md:absolute right-2 top-32 cursor-pointer"
+        class="touch-ball fixed md:absolute right-2 top-32"
     >
         <img
             :src="`images/${showKeyboard ? 'keyboard' : 'command'}.svg`"
