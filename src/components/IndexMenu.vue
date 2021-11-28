@@ -42,6 +42,6 @@ export default {
 
 <style lang="postcss" scoped>
 .list-item {
-    @apply bg-light h-20 flex items-center pl-4 justify-between rounded-md shadow-lg mb-4;
+    @apply bg-light h-20 flex items-center pl-4 justify-between rounded-md shadow-lg mb-4 hover:scale-110 transform transition duration-500;
 }
 </style>

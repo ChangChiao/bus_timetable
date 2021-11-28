@@ -56,7 +56,6 @@ export default {
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
                 popupAnchor: [1, -34],
-                // shadowSize: [41, 41]
             });
         },
         drawSelfMark(latitude, longitude) {

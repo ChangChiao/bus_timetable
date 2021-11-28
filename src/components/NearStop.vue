@@ -43,14 +43,14 @@
                         alt=""
                 /></span>
             </div>
-            <ul class="overflow-y-scroll md:h-96">
-                <template v-for="item in timeList">
+            <ul class="stop-list overflow-y-scroll">
+                <template v-for="item in sortedTimeList">
                     <bus-near-estimate-item
                         :key="item.StopUID"
                         :itemData="item"
                     />
                 </template>
-                <li class="no-data" v-show="timeList.length === 0">
+                <li class="no-data" v-show="sortedTimeList.length === 0">
                     附近無站牌
                 </li>
             </ul>
@@ -85,6 +85,14 @@ export default {
     },
     computed: {
         ...mapState(["terminalList"]),
+        sortedTimeList() {
+            const temp = [...this.timeList];
+            return temp.sort((a, b) => {
+                const aTime = a.EstimateTime ?? 99999;
+                const bTime = b.EstimateTime ?? 99999;
+                return aTime - bTime;
+            });
+        },
     },
     methods: {
         transStatus(obj) {
@@ -112,9 +120,15 @@ export default {
                     (position) => {
                         const longitude = position.coords.longitude;
                         const latitude = position.coords.latitude;
+                        console.log(longitude, latitude);
                         this.showList = true;
                         this.getNearStop(latitude, longitude);
                         this.setNowPos({ latitude, longitude });
+                        // for test
+                        // this.getNearStop(
+                        //     25.033876641528444,
+                        //     121.56456344001262
+                        // );
                         this.$bus.$emit("setLoading", false);
                     },
                     (event) => {
@@ -235,6 +249,12 @@ export default {
 .near-list {
     border-top-right-radius: 60px;
 }
+.stop-list {
+    height: 580px;
+}
 @media screen and (max-width: 768px) {
+    .stop-list {
+        height: 24vh;
+    }
 }
 </style>
