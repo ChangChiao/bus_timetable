@@ -32,7 +32,7 @@
 本專案請求TDX和mapBox的token均存在.env，需自行設定
 
 ```
-//.env
+.env
 
 VUE_APP_ID = your TDX APP ID 
 VUE_APP_KEY = your TDX APP KEY 
