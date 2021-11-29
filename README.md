@@ -46,7 +46,7 @@ VUE_APP_MAP_TOKEN = your mapbox token
 - vuex
 - axios
 - tailwindcss
-- Leaflet
+- leaflet
 
 
 ## 專案架構
