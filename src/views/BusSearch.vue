@@ -18,7 +18,7 @@
                     ref="inputRouteName"
                     @input="keyIn"
                     placeholder="請輸入公車路線"
-                    v-model="routeName"
+                    :value="routeName"
                 />
                 <img
                     v-if="routeName"
@@ -73,6 +73,7 @@ export default {
             showKeyboard: false,
             pageData: [],
             endFlag: false,
+            debounce: null,
         };
     },
     computed: {
@@ -120,8 +121,11 @@ export default {
             }
         },
         keyIn(event) {
-            this.routeName = event.target.value;
-            this.getRoute();
+            clearTimeout(this.debounce);
+            this.debounce = setTimeout(() => {
+                this.routeName = event.target.value;
+                this.getRoute();
+            }, 600);
         },
         reset() {
             this.routeName = "";
