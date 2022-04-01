@@ -13,6 +13,8 @@
 - 根據使用者所在位置獲取鄰近的公車資訊
 - 收藏常用站牌
 
+![image](https://user-images.githubusercontent.com/24662856/161200768-2c7afd24-5f3d-4d7c-98c6-d55bbca61437.png)
+
 
 ## Designer
 
