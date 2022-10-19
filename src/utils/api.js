@@ -12,7 +12,6 @@ import {
     API_BUS_ESTIMATED_NEAR,
     API_BUS_REALTIME,
 } from "../global/constant";
-import jsSHA from "jssha";
 
 let timer = 0;
 
@@ -37,7 +36,7 @@ const getAuthorizationHeader = () => {
     const token = localStorage.getItem("token");
     return {
         authorization: `Bearer ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
     };
 };
 
@@ -160,8 +159,8 @@ export const getToken = () => {
     timer = Date.now();
     const data = {
         grant_type: "client_credentials",
-        client_id: process.env.VITE_APP_ID,
-        client_secret: process.env.VITE_APP_KEY,
+        client_id: process.env.VUE_APP_ID,
+        client_secret: process.env.VUE_APP_KEY,
     };
     let config = {
         headers: {

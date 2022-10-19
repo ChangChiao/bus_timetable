@@ -1,5 +1,6 @@
-export const API_URL = "https://tdx.transportdata.tw/api/basic/v2/Bus";
-export const API_TDX = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token";
+export const API_URL = "https://ptx.transportdata.tw/MOTC/v2/Bus";
+export const API_TDX =
+    "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token";
 export const API_ROUTE = API_URL + "/Route/City"; //取得所有公車路線 +routeName可取得路線資訊（車牌號碼 票價）
 export const API_ESTIMATED_TIME = API_URL + "/EstimatedTimeOfArrival/City"; //預估到站時間
 export const API_SCHEDULE = API_URL + "/Schedule/City"; //取得公車路線班表

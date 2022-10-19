@@ -5,7 +5,7 @@ const service = axios.create({});
 
 service.interceptors.request.use(
     (config) => {
-        let params = config.params;
+        let params = config.params ?? config.data;
         Object.keys(params).map((vo) => {
             if (!params[vo]) delete params[vo];
         });
@@ -24,7 +24,7 @@ service.interceptors.response.use(
         const status = error?.response?.status;
         showToast(`error--${status}`, "error");
         console.log("status", typeof status);
-        if (status === 403 || status === 429) {
+        if (status === 403 || status === 429 || status === 401) {
             const res = await getToken();
             console.log("res", res);
             if (res.access_token) {
