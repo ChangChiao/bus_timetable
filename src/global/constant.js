@@ -1,4 +1,6 @@
-export const API_URL = "https://ptx.transportdata.tw/MOTC/v2/Bus";
+// export const API_URL = "https://ptx.transportdata.tw/MOTC/v2/Bus";
+export const API_URL = "https://tdx.transportdata.tw/api/basic/v2/Bus";
+export const API_URL_AD = "https://tdx.transportdata.tw/api/advanced/v2/Bus";
 export const API_TDX =
     "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token";
 export const API_ROUTE = API_URL + "/Route/City"; //取得所有公車路線 +routeName可取得路線資訊（車牌號碼 票價）
@@ -11,8 +13,8 @@ export const API_BUS_REALTIME = API_URL + "/RealTimeNearStop/City"; //取得公�
 //批次(60秒更新) 逐筆（較快更新不過比較會掉資料）
 export const API_BUS_STOP = API_URL + "/StopOfRoute/City"; //取得公車所有站點(座標)
 //取得鄰近資訊
-export const API_BUS_STOP_NEAR = API_URL + "/Station/NearBy"; //取得附近公車站牌
-export const API_BUS_ROUTE_NEAR = API_URL + "/Route/NearBy"; //取得附近公車路線
+export const API_BUS_STOP_NEAR = API_URL_AD + "/Station/NearBy"; //取得附近公車站牌
+export const API_BUS_ROUTE_NEAR = API_URL_AD + "/Route/NearBy"; //取得附近公車路線
 //取得指定站牌
 export const API_BUS_ESTIMATED_STATION =
     API_URL + "/EstimatedTimeOfArrival/City"; //取得指定站牌到站預估
@@ -21,7 +23,7 @@ export const API_BUS_SCHAPI_BUS_ESTIMATED_STATIONEDULE =
     API_URL + "/Schedule/City";
 //not use
 export const API_BUS_ESTIMATED_NEAR =
-    API_URL + "/EstimatedTimeOfArrival/NearBy"; //取得附近公車到站時間(僅桃園 台中有提供...) (n/a)
+    API_URL_AD + "/EstimatedTimeOfArrival/NearBy"; //取得附近公車到站時間(僅桃園 台中有提供...) (n/a)
 export const CITY_LIST = [
     {
         ISO: "TPE",

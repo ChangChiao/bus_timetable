@@ -119,7 +119,7 @@ export default {
             this.getBusPos();
         },
         setView(mapInfo) {
-            const { PositionLat, PositionLon } = mapInfo[0]?.StopPosition;
+            const { PositionLat, PositionLon } = mapInfo?.[0]?.StopPosition;
             this.$refs.mapRoute.drawMark(mapInfo);
             this.$refs.mapRoute.setView(PositionLat, PositionLon, 12);
         },
@@ -130,7 +130,7 @@ export default {
             console.log("obj====", obj);
             const { StopUID } = obj;
             const target = this.mapInfo.find((vo) => vo.StopUID === StopUID);
-            const { PositionLat, PositionLon } = target.StopPosition;
+            const { PositionLat, PositionLon } = target?.StopPosition;
             this.$refs.mapRoute.setView(PositionLat, PositionLon, 18);
         },
     },

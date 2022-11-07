@@ -55,7 +55,7 @@ export const getBusRoute = (sendData) => {
             ...data,
         },
     };
-    return api.get(API_ROUTE + `/${cityPath}/${routeName}`, config);
+    return api.get(API_ROUTE + `/${cityPath}${routeName}`, config);
 };
 
 export const getEstimatedTime = (sendData) => {
@@ -77,7 +77,7 @@ export const getBusStop = (sendData) => {
             ...data,
         },
     };
-    return api.get(API_BUS_STOP + `/${cityPath}/${routeName}`, config);
+    return api.get(API_BUS_STOP + `/${cityPath}${routeName}`, config);
 };
 
 export const getBusLine = (sendData) => {
@@ -88,7 +88,7 @@ export const getBusLine = (sendData) => {
             ...data,
         },
     };
-    return api.get(API_BUS_SHAPE + `/${cityPath}/${routeName}`, config);
+    return api.get(API_BUS_SHAPE + `/${cityPath}${routeName}`, config);
 };
 
 export const getBusPosition = (sendData) => {

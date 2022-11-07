@@ -7,7 +7,7 @@
             alt=""
         />
 
-        <p class="text-gray-500 text-sm py-2">
+        <p class="py-2 text-sm text-gray-500">
             將於{{ second }}秒後更新
             <img
                 @click="refresh"
@@ -16,10 +16,10 @@
                 alt=""
             />
         </p>
-        <h1 class="text-3xl font-bold pb-4">
+        <h1 class="pb-4 text-3xl font-bold">
             {{ routeName }}
             <font-awesome-icon
-                class="text-gray-400 text-2xl cursor-pointer"
+                class="text-2xl text-gray-400 cursor-pointer"
                 :class="{ 'text-status-error': isExistFavorite }"
                 @click="setFavorite"
                 icon="heart"
@@ -27,12 +27,12 @@
         </h1>
         <ul
             class="
-                flex
-                justify-between
-                items-center
-                border-b border-gray-300
                 relative
                 z-30
+                flex
+                items-center
+                justify-between
+                border-b border-gray-300
             "
         >
             <li
@@ -51,14 +51,14 @@
         <ul class="scroll-list">
             <li
                 class="
-                    w-full
+                    relative
                     flex
                     items-center
-                    border-b
+                    w-full
                     py-4
+                    border-b
                     cursor-pointer
                     border-line
-                    relative
                     hover:bg-gray-200
                 "
                 v-for="(item, i) in typeBusList"
@@ -71,7 +71,7 @@
                     {{ item.StopName.Zh_tw }}
                 </span>
                 <span
-                    class="h-full w-px bg-gray-300 absolute line top-0"
+                    class="absolute top-0 w-px h-full bg-gray-300 line"
                 ></span>
                 <span
                     class="
@@ -90,15 +90,16 @@
                     v-if="item.PlateNumb"
                     class="
                         absolute
-                        right-6
                         flex
                         items-center
                         justify-center
-                        top-5
-                        gradients-deep
-                        text-center text-light text-sm
                         w-20
                         h-5
+                        text-sm text-center
+                        right-6
+                        top-5
+                        gradients-deep
+                        text-light
                         rounded-2xl
                     "
                     >{{ item.PlateNumb }}</span
@@ -223,6 +224,7 @@ export default {
         combineData(bus) {
             let temp = [...this.busData];
             bus.forEach((element) => {
+                console.log("combineData");
                 const index = this.busData.findIndex(
                     (vo) => vo.StopUID === element.StopUID
                 );
@@ -255,12 +257,14 @@ export default {
             let temp = [];
             console.warn("arr", arr);
             console.warn("this.stopInfo~~~", this.stopInfo);
-            this.stopInfo[order]["Stops"].forEach((vo) => {
-                const target = arr.find((item) => item.StopUID === vo.StopUID);
-                temp.push(target);
+            this.stopInfo?.[order]?.["Stops"].forEach((vo) => {
+                if (arr.length > 0) {
+                    const target = arr.find(
+                        (item) => item?.StopUID === vo?.StopUID
+                    );
+                    temp.push(target);
+                }
             });
-            console.warn("order", order);
-            console.warn("temp", temp);
             return temp;
         },
     },

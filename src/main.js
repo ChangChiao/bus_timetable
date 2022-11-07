@@ -13,7 +13,7 @@ import Pagination from "vue-pagination-2";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
+import { getToken } from "@/utils/api";
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("pagination", Pagination);
 
@@ -23,6 +23,17 @@ Vue.config.productionTip = false;
 Vue.use(VueGtag, {
     config: { id: "G-N2LJBT6101" },
 });
+
+const checkToken = async () => {
+    if (!localStorage.getItem("token")) {
+        const res = await getToken();
+        if (res.access_token) {
+            localStorage.setItem("token", res.access_token);
+        }
+    }
+};
+
+checkToken();
 
 Vue.prototype.$bus = new Vue();
 
