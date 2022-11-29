@@ -15,8 +15,8 @@ module.exports = {
                 },
                 secondary: {
                     pink: "#FFCCAC",
-                    blue: "78CCDE",
-                    yellow: "FFF0B7",
+                    blue: "#78CCDE",
+                    yellow: "#FFF0B7",
                 },
                 status: {
                     error: "#FB5B44",

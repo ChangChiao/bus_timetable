@@ -1,17 +1,7 @@
 <template>
     <li
         @click="goRouteDetail"
-        class="
-            flex
-            items-center
-            justify-between
-            flex-wrap
-            h-16
-            border-b
-            px-2
-            cursor-pointer
-            border-line
-        "
+        class="flex flex-wrap items-center justify-between h-16 px-2 border-b cursor-pointer border-line"
     >
         <p
             :class="{ red: itemData.EstimateTime <= 90 }"
@@ -19,17 +9,17 @@
             v-html="transStatus(itemData)"
         ></p>
 
-        <p class="text-black w-3/5">
+        <p class="w-3/5 text-black">
             <span
                 ><strong v-if="!isIndex">{{ order }}.</strong>
                 {{ itemData.RouteName.Zh_tw }}</span
             >
-            <span class="text-gray-400 text-sm block w-full">
+            <span class="block w-full text-sm text-gray-400">
                 {{ (head && `開往${head}`) || "--" }}
             </span>
         </p>
         <img
-            class="w-6 block"
+            class="block w-6"
             src="images/arrow/arrow-right-light.svg"
             alt=""
         />

@@ -8,14 +8,7 @@
                 我們將用在提供您所在位置附近的交通等資訊。
             </p>
             <button
-                class="
-                    border-2
-                    w-full
-                    h-12
-                    text-primary-500
-                    border-primary-500
-                    rounded-3xl
-                "
+                class="border-2 w-full h-12 text-primary-500 border-primary-500 rounded-3xl"
                 @click="getNowPos"
             >
                 開啟定位功能

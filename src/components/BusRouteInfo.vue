@@ -26,14 +26,7 @@
             />
         </h1>
         <ul
-            class="
-                relative
-                z-30
-                flex
-                items-center
-                justify-between
-                border-b border-gray-300
-            "
+            class="relative z-30 flex items-center justify-between border-b border-gray-300"
         >
             <li
                 :class="['tab-item', { active: listType === 0 }]"
@@ -50,17 +43,7 @@
         </ul>
         <ul class="scroll-list">
             <li
-                class="
-                    relative
-                    flex
-                    items-center
-                    w-full
-                    py-4
-                    border-b
-                    cursor-pointer
-                    border-line
-                    hover:bg-gray-200
-                "
+                class="relative flex items-center w-full py-4 border-b cursor-pointer border-line hover:bg-gray-200"
                 v-for="(item, i) in typeBusList"
                 :key="item.StopUID"
                 @click="clickStop(item)"
@@ -74,34 +57,12 @@
                     class="absolute top-0 w-px h-full bg-gray-300 line"
                 ></span>
                 <span
-                    class="
-                        border
-                        absolute
-                        right-1.5
-                        top-6
-                        border-gray-400
-                        w-3
-                        h-3
-                        rounded-full
-                    "
+                    class="border absolute right-1.5 top-6 border-gray-400 w-3 h-3 rounded-full"
                     :class="item.PlateNumb ? 'bg-primary-500' : 'bg-light'"
                 ></span>
                 <span
                     v-if="item.PlateNumb"
-                    class="
-                        absolute
-                        flex
-                        items-center
-                        justify-center
-                        w-20
-                        h-5
-                        text-sm text-center
-                        right-6
-                        top-5
-                        gradients-deep
-                        text-light
-                        rounded-2xl
-                    "
+                    class="absolute flex items-center justify-center w-20 h-5 text-sm text-center right-6 top-5 gradients-deep text-light rounded-2xl"
                     >{{ item.PlateNumb }}</span
                 >
             </li>

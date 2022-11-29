@@ -1,19 +1,6 @@
 <template>
     <ul
-        class="
-            fixed
-            bottom-0
-            left-0
-            w-full
-            p-2
-            h-56
-            flex
-            justify-between
-            flex-wrap
-            bg-gray-300
-            border-t border-gray-500
-            md:absolute
-        "
+        class="fixed bottom-0 left-0 w-full p-2 h-56 flex justify-between flex-wrap bg-gray-300 border-t border-gray-500 md:absolute"
     >
         <li
             class="keyboard-item"

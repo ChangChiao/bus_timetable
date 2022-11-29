@@ -1,18 +1,7 @@
 <template>
     <footer
         v-if="!isMobile || (isMobile && isIndex)"
-        class="
-            bg-primary-700
-            h-9
-            fixed
-            bottom-0
-            flex
-            justify-center
-            items-center
-            text-white
-            z-50
-            md:right-0
-        "
+        class="bg-primary-700 h-9 fixed bottom-0 flex justify-center items-center text-white z-50 md:right-0"
     >
         The F2E 3rd Week3 - Bus
     </footer>

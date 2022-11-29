@@ -6,26 +6,13 @@
                 v-for="(item, i) in stopList"
                 :key="item.StationUID"
                 @click="selectStop(item)"
-                class="
-                    p-2
-                    my-2
-                    border border-purple-300
-                    cursor-pointer
-                    rounded-lg
-                    text-left
-                "
+                class="p-2 my-2 border border-purple-300 cursor-pointer rounded-lg text-left"
             >
                 <h3 class="font-bold text-black py-2">
                     <span>{{ i + 1 }}</span>
                     {{ item.StationName.Zh_tw }}
                     <span
-                        class="
-                            rounded-full
-                            bg-gray-400
-                            px-2
-                            py-1
-                            text-sm text-white
-                        "
+                        class="rounded-full bg-gray-400 px-2 py-1 text-sm text-white"
                     >
                         {{ direction[item.Bearing] }}
                     </span>

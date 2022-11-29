@@ -4,20 +4,7 @@
         @touchmove="touchmove"
         @touchend="touchend"
         :style="{ transform: 'translateY(' + this.moveY + 'px)' }"
-        class="
-            pt-2
-            rounded-tl-3xl
-            px-4
-            h-screen
-            w-screen
-            rounded-rl-3xl
-            bg-light
-            fixed
-            z-20
-            bottom-0
-            overflow-y-scroll
-            max-h-14
-        "
+        class="pt-2 rounded-tl-3xl px-4 h-screen w-screen rounded-rl-3xl bg-light fixed z-20 bottom-0 overflow-y-scroll max-h-14"
     >
         <div class="w-10 h-0.5 bg-gray-400 m-auto"></div>
         <slot></slot>

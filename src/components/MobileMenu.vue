@@ -3,27 +3,10 @@
         <div class="fixed w-screen h-screen top-0 left-0 z-50" v-if="active">
             <div class="mask"></div>
             <nav
-                class="
-                    menu
-                    overflow-hidden
-                    fixed
-                    right-0
-                    top-0
-                    w-60
-                    gradients-dark
-                    z-30
-                "
+                class="menu overflow-hidden fixed right-0 top-0 w-60 gradients-dark z-30"
             >
                 <ul
-                    class="
-                        menu-list
-                        absolute
-                        pt-16
-                        pr-48
-                        top-16
-                        rounded-full
-                        gradients
-                    "
+                    class="menu-list absolute pt-16 pr-48 top-16 rounded-full gradients"
                 >
                     <li
                         v-for="item in menuList"
