@@ -29,29 +29,29 @@
 
 <script>
 export default {
-    props: {
-        stopList: {
-            type: Array,
-            default: () => [],
-        },
-        direction: {
-            type: Object,
-            default: () => {},
-        },
+  props: {
+    stopList: {
+      type: Array,
+      default: () => []
     },
-    data() {
-        return {};
+    direction: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  data () {
+    return {}
+  },
+  methods: {
+    selectStop (obj) {
+      this.$emit('selectStop', obj)
     },
-    methods: {
-        selectStop(obj) {
-            this.$emit("selectStop", obj);
-        },
-        transRoute(arr) {
-            const temp = arr.map((vo) => vo.RouteName.Zh_tw);
-            return temp.join(",");
-        },
-    },
-};
+    transRoute (arr) {
+      const temp = arr.map((vo) => vo.RouteName.Zh_tw)
+      return temp.join(',')
+    }
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

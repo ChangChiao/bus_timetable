@@ -47,122 +47,122 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
-import BusSearchList from "../components/BusSearchList.vue";
-import KeyBoard from "../components/KeyBoard.vue";
-import BusSearchBtn from "../components/BusSearchBtn.vue";
-import { CITY_LIST } from "../global/constant";
-import { getBusRoute } from "../utils/api";
-import MapSearchs from "../components/MapSearchs.vue";
+import Footer from '../components/Footer.vue'
+import Header from '../components/Header.vue'
+import BusSearchList from '../components/BusSearchList.vue'
+import KeyBoard from '../components/KeyBoard.vue'
+import BusSearchBtn from '../components/BusSearchBtn.vue'
+import { CITY_LIST } from '../global/constant'
+import { getBusRoute } from '../utils/api'
+import MapSearchs from '../components/MapSearchs.vue'
 export default {
-    components: {
-        KeyBoard,
-        BusSearchList,
-        BusSearchBtn,
-        MapSearchs,
-        Footer,
-        Header,
+  components: {
+    KeyBoard,
+    BusSearchList,
+    BusSearchBtn,
+    MapSearchs,
+    Footer,
+    Header
+  },
+  data () {
+    return {
+      CITY_LIST,
+      city: CITY_LIST[0].value,
+      routeName: '',
+      busList: [],
+      showKeyboard: false,
+      pageData: [],
+      endFlag: false,
+      debounce: null
+    }
+  },
+  computed: {
+    liveBus () {
+      return this.busList.filter((item) => item.PlateNumb)
     },
-    data() {
-        return {
-            CITY_LIST,
-            city: CITY_LIST[0].value,
-            routeName: "",
-            busList: [],
-            showKeyboard: false,
-            pageData: [],
-            endFlag: false,
-            debounce: null,
-        };
+    showSearch () {
+      return this.routeName.length > 0
+    }
+  },
+  methods: {
+    async getRoute () {
+      const sendData = {
+        city: this.city,
+        $filter: this.routeName
+          ? `contains(RouteName/Zh_tw, '${this.routeName}')`
+          : ''
+      }
+      try {
+        const result = await getBusRoute(sendData)
+        this.busList = result
+        this.pageData = []
+        this.splitData()
+      } catch (error) {
+        console.log('error', error)
+      }
+      this.setView()
     },
-    computed: {
-        liveBus() {
-            return this.busList.filter((item) => item.PlateNumb);
-        },
-        showSearch() {
-            return this.routeName.length > 0;
-        },
+    splitData () {
+      if (this.busList.length === 0) this.endFlag = true
+      const temp = this.busList.splice(0, 30)
+      this.pageData = this.pageData.concat(temp)
     },
-    methods: {
-        async getRoute() {
-            const sendData = {
-                city: this.city,
-                $filter: this.routeName
-                    ? `contains(RouteName/Zh_tw, '${this.routeName}')`
-                    : "",
-            };
-            try {
-                const result = await getBusRoute(sendData);
-                this.busList = result;
-                this.pageData = [];
-                this.splitData();
-            } catch (error) {
-                console.log("error", error);
-            }
-            this.setView();
-        },
-        splitData() {
-            if (this.busList.length === 0) this.endFlag = true;
-            const temp = this.busList.splice(0, 30);
-            this.pageData = this.pageData.concat(temp);
-        },
-        setRouteName(word) {
-            this.routeName += word;
-            this.getRoute();
-        },
-        deleteRouteName() {
-            this.routeName = this.routeName.substring(
-                0,
-                this.routeName.length - 1
-            );
-            if (!this.routeName) {
-                this.getRoute();
-            }
-        },
-        keyIn(event) {
-            clearTimeout(this.debounce);
-            this.debounce = setTimeout(() => {
-                this.routeName = event.target.value;
-                this.getRoute();
-            }, 600);
-        },
-        reset() {
-            this.routeName = "";
-            this.getRoute();
-        },
-        ctrlKeyboard() {
-            this.showKeyboard = !this.showKeyboard;
-            if (!this.showKeyboard) {
-                this.$refs.inputRouteName.focus();
-            }
-        },
-        scrollEvent() {
-            if (this.endFlag) return;
-            const target = document.querySelector(".scroll-list");
-            if (
-                target.scrollTop ===
+    setRouteName (word) {
+      this.routeName += word
+      this.getRoute()
+    },
+    deleteRouteName () {
+      this.routeName = this.routeName.substring(
+        0,
+        this.routeName.length - 1
+      )
+      if (!this.routeName) {
+        this.getRoute()
+      }
+    },
+    keyIn (event) {
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        this.routeName = event.target.value
+        this.getRoute()
+      }, 600)
+    },
+    reset () {
+      this.routeName = ''
+      this.getRoute()
+    },
+    ctrlKeyboard () {
+      this.showKeyboard = !this.showKeyboard
+      if (!this.showKeyboard) {
+        this.$refs.inputRouteName.focus()
+      }
+    },
+    scrollEvent () {
+      if (this.endFlag) return
+      const target = document.querySelector('.scroll-list')
+      if (
+        target.scrollTop ===
                 target.scrollHeight - target.offsetHeight
-            ) {
-                this.splitData();
-            }
-        },
-        setView() {
-            const { pos } = CITY_LIST.find((vo) => vo.value === this.city);
-            const { lat, lon } = pos;
-            this.$refs.mapSearch.setView(lat, lon);
-        },
+      ) {
+        this.splitData()
+      }
     },
-    mounted() {
-        this.getRoute();
-        const target = document.querySelector(".scroll-list");
-        target.addEventListener("scroll", this.scrollEvent);
-    },
-    beforeDestroy() {
-        const target = document.querySelector(".scroll-list");
-        target.removeEventListener("scroll", this.scrollEvent);
-    },
-};
+    setView () {
+      const { pos } = CITY_LIST.find((vo) => vo.value === this.city)
+      const { lat, lon } = pos
+      this.$refs.mapSearch.setView(lat, lon)
+    }
+  },
+  mounted () {
+    this.getRoute()
+    const target = document.querySelector('.scroll-list')
+    target.addEventListener('scroll', this.scrollEvent)
+  },
+  beforeDestroy () {
+    const target = document.querySelector('.scroll-list')
+    target.removeEventListener('scroll', this.scrollEvent)
+  }
+}
 </script>
 
 <style lang="postcss">

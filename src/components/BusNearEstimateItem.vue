@@ -27,55 +27,55 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { transBusStatus } from "../utils/common";
+import { mapState } from 'vuex'
+import { transBusStatus } from '../utils/common'
 export default {
-    props: {
-        itemData: {
-            type: Object,
-            default: () => {},
-        },
-        order: {
-            type: Number,
-            default: 0,
-        },
+  props: {
+    itemData: {
+      type: Object,
+      default: () => {}
     },
-    computed: {
-        ...mapState(["terminalList"]),
-        target() {
-            return this.terminalList[this.itemData.RouteUID];
-        },
-        head() {
-            return this.itemData.Direction === 0
-                ? this.target?.DestinationStopNameZh
-                : this.target?.DepartureStopNameZh;
-        },
-        isIndex() {
-            return this.$route.path === "/";
-        },
+    order: {
+      type: Number,
+      default: 0
+    }
+  },
+  computed: {
+    ...mapState(['terminalList']),
+    target () {
+      return this.terminalList[this.itemData.RouteUID]
     },
-    methods: {
-        transStatus(obj) {
-            return transBusStatus(obj);
-        },
-        goRouteDetail() {
-            const { RouteName, RouteUID } = this.itemData;
-            const { DepartureStopNameZh, DestinationStopNameZh, City } =
-                this.target;
+    head () {
+      return this.itemData.Direction === 0
+        ? this.target?.DestinationStopNameZh
+        : this.target?.DepartureStopNameZh
+    },
+    isIndex () {
+      return this.$route.path === '/'
+    }
+  },
+  methods: {
+    transStatus (obj) {
+      return transBusStatus(obj)
+    },
+    goRouteDetail () {
+      const { RouteName, RouteUID } = this.itemData
+      const { DepartureStopNameZh, DestinationStopNameZh, City } =
+                this.target
 
-            this.$router.push({
-                path: "/busroute",
-                query: {
-                    routeUID: RouteUID,
-                    routeName: RouteName.Zh_tw,
-                    city: City,
-                    to: DepartureStopNameZh,
-                    back: DestinationStopNameZh,
-                },
-            });
-        },
-    },
-};
+      this.$router.push({
+        path: '/busroute',
+        query: {
+          routeUID: RouteUID,
+          routeName: RouteName.Zh_tw,
+          city: City,
+          to: DepartureStopNameZh,
+          back: DestinationStopNameZh
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

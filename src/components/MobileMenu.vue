@@ -42,31 +42,31 @@
 
 <script>
 export default {
-    data() {
-        return {
-            menuList: [
-                { name: "回首頁", path: "/" },
-                { name: "公車快找", path: "/bussearch" },
-                { name: "查詢公車", path: "/busnear" },
-                { name: "我的最愛", path: "/favorite" },
-            ],
-            active: false,
-            showHam: true,
-        };
+  data () {
+    return {
+      menuList: [
+        { name: '回首頁', path: '/' },
+        { name: '公車快找', path: '/bussearch' },
+        { name: '查詢公車', path: '/busnear' },
+        { name: '我的最愛', path: '/favorite' }
+      ],
+      active: false,
+      showHam: true
+    }
+  },
+  methods: {
+    ctrlMenu () {
+      this.active = !this.active
     },
-    methods: {
-        ctrlMenu() {
-            this.active = !this.active;
-        },
-        goPath(path) {
-            this.$router.push(path);
-            this.active = false;
-        },
-    },
-    mounted() {
-        this.showHam = this.$route.path !== "/";
-    },
-};
+    goPath (path) {
+      this.$router.push(path)
+      this.active = false
+    }
+  },
+  mounted () {
+    this.showHam = this.$route.path !== '/'
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

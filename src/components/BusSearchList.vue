@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import BusSearchListItem from "./BusSearchListItem.vue";
+import BusSearchListItem from './BusSearchListItem.vue'
 export default {
-    components: { BusSearchListItem },
-    props: {
-        pageData: {
-            type: Array,
-            default: () => [],
-        },
-    },
-};
+  components: { BusSearchListItem },
+  props: {
+    pageData: {
+      type: Array,
+      default: () => []
+    }
+  }
+}
 </script>

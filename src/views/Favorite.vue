@@ -15,20 +15,20 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
-import MapSearchs from "../components/MapSearchs.vue";
-import { mapState } from "vuex";
-import BusSearchListItem from "../components/BusSearchListItem.vue";
+import Footer from '../components/Footer.vue'
+import Header from '../components/Header.vue'
+import MapSearchs from '../components/MapSearchs.vue'
+import { mapState } from 'vuex'
+import BusSearchListItem from '../components/BusSearchListItem.vue'
 export default {
-    components: {
-        BusSearchListItem,
-        MapSearchs,
-        Footer,
-        Header,
-    },
-    computed: {
-        ...mapState(["favoriteList"]),
-    },
-};
+  components: {
+    BusSearchListItem,
+    MapSearchs,
+    Footer,
+    Header
+  },
+  computed: {
+    ...mapState(['favoriteList'])
+  }
+}
 </script>

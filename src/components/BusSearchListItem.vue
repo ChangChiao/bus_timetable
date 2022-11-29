@@ -21,32 +21,32 @@
 
 <script>
 export default {
-    props: {
-        item: {
-            type: Object,
-            default: () => {},
-        },
-    },
-    methods: {
-        toBusRoute() {
-            const {
-                DepartureStopNameZh,
-                DestinationStopNameZh,
-                RouteName,
-                RouteUID,
-                City,
-            } = this.item;
-            this.$router.push({
-                path: "/busroute",
-                query: {
-                    routeUID: RouteUID,
-                    routeName: RouteName.Zh_tw,
-                    city: City,
-                    to: DepartureStopNameZh,
-                    back: DestinationStopNameZh,
-                },
-            });
-        },
-    },
-};
+  props: {
+    item: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  methods: {
+    toBusRoute () {
+      const {
+        DepartureStopNameZh,
+        DestinationStopNameZh,
+        RouteName,
+        RouteUID,
+        City
+      } = this.item
+      this.$router.push({
+        path: '/busroute',
+        query: {
+          routeUID: RouteUID,
+          routeName: RouteName.Zh_tw,
+          city: City,
+          to: DepartureStopNameZh,
+          back: DestinationStopNameZh
+        }
+      })
+    }
+  }
+}
 </script>

@@ -13,47 +13,46 @@
 
 <script>
 const startPos = {
-    x: 0,
-    y: 0,
-};
+  x: 0,
+  y: 0
+}
 const endPos = {
-    x: 0,
-    y: 0,
-};
+  x: 0,
+  y: 0
+}
 export default {
-    data() {
-        return {
-            moveY: 0,
-        };
-    },
-    methods: {
-        touchstart(e) {
-            if (
-                this.penndiing ||
+  data () {
+    return {
+      moveY: 0
+    }
+  },
+  methods: {
+    touchstart (e) {
+      if (
+        this.penndiing ||
                 !this.isLogin ||
                 this.isLockedMove ||
                 this.isForbidden
-            )
-                return;
-            this.sec = 0.5;
-            this.touchPath = e.path || e?.composedPath?.();
-            startPos.x = e.touches[0].pageX;
-            startPos.y = e.touches[0].pageY;
-        },
-        touchmove(e) {
-            endPos.x = e.touches[0].pageX;
-            endPos.y = e.touches[0].pageY;
-        },
-        touchend() {
-            let x = endPos.x - startPos.x;
-            let y = endPos.y - startPos.y;
-            if (Math.abs(y) > Math.abs(x)) {
-                //水平滑動
-                this.moveY = y > 0 ? 30 : 80;
-            }
-        },
+      ) { return }
+      this.sec = 0.5
+      this.touchPath = e.path || e?.composedPath?.()
+      startPos.x = e.touches[0].pageX
+      startPos.y = e.touches[0].pageY
     },
-};
+    touchmove (e) {
+      endPos.x = e.touches[0].pageX
+      endPos.y = e.touches[0].pageY
+    },
+    touchend () {
+      const x = endPos.x - startPos.x
+      const y = endPos.y - startPos.y
+      if (Math.abs(y) > Math.abs(x)) {
+        // 水平滑動
+        this.moveY = y > 0 ? 30 : 80
+      }
+    }
+  }
+}
 </script>
 
 <style lang="postcss" scoped></style>

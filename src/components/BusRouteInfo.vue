@@ -72,168 +72,168 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { transBusStatus } from "../utils/common";
-import { getBusArrival, getBusRealTime } from "../utils/api";
+import { mapState } from 'vuex'
+import { transBusStatus } from '../utils/common'
+import { getBusArrival, getBusRealTime } from '../utils/api'
 export default {
-    props: {
-        routeName: {
-            type: String,
-            default: "",
-        },
-        city: {
-            type: String,
-            default: "",
-        },
-        routeUID: {
-            type: String,
-            default: "",
-        },
-        destination: {
-            type: Object,
-            default: () => {},
-        },
-        stopInfo: {
-            type: Array,
-            default: () => [],
-        },
+  props: {
+    routeName: {
+      type: String,
+      default: ''
     },
-    watch: {
-        routeName: {
-            immediate: true,
-            handler() {
-                if (!this.routeName) return;
-                this.getBusArrive();
-                this.getDataByTimer();
-            },
-        },
+    city: {
+      type: String,
+      default: ''
     },
-    computed: {
-        ...mapState(["favoriteList"]),
-        goBus() {
-            const list = this.busData.filter((item) => item.Direction === 0);
-            return this.sortData(list, 0);
-        },
-        backBus() {
-            const list = this.busData.filter((item) => item.Direction === 1);
-            return this.sortData(list, 1);
-        },
-        typeBusList() {
-            return this.listType === 0 ? this.goBus : this.backBus;
-        },
-        isExistFavorite() {
-            return this.favoriteList.some(
-                (vo) => vo.RouteUID === this.routeUID
-            );
-        },
+    routeUID: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            timer: null,
-            listType: 0,
-            second: 60,
-            busData: [],
-            busPos: [],
-        };
+    destination: {
+      type: Object,
+      default: () => {}
     },
-    methods: {
-        transStatus(obj) {
-            return transBusStatus(obj);
-        },
-        refresh() {
-            this.second = 60;
-            this.getBusArrive();
-            this.getDataByTimer();
-        },
-        getDataByTimer() {
-            clearInterval(this.timer);
-            this.timer = setInterval(() => {
-                this.second -= 1;
-                if (this.second <= 0) {
-                    this.second = 60;
-                    this.getBusArrive();
-                }
-            }, 1000);
-        },
-        async getBusArrive() {
-            try {
-                const sendData = {
-                    city: this.city,
-                    $filter: `contains(RouteUID,'${this.routeUID}')`,
-                };
-                this.$bus.$emit("setLoading", true);
-                const result = await getBusArrival(sendData);
-                this.$bus.$emit("setLoading", false);
-                this.busData = result;
-                this.getBusRealInfo();
-            } catch (error) {
-                console.log("error", error);
-            }
-        },
-        async getBusRealInfo() {
-            try {
-                const sendData = {
-                    city: this.city,
-                    $filter: `contains(RouteUID,'${this.routeUID}')`,
-                };
-                const result = await getBusRealTime(sendData);
-                this.combineData(result);
-            } catch (error) {
-                console.log("error", error);
-            }
-        },
-        combineData(bus) {
-            let temp = [...this.busData];
-            bus.forEach((element) => {
-                console.log("combineData");
-                const index = this.busData.findIndex(
-                    (vo) => vo.StopUID === element.StopUID
-                );
-                temp[index]["PlateNumb"] = element.PlateNumb;
-            });
-            this.busData = temp;
-        },
-        setTab(type) {
-            this.listType = type;
-        },
-        goBack() {
-            this.$router.go(-1);
-        },
-        clickStop(obj) {
-            this.$emit("clickStop", obj);
-        },
-        setFavorite() {
-            const obj = {
-                RouteName: {
-                    Zh_tw: this.routeName,
-                },
-                City: this.city,
-                RouteUID: this.routeUID,
-                DepartureStopNameZh: this.destination.to,
-                DestinationStopNameZh: this.destination.back,
-            };
-            this.$store.commit("updateFavoriteList", obj);
-        },
-        sortData(arr = [], order) {
-            let temp = [];
-            console.warn("arr", arr);
-            console.warn("this.stopInfo~~~", this.stopInfo);
-            this.stopInfo?.[order]?.["Stops"].forEach((vo) => {
-                if (arr.length > 0) {
-                    const target = arr.find(
-                        (item) => item?.StopUID === vo?.StopUID
-                    );
-                    temp.push(target);
-                }
-            });
-            return temp;
-        },
+    stopInfo: {
+      type: Array,
+      default: () => []
+    }
+  },
+  watch: {
+    routeName: {
+      immediate: true,
+      handler () {
+        if (!this.routeName) return
+        this.getBusArrive()
+        this.getDataByTimer()
+      }
+    }
+  },
+  computed: {
+    ...mapState(['favoriteList']),
+    goBus () {
+      const list = this.busData.filter((item) => item.Direction === 0)
+      return this.sortData(list, 0)
     },
-    mounted() {},
-    beforeDestroy() {
-        clearInterval(this.timer);
+    backBus () {
+      const list = this.busData.filter((item) => item.Direction === 1)
+      return this.sortData(list, 1)
     },
-};
+    typeBusList () {
+      return this.listType === 0 ? this.goBus : this.backBus
+    },
+    isExistFavorite () {
+      return this.favoriteList.some(
+        (vo) => vo.RouteUID === this.routeUID
+      )
+    }
+  },
+  data () {
+    return {
+      timer: null,
+      listType: 0,
+      second: 60,
+      busData: [],
+      busPos: []
+    }
+  },
+  methods: {
+    transStatus (obj) {
+      return transBusStatus(obj)
+    },
+    refresh () {
+      this.second = 60
+      this.getBusArrive()
+      this.getDataByTimer()
+    },
+    getDataByTimer () {
+      clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        this.second -= 1
+        if (this.second <= 0) {
+          this.second = 60
+          this.getBusArrive()
+        }
+      }, 1000)
+    },
+    async getBusArrive () {
+      try {
+        const sendData = {
+          city: this.city,
+          $filter: `contains(RouteUID,'${this.routeUID}')`
+        }
+        this.$bus.$emit('setLoading', true)
+        const result = await getBusArrival(sendData)
+        this.$bus.$emit('setLoading', false)
+        this.busData = result
+        this.getBusRealInfo()
+      } catch (error) {
+        console.log('error', error)
+      }
+    },
+    async getBusRealInfo () {
+      try {
+        const sendData = {
+          city: this.city,
+          $filter: `contains(RouteUID,'${this.routeUID}')`
+        }
+        const result = await getBusRealTime(sendData)
+        this.combineData(result)
+      } catch (error) {
+        console.log('error', error)
+      }
+    },
+    combineData (bus) {
+      const temp = [...this.busData]
+      bus.forEach((element) => {
+        console.log('combineData')
+        const index = this.busData.findIndex(
+          (vo) => vo.StopUID === element.StopUID
+        )
+        temp[index].PlateNumb = element.PlateNumb
+      })
+      this.busData = temp
+    },
+    setTab (type) {
+      this.listType = type
+    },
+    goBack () {
+      this.$router.go(-1)
+    },
+    clickStop (obj) {
+      this.$emit('clickStop', obj)
+    },
+    setFavorite () {
+      const obj = {
+        RouteName: {
+          Zh_tw: this.routeName
+        },
+        City: this.city,
+        RouteUID: this.routeUID,
+        DepartureStopNameZh: this.destination.to,
+        DestinationStopNameZh: this.destination.back
+      }
+      this.$store.commit('updateFavoriteList', obj)
+    },
+    sortData (arr = [], order) {
+      const temp = []
+      console.warn('arr', arr)
+      console.warn('this.stopInfo~~~', this.stopInfo)
+      this.stopInfo?.[order]?.Stops.forEach((vo) => {
+        if (arr.length > 0) {
+          const target = arr.find(
+            (item) => item?.StopUID === vo?.StopUID
+          )
+          temp.push(target)
+        }
+      })
+      return temp
+    }
+  },
+  mounted () {},
+  beforeDestroy () {
+    clearInterval(this.timer)
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

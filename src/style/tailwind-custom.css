@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-/* @layer base {
+@layer base {
     input {
         outline: none;
         @apply bg-transparent border-0 text-gray-900 w-4/5;
@@ -110,4 +110,4 @@
         @apply overflow-y-scroll pb-4;
     }
 }
- */
+

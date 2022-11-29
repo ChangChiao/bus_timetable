@@ -32,12 +32,12 @@
 
 <script>
 export default {
-    methods: {
-        goPath(path) {
-            this.$router.push(path);
-        },
-    },
-};
+  methods: {
+    goPath (path) {
+      this.$router.push(path)
+    }
+  }
+}
 </script>
 
 <style lang="postcss" scoped>

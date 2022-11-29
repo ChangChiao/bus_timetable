@@ -9,23 +9,23 @@
 
 <script>
 export default {
-    inject: ["appData"],
-    computed: {
-        isMobile() {
-            return this.appData?.windowSize < 780;
-        },
-    },
-    data() {
-        return {
-            isIndex: false,
-        };
-    },
-    mounted() {
-        if (this.$route.path === "/") {
-            this.isIndex = true;
-        }
-    },
-};
+  inject: ['appData'],
+  computed: {
+    isMobile () {
+      return this.appData?.windowSize < 780
+    }
+  },
+  data () {
+    return {
+      isIndex: false
+    }
+  },
+  mounted () {
+    if (this.$route.path === '/') {
+      this.isIndex = true
+    }
+  }
+}
 </script>
 
 <style lang="postcss">

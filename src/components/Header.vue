@@ -36,40 +36,40 @@
 
 <script>
 export default {
-    inject: ["appData"],
-    props: {
-        setClass: {
-            type: String,
-            default: "",
-        },
-    },
-    data() {
-        return {
-            menuList: [
-                { name: "公車快找", path: "/bussearch" },
-                { name: "查詢公車", path: "/busnear" },
-                { name: "我的最愛", path: "/favorite" },
-            ],
-            showHeader: false,
-            isIndex: false,
-        };
-    },
-    computed: {
-        isMobile() {
-            return this.appData?.windowSize < 780;
-        },
-    },
-    methods: {
-        goPath(path) {
-            this.$router.push(path);
-        },
-    },
-    mounted() {
-        if (this.$route.path === "/") {
-            this.isIndex = true;
-        }
-    },
-};
+  inject: ['appData'],
+  props: {
+    setClass: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
+    return {
+      menuList: [
+        { name: '公車快找', path: '/bussearch' },
+        { name: '查詢公車', path: '/busnear' },
+        { name: '我的最愛', path: '/favorite' }
+      ],
+      showHeader: false,
+      isIndex: false
+    }
+  },
+  computed: {
+    isMobile () {
+      return this.appData?.windowSize < 780
+    }
+  },
+  methods: {
+    goPath (path) {
+      this.$router.push(path)
+    }
+  },
+  mounted () {
+    if (this.$route.path === '/') {
+      this.isIndex = true
+    }
+  }
+}
 </script>
 
 <style lang="postcss">

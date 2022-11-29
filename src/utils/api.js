@@ -1,19 +1,17 @@
-import api from "../utils/http";
+import api from '../utils/http'
 import {
-    API_TDX,
-    API_ROUTE,
-    API_BUS_STOP,
-    API_BUS_SHAPE,
-    API_BUS_POS,
-    API_BUS_STOP_NEAR,
-    API_BUS_ROUTE_NEAR,
-    API_ESTIMATED_TIME,
-    API_BUS_ESTIMATED_STATION,
-    API_BUS_ESTIMATED_NEAR,
-    API_BUS_REALTIME,
-} from "../global/constant";
-
-let timer = 0;
+  API_TDX,
+  API_ROUTE,
+  API_BUS_STOP,
+  API_BUS_SHAPE,
+  API_BUS_POS,
+  API_BUS_STOP_NEAR,
+  API_BUS_ROUTE_NEAR,
+  API_ESTIMATED_TIME,
+  API_BUS_ESTIMATED_STATION,
+  API_BUS_ESTIMATED_NEAR,
+  API_BUS_REALTIME
+} from '../global/constant'
 
 // const getAuthorizationHeader = () => {
 //     let AppID = process.env.VUE_APP_ID;
@@ -33,122 +31,120 @@ let timer = 0;
 // };
 
 const setPath = (data) => {
-    const { city = "", routeName = "" } = data;
-    delete data.city;
-    delete data.routeName;
-    return { cityPath: city, routeName, data };
-};
+  const { city = '', routeName = '' } = data
+  delete data.city
+  delete data.routeName
+  return { cityPath: city, routeName, data }
+}
 
 export const getBusRoute = (sendData) => {
-    const { cityPath, routeName = "", data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_ROUTE + `/${cityPath}${routeName}`, config);
-};
+  const { cityPath, routeName = '', data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_ROUTE + `/${cityPath}${routeName}`, config)
+}
 
 export const getEstimatedTime = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_ESTIMATED_TIME + `/${cityPath}/${routeName}`, config);
-};
+  const { cityPath, routeName, data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_ESTIMATED_TIME + `/${cityPath}/${routeName}`, config)
+}
 
 export const getBusStop = (sendData) => {
-    const { cityPath, routeName = "", data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_STOP + `/${cityPath}${routeName}`, config);
-};
+  const { cityPath, routeName = '', data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_BUS_STOP + `/${cityPath}${routeName}`, config)
+}
 
 export const getBusLine = (sendData) => {
-    const { cityPath, routeName, data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_SHAPE + `/${cityPath}${routeName}`, config);
-};
+  const { cityPath, routeName, data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_BUS_SHAPE + `/${cityPath}${routeName}`, config)
+}
 
 export const getBusPosition = (sendData) => {
-    const { cityPath, data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_POS + `/${cityPath}`, config);
-};
+  const { cityPath, data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_BUS_POS + `/${cityPath}`, config)
+}
 
 export const getStopNear = (sendData) => {
-    console.log("getStopNear");
-    let config = {
-        params: {
-            ...sendData,
-        },
-    };
-    return api.get(API_BUS_STOP_NEAR, config);
-};
+  console.log('getStopNear')
+  const config = {
+    params: {
+      ...sendData
+    }
+  }
+  return api.get(API_BUS_STOP_NEAR, config)
+}
 
 export const getRouteNear = (sendData) => {
-    let config = {
-        params: {
-            ...sendData,
-        },
-    };
-    return api.get(API_BUS_ROUTE_NEAR, config);
-};
+  const config = {
+    params: {
+      ...sendData
+    }
+  }
+  return api.get(API_BUS_ROUTE_NEAR, config)
+}
 
 export const getNearEstimated = (sendData) => {
-    let config = {
-        params: {
-            ...sendData,
-        },
-    };
-    return api.get(API_BUS_ESTIMATED_NEAR, config);
-};
+  const config = {
+    params: {
+      ...sendData
+    }
+  }
+  return api.get(API_BUS_ESTIMATED_NEAR, config)
+}
 
 export const getBusRealTime = (sendData) => {
-    const { cityPath, data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_REALTIME + `/${cityPath}`, config);
-};
+  const { cityPath, data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_BUS_REALTIME + `/${cityPath}`, config)
+}
 
 export const getBusArrival = (sendData) => {
-    const { cityPath, data } = setPath(sendData);
-    let config = {
-        params: {
-            ...data,
-        },
-    };
-    return api.get(API_BUS_ESTIMATED_STATION + `/${cityPath}`, config);
-};
+  const { cityPath, data } = setPath(sendData)
+  const config = {
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_BUS_ESTIMATED_STATION + `/${cityPath}`, config)
+}
 
 export const getToken = () => {
-    if (Date.now() - timer < 3000) return Promise.reject("fail");
-    timer = Date.now();
-    const data = {
-        grant_type: "client_credentials",
-        client_id: process.env.VUE_APP_ID,
-        client_secret: process.env.VUE_APP_KEY,
-    };
-    let config = {
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-    };
-    return api.post(API_TDX, new URLSearchParams(data), config);
-};
+  const data = {
+    grant_type: 'client_credentials',
+    client_id: process.env.VUE_APP_ID,
+    client_secret: process.env.VUE_APP_KEY
+  }
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
+  return api.post(API_TDX, new URLSearchParams(data), config)
+}
