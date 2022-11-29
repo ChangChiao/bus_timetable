@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import VueGtag from "vue-gtag";
 import "./style/main.css";
-import "tailwindcss/tailwind.css";
+// import "tailwindcss/tailwind.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
