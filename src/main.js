@@ -25,11 +25,22 @@ Vue.use(VueGtag, {
 });
 
 const checkToken = async () => {
-    if (!localStorage.getItem("token")) {
-        const res = await getToken();
-        if (res.access_token) {
-            localStorage.setItem("token", res.access_token);
-        }
+    console.log(
+        "test",
+        new Date().getTime() <= Number(localStorage.getItem("expireTime"))
+    );
+    if (
+        new Date().getTime() / 1000 <=
+        Number(localStorage.getItem("expireTime"))
+    )
+        return;
+    const res = await getToken();
+    if (res.access_token) {
+        localStorage.setItem("token", res.access_token);
+        localStorage.setItem(
+            "expireTime",
+            new Date().getTime() / 1000 + res.expires_in
+        );
     }
 };
 

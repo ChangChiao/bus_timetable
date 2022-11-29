@@ -32,14 +32,6 @@ let timer = 0;
 //     };
 // };
 
-const getAuthorizationHeader = () => {
-    const token = localStorage.getItem("token");
-    return {
-        authorization: `Bearer ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-    };
-};
-
 const setPath = (data) => {
     const { city = "", routeName = "" } = data;
     delete data.city;
@@ -50,7 +42,6 @@ const setPath = (data) => {
 export const getBusRoute = (sendData) => {
     const { cityPath, routeName = "", data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -61,7 +52,6 @@ export const getBusRoute = (sendData) => {
 export const getEstimatedTime = (sendData) => {
     const { cityPath, routeName, data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -72,7 +62,6 @@ export const getEstimatedTime = (sendData) => {
 export const getBusStop = (sendData) => {
     const { cityPath, routeName = "", data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -83,7 +72,6 @@ export const getBusStop = (sendData) => {
 export const getBusLine = (sendData) => {
     const { cityPath, routeName, data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -94,7 +82,6 @@ export const getBusLine = (sendData) => {
 export const getBusPosition = (sendData) => {
     const { cityPath, data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -103,8 +90,8 @@ export const getBusPosition = (sendData) => {
 };
 
 export const getStopNear = (sendData) => {
+    console.log("getStopNear");
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...sendData,
         },
@@ -114,7 +101,6 @@ export const getStopNear = (sendData) => {
 
 export const getRouteNear = (sendData) => {
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...sendData,
         },
@@ -124,7 +110,6 @@ export const getRouteNear = (sendData) => {
 
 export const getNearEstimated = (sendData) => {
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...sendData,
         },
@@ -135,7 +120,6 @@ export const getNearEstimated = (sendData) => {
 export const getBusRealTime = (sendData) => {
     const { cityPath, data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },
@@ -146,7 +130,6 @@ export const getBusRealTime = (sendData) => {
 export const getBusArrival = (sendData) => {
     const { cityPath, data } = setPath(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data,
         },

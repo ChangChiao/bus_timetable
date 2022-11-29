@@ -3,7 +3,7 @@
         <Header />
         <map-near ref="mapNear" @setStop="setStop" @getNowPos="getNowPos" />
         <div
-            class="touch-ball z-50 right-0 top-72 md:left-0 md:top-48"
+            class="right-0 z-50 touch-ball top-72 md:left-0 md:top-48"
             @click="focusSelf"
         >
             <img src="images/cursor.svg" alt="" />
@@ -128,6 +128,7 @@ export default {
             };
             try {
                 const result = await getStopNear(sendData);
+                console.log("this.stopList", result);
                 this.stopList = this.filterReapeatList(result);
                 this.$refs.mapNear.drawStation(this.stopList);
             } catch (error) {
@@ -136,6 +137,7 @@ export default {
         },
         filterReapeatList(result) {
             const record = [];
+            if (!result) return [];
             return result.filter((item) => {
                 if (!record.includes(item.StationID)) {
                     record.push(item.StationID);

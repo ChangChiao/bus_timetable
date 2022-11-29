@@ -16,6 +16,7 @@
     "@tailwindcss/postcss7-compat": "^2.2.17",
     "autoprefixer": "9",
     "axios": "^0.24.0",
+    "axios-retry": "^3.3.1",
     "core-js": "^3.6.5",
     "gh-pages": "^3.2.3",
     "jssha": "^3.2.0",
