@@ -16,10 +16,6 @@
 ![image](https://user-images.githubusercontent.com/24662856/161200768-2c7afd24-5f3d-4d7c-98c6-d55bbca61437.png)
 
 
-## 獲獎紀錄
-🏅 2021 THE F2E 3rd 前端個人組佳作
-![image](./public/JoeChang.png)
-
 ## Designer
 
 👏 [早餐](https://2021.thef2e.com/users/6296427084285739247?week=3&type=1)
