@@ -2,7 +2,7 @@
 
 ## Demo
 
-👉 [機智公車族](https://bus-timetable-rneqtldx1-changchiaos-projects.vercel.app/#/)
+👉 [機智公車族](https://bus-timetable.vercel.app/#/)
 
 ## 作品說明
 
