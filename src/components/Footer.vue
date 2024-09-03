@@ -3,7 +3,7 @@
     v-if="!isMobile || (isMobile && isIndex)"
     class="bg-primary-700 h-9 fixed bottom-0 flex justify-center items-center text-white z-50 md:right-0"
   >
-    Taiwan Bus © {{ new Date().getFullYear() }}
+    Taiwan Bus © {{ year }}
   </footer>
 </template>
 
@@ -18,12 +18,14 @@ export default {
   data() {
     return {
       isIndex: false,
+      year: 2024,
     };
   },
   mounted() {
     if (this.$route.path === "/") {
       this.isIndex = true;
     }
+    this.year = new Date().getFullYear();
   },
 };
 </script>
