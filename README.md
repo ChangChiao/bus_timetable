@@ -2,12 +2,11 @@
 
 ## Demo
 
-👉 [機智公車族](https://changchiao.github.io/bus_timetable/#/)
-
+👉 [機智公車族](https://bus-timetable-rneqtldx1-changchiaos-projects.vercel.app/#/)
 
 ## 作品說明
 
-以行動裝置的設計為優先，串接TDX運輸資料流通服務，實作以下功能:
+以行動裝置的設計為優先，串接 TDX 運輸資料流通服務，實作以下功能:
 
 - 輸入路線查詢公車資訊
 - 根據使用者所在位置獲取鄰近的公車資訊
@@ -15,13 +14,9 @@
 
 ![image](https://user-images.githubusercontent.com/24662856/161200768-2c7afd24-5f3d-4d7c-98c6-d55bbca61437.png)
 
-
 ## Designer
 
 👏 [早餐](https://2021.thef2e.com/users/6296427084285739247?week=3&type=1)
-
-
-
 
 ## 系統說明
 
@@ -30,17 +25,15 @@
 - 安裝： `yarn`
 - 執行： `yarn serve`
 
-
-本專案請求TDX和mapBox的token均存在.env，需自行設定
+本專案請求 TDX 和 mapBox 的 token 均存在.env，需自行設定
 
 ```
 .env
 
-VUE_APP_ID = your TDX APP ID 
-VUE_APP_KEY = your TDX APP KEY 
+VUE_APP_ID = your TDX APP ID
+VUE_APP_KEY = your TDX APP KEY
 VUE_APP_MAP_TOKEN = your mapbox token
 ```
-
 
 ## 使用技術
 
@@ -49,7 +42,6 @@ VUE_APP_MAP_TOKEN = your mapbox token
 - axios
 - tailwindcss
 - leaflet
-
 
 ## 專案架構
 
@@ -63,21 +55,19 @@ VUE_APP_MAP_TOKEN = your mapbox token
     | --- store      (全域資料)
     | --- utils      (共用函式及api函式)
 
-         
-```
 
+```
 
 ## 實作功能
 
--   依據使用者所在位置，顯示500公尺內與使用者最近的站牌(首頁)
--   自製搜尋鍵盤，方便使用者快速查找路線
--   每分鐘更新公車進站資訊
--   將使用者喜愛的路線資訊存在localStorage
--   根據api提供的圖資繪製出公車路線、公車所在位址、站牌位置等等
--   分段加載資料，避免一次渲染過多元素
-
+- 依據使用者所在位置，顯示 500 公尺內與使用者最近的站牌(首頁)
+- 自製搜尋鍵盤，方便使用者快速查找路線
+- 每分鐘更新公車進站資訊
+- 將使用者喜愛的路線資訊存在 localStorage
+- 根據 api 提供的圖資繪製出公車路線、公車所在位址、站牌位置等等
+- 分段加載資料，避免一次渲染過多元素
 
 ## 第三方服務
 
-- [TDX運輸資料流通服務](https://tdx.transportdata.tw/api-service/swagger)
+- [TDX 運輸資料流通服務](https://tdx.transportdata.tw/api-service/swagger)
 - [MapBox](https://www.mapbox.com/)
